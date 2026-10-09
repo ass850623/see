@@ -1,3 +1,4 @@
+import {aftermathScenes} from './aftermath.mjs';
 import {narrativeBeats} from './narrative.mjs';
 import {hearingScenes} from './hearing.mjs';
 const choice=(id,text,next,effects={})=>({id,text,next,effects});
@@ -25,7 +26,8 @@ export const chapterScenes={
  reconcile:{place:'辦公室 · 證據整理桌',speaker:'林予澄',role:'幕僚長',portrait:'aide',text:'通訊資料已到齊。船上與港口的時間相差四十秒，校正後可確認：商船先偏離航道，通訊中斷期間拖船轉向失誤。這是可以核實的事故順序，仍不足以判定政治動機。你想把哪一句帶到聽證會？',choices:[choice('bounded','各方失誤都有證據；動機仍需調查。','authorization',{stats:{trust:4},flags:{hearingClaim:'bounded'},tasks:{M01:'complete'},note:'你建立了可信的時間線，保留未知事項。'}),choice('accuse','這一定是有人策劃的挑釁。','authorization',{stats:{trust:-4,tension:5},flags:{hearingClaim:'accusation'},tasks:{M01:'complete'},note:'予澄提出異議：現有證據不支持這個動機指控。'})]},
  authorization:{place:'辦公室 · 工會回電',speaker:'陳海寧',role:'港口工會代表',portrait:'worker',text:'我看過你們校正後的時間線了。我仍然要求遮蔽個資。如果你願意保留完整脈絡，我可以授權使用；如果你只想拿一句話當標語，請不要說工會支持你。',choices:[choice('authorize','承諾完整脈絡與個資保護，取得授權。','checkpoint',{evidence:{E02:{verified:true,authorized:true}},tasks:{M02:'complete'},flags:{recordRelease:'redacted'},relations:{haining:1},note:'公開授權已確認。你仍須遵守遮蔽個資與完整脈絡的條件。'}),choice('private','暫不公開原始資料，只提交調查。','checkpoint',{evidence:{E02:{verified:true,authorized:false}},tasks:{M02:'pending'},flags:{recordRelease:'review'},note:'公開授權仍未完成，資料保留供調查使用。'})]},
  checkpoint:{place:'議會走廊 · 聽證準備',speaker:'沈若川',role:'本土協進黨議員',portrait:'senior',text:'窗外天色開始轉暗。證據有了，承諾也留下了。接下來是黨團協商與公開聽證。你仍可以查看案件簿，或先存檔再前進。',choices:[choice('continue','前往黨團協商。','caucus')]},
- ...hearingScenes
+ ...hearingScenes,
+ ...aftermathScenes
 };
 export const visits=[{id:'technician',title:'拜訪技師 · 通訊與維護資料'},{id:'family',title:'探望船員家庭 · 停航之後',task:'S01'},{id:'journalist',title:'與記者核對 · 報導時間線',task:'S02'},{id:'aide',title:'和予澄談談 · 幕僚工作量',task:'S03'}];
 
