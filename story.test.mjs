@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {initialStats,scenes,applyChoice,ending} from './story.mjs';
+test('Every story route completes with bounded stats and an ending',()=>{let routes=0;function walk(i,s){if(i===scenes.length){const e=ending(s);assert.ok(e.title&&e.text);routes++;return;}for(const c of scenes[i].choices){const next=applyChoice(s,c.effect);assert.ok(Object.values(next).every(v=>v>=0&&v<=100));walk(i+1,next);}}walk(0,initialStats);assert.equal(routes,243);});
+test('Transparent autonomous route unlocks public trust ending',()=>{let s={...initialStats};for(const scene of scenes)s=applyChoice(s,scene.choices[0].effect);assert.equal(ending(s).title,'把未來交還人民');});
+test('Stat changes clamp at limits without mutating input',()=>{assert.equal(applyChoice(initialStats,{trust:200,tension:-100}).trust,100);assert.equal(applyChoice(initialStats,{tension:-100}).tension,0);assert.equal(initialStats.trust,50);});
