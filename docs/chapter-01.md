@@ -153,3 +153,7 @@
 ### 許知言與夜間辦公室美術
 
 許知言獨立立繪接入 journalist、hearing1、clarify1、hearing3、postPress；夜景背景接入 night 與 postStaff，沿用白天辦公室的空間與家具。兩張素材不改變劇情、存檔或選擇效果。公共電視採訪區與技師室尚無專用背景；角色尚未加入多表情。
+
+### 技師室與採訪區背景
+
+maintenance-room.png 接入 technician，呈現雨天通訊維護室、工具與文件；press-room.png 接入 postPress，呈現直播後空椅、攝影機與港灣夜景。兩者僅補充場所美術；journalist 的港邊咖啡店仍保留原型背景，場景、選項及存檔 ID 不變。
