@@ -157,3 +157,7 @@
 ### 技師室與採訪區背景
 
 maintenance-room.png 接入 technician，呈現雨天通訊維護室、工具與文件；press-room.png 接入 postPress，呈現直播後空椅、攝影機與港灣夜景。兩者僅補充場所美術；journalist 的港邊咖啡店仍保留原型背景，場景、選項及存檔 ID 不變。
+
+### 咖啡店、代表處與議會走廊
+
+harbor-cafe.png 用於 journalist，diplomacy-room.png 用於 diplomacy，parliament-corridor.png 用於 checkpoint。場所保持劇本原設定，不把黨團會議室套用為走廊。周岳、艾琳及主角仍為示意圖，角色多表情亦未完成。此次只增加美術，不改動劇情、時長或存檔 ID。
