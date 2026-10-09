@@ -1,3 +1,4 @@
+import {validPhaseTimes} from './playtime.mjs';
 import {aftermathReaction} from './aftermath.mjs';
 import {staffReaction,validStaffFlags} from './staff.mjs';
 import {fieldReaction} from './fieldwork.mjs';
@@ -6,7 +7,7 @@ import {reporterReaction} from './reporter.mjs';
 import {initialStats,applyChoice} from './story.mjs';
 import {chapterScenes,evidenceCatalog,taskCatalog,visits} from './chapter.mjs';
 export const SAVE_PREFIX='mist-chapter-v1-';
-export function newGame(){return {schemaVersion:1,chapter:'c01',scene:'office',pageIndex:0,playTimeMs:0,stats:{...initialStats},relations:{yucheng:0,haining:0,anhe:0},flags:{},evidence:{},tasks:Object.fromEntries(Object.keys(taskCatalog).map(k=>[k,'pending'])),slots:3,visited:[],history:[],note:''};}
+export function newGame(){return {schemaVersion:1,chapter:'c01',scene:'office',pageIndex:0,playTimeMs:0,phaseTimesMs:{},stats:{...initialStats},relations:{yucheng:0,haining:0,anhe:0},flags:{},evidence:{},tasks:Object.fromEntries(Object.keys(taskCatalog).map(k=>[k,'pending'])),slots:3,visited:[],history:[],note:''};}
 export function readNextPage(state){const max=chapterScenes[state.scene].beats?.length||0;if((state.pageIndex||0)>=max)throw new Error('已到選擇頁');return {...state,pageIndex:(state.pageIndex||0)+1};}
 export function blockedReason(state,option){for(const id of option.requires||[]){const e=state.evidence[id];if(!e)return `尚未取得 ${id}`;if(!e.verified)return `${id} 尚未核實`;if(!e.authorized)return `${id} 未獲公開授權`;}return '';}
 export function options(state){if(state.scene==='technician'&&state.flags.witnessConsent==='pressure')return chapterScenes.technician.choices.filter(c=>c.id!=='named');if(state.scene==='journalist'&&state.flags.reporterSource==='bargain')return chapterScenes.journalist.choices.filter(c=>c.id!=='interview');if(state.scene==='hub')return visits.filter(v=>!state.visited.includes(v.id)).map(v=>({id:v.id,text:v.title,next:v.id,effects:{}}));return chapterScenes[state.scene].choices;}
@@ -22,10 +23,11 @@ if(!Object.values(s.flags).every(v=>typeof v==='string'||typeof v==='boolean'))r
 if(!s.history.every(h=>obj(h)&&chapterScenes[h.scene]&&['speaker','text','choice'].every(k=>typeof h[k]==='string')))return false;
 if(['hub',...visits.map(v=>v.id),'reconcile','authorization','checkpoint'].includes(s.scene)&&!s.evidence.E02)return false;
 if(s.playTimeMs!==undefined&&(!Number.isSafeInteger(s.playTimeMs)||s.playTimeMs<0))return false;
+if(!validPhaseTimes(s.phaseTimesMs,s.playTimeMs||0))return false;
 if(s.pageIndex!==undefined&&(!Number.isInteger(s.pageIndex)||s.pageIndex<0||s.pageIndex>(chapterScenes[s.scene].beats?.length||0)))return false;
 if(s.scene==='hub'&&s.slots===0)return false;
 if(['caucus','diplomacy','hearing1','clarify1','hearing2','clarify2','hearing3','night','postUnion','postPress','postStaff','chapterEnd'].includes(s.scene)&& (s.slots!==0||!s.evidence.E02?.verified||!s.evidence.E03?.verified))return false;
 return true;}
-export function decodeSave(raw){try{const data=JSON.parse(raw);if(!validState(data))return null;data.pageIndex??=0;data.playTimeMs??=0;return data;}catch{return null;}}
+export function decodeSave(raw){try{const data=JSON.parse(raw);if(!validState(data))return null;data.pageIndex??=0;data.playTimeMs??=0;data.phaseTimesMs??={};return data;}catch{return null;}}
 export function writeSave(storage,slot,state){if(!['auto','1','2','3'].includes(slot)||!validState(state))throw new Error('無效存檔');storage.setItem(SAVE_PREFIX+slot,JSON.stringify(state));}
 export function readSave(storage,slot){if(!['auto','1','2','3'].includes(slot))return null;return decodeSave(storage.getItem(SAVE_PREFIX+slot));}
