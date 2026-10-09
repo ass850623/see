@@ -1,1 +1,11 @@
-{"name":"mist-islands-rpg","version":"0.1.0","private":true,"scripts":{"start":"node server.mjs","test":"node --test"}}
+{
+  "name": "mist-islands-rpg",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test",
+    "playtest": "node scripts/chapter-playtest.mjs",
+    "playtest:report": "node scripts/chapter-playtest.mjs --write"
+  }
+}
