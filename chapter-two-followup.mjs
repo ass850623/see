@@ -1,3 +1,4 @@
+import {deliveryScenes,validDelivery} from './chapter-two-delivery.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
 export const followupScenes={
  c02Followup:{place:'第二章 · 辦公室 · 追蹤回訪桌',speaker:'林予澄',role:'幕僚長',portrait:'aide',
@@ -16,11 +17,11 @@ export const followupScenes={
  beats:['海寧把收入證明、替代文件與個案資格寫成三個標題。「我們可以把一般問題問清楚，但哪一份材料能用，要由承辦核對。把文件種類問到，不是替某個人通過審核。」','她把空白便條遞給你，不把任何家庭的資料附上。「下一次回覆要讓人知道自己可以做什麼，也要讓人知道還有哪一項沒答案。只說再等等，跟直接保證會過，都會讓人找不到路。」'],
  text:'下一步如何留下可用的回覆？補件清單只涵蓋已知項目；替代文件仍需承辦確認，個案審核與撥款都未完成。',choices:[c('checklist','提供已知補件清單，標註替代文件仍待確認。','c02Followup',{c02BarrierNext:'checklist'}),c('window','送出一般替代文件詢問，保留待回覆欄位。','c02Followup',{c02BarrierNext:'window'})]},
  c02FollowupEnd:{place:'第二章回訪 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'原卷調閱申請與救助文件卡點已留下追蹤紀錄。申請回執不代表原卷已取得，流程回覆不代表個案核定。後續文件交付、替代文件正式答覆與個案結果尚未開放。',choices:[]}
+ text:'原卷調閱申請與救助文件卡點已留下追蹤紀錄。申請回執不代表原卷已取得，流程回覆不代表個案核定。可接續文件交付核對與正式窗口回覆；個案結果仍待追蹤。',choices:[]}
 };
 export function followupOptions(s){return [!s.flags.c02FileDisposition&&c('files','提交原卷調閱申請。','c02FileRequest'),!s.flags.c02BarrierNext&&c('barrier','回訪救助文件卡點。','c02ReliefReturn')].filter(Boolean);}
 export function followupSummary(s){const f=s.flags;return [
- {title:'原卷調閱申請',status:f.c02FileDisposition?(f.c02FileDisposition==='narrow'?'修正申請已送 · 受理待確認':f.c02FileScope==='full'?'申請已收件 · 範圍待釐清':'版本申請已受理 · 原卷未交付'):f.c02FileScope?'申請處理中':'尚未申請',detail:f.c02FileDisposition?(f.c02FileDisposition==='narrow'?'已補送版本紀錄範圍，保留原申請與修正紀錄。':'已保存本次範圍的收件紀錄。')+'附件與原卷尚未取得；沒有新增公開授權。':'需釐清版本紀錄或完整卷宗的調閱範圍。'},
+ {title:'原卷調閱申請',status:f.c02FileDisposition?(f.c02FileDisposition==='narrow'?'修正申請已送 · 受理待確認':f.c02FileScope==='full'?'申請已收件 · 範圍待釐清':'版本申請已受理 · 原卷未交付'):f.c02FileScope?'申請處理中':'尚未申請',detail:f.c02FileDisposition?(f.c02FileDisposition==='narrow'?'已補送版本紀錄範圍，保留原申請與修正紀錄。':'已保存本次範圍的收件紀錄。')+(f.c02DeliveryStarted?'前輪申請時附件與原卷尚未取得；後續交付範圍見最新紀錄。':'附件與原卷尚未取得；沒有新增公開授權。'):'需釐清版本紀錄或完整卷宗的調閱範圍。'},
  {title:'救助卡點回訪',status:f.c02BarrierNext?(f.c02BarrierNext==='checklist'?'已知補件路徑已說明 · 個案未審':'替代文件詢問已送 · 答覆待收'):f.c02ReliefContact?'回訪中':'尚未回訪',detail:f.c02BarrierNext?(f.c02BarrierNext==='checklist'?'已提供已知文件清單，替代文件另標未確認。':'已送一般文件問題至正式承辦，沒有附個人申請資料。')+'沒有代判資格或保證撥款。':'需處理收入證明與替代文件的一般問題；個人資料由當事人直接交承辦。'}
  ];}
 export function followupReaction(s){if(!s.flags.c02FollowupStarted)return '';const f=s.flags;
@@ -32,8 +33,9 @@ export function followupReaction(s){if(!s.flags.c02FollowupStarted)return '';con
  if(s.scene==='c02FollowupEnd')return followupSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';
 }
 export function validFollowup(s){const f=s.flags,keys=['c02FollowupStarted','c02FileScope','c02FileDisposition','c02ReliefContact','c02BarrierNext'];
- if(!f.c02FollowupStarted)return !keys.some(k=>f[k]!==undefined)&&!followupScenes[s.scene];
- if(f.c02FollowupStarted!==true||!followupScenes[s.scene]||!f.c02SourceNext||!f.c02ReliefNext)return false;
+ if(!validDelivery(s))return false;
+ if(!f.c02FollowupStarted)return !keys.some(k=>f[k]!==undefined)&&!followupScenes[s.scene]&&!f.c02DeliveryStarted;
+ if(f.c02FollowupStarted!==true||(!followupScenes[s.scene]&&!deliveryScenes[s.scene])||!f.c02SourceNext||!f.c02ReliefNext)return false;
  if(f.c02FileScope!==undefined&&!['versions','full'].includes(f.c02FileScope))return false;
  if(f.c02FileDisposition!==undefined&&(!['keep','narrow'].includes(f.c02FileDisposition)||!f.c02FileScope))return false;
  if(f.c02ReliefContact!==undefined&&!['callback','explain'].includes(f.c02ReliefContact))return false;
