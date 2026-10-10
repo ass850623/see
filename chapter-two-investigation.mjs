@@ -1,3 +1,4 @@
+import {followupScenes,validFollowup} from './chapter-two-followup.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
 export const investigationScenes={
  c02Investigate:{place:'第二章 · 辦公室 · 調查分流桌',speaker:'林予澄',role:'幕僚長',portrait:'aide',
@@ -16,7 +17,7 @@ export const investigationScenes={
  beats:['承辦人提供現行申請路徑與文件種類的說明，提醒停航影響不等於所有申請都符合資格。船員與周邊工作者須依各自適用的方案確認；審核、預算與撥款仍有程序。','海寧在便條上寫下正式窗口，不寫當事人的姓名。「這至少讓人知道該去哪裡問。但拿到流程不是拿到補助，回去對等待的人說明時，這句不能漏掉。」'],
  text:'要如何把本次取得的窗口說明用於後續回覆？兩種方式都不替個案判定資格，也不保證領款日期。',choices:[c('referral','提供一般流程與正式窗口，讓當事人自行送件。','c02Investigate',{c02ReliefNext:'referral'}),c('review','先整理卡點與疑問，請承辦確認後再補充回覆。','c02Investigate',{c02ReliefNext:'review'})]},
  c02InvestigationEnd:{place:'第二章調查 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'維護來信與救助窗口的調查紀錄已交回辦公室。原卷、來源身分、個案審核與正式履行仍有待追蹤。這裡是目前第二章原型的暫停點；後續原卷調閱與個案結果尚未開放。',choices:[]}
+ text:'維護來信與救助窗口的調查紀錄已交回辦公室。原卷、來源身分、個案審核與正式履行仍有待追蹤。可接續原卷申請與救助卡點回訪；後續文件交付與個案結果仍待追蹤。',choices:[]}
 };
 export function investigationOptions(s){return [!s.flags.c02SourceNext&&c('source','核對維護來信與受理編號。','c02Letter'),!s.flags.c02ReliefNext&&c('relief','追蹤救助資格與轉介窗口。','c02Relief')].filter(Boolean);}
 export function investigationSummary(s){const f=s.flags;return [
@@ -30,8 +31,9 @@ export function investigationReaction(s){const f=s.flags;if(!f.c02InvestigationS
  if(s.scene==='c02InvestigationEnd')return investigationSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';
 }
 export function validInvestigation(s){const f=s.flags;const keys=['c02InvestigationStarted','c02SourceCheck','c02SourceNext','c02ReliefApproach','c02ReliefNext'];
- if(!f.c02InvestigationStarted)return !keys.some(k=>f[k]!==undefined)&&!investigationScenes[s.scene];
- if(f.c02InvestigationStarted!==true||!investigationScenes[s.scene])return false;
+ if(!validFollowup(s))return false;
+ if(!f.c02InvestigationStarted)return !keys.some(k=>f[k]!==undefined)&&!investigationScenes[s.scene]&&!f.c02FollowupStarted;
+ if(f.c02InvestigationStarted!==true||(!investigationScenes[s.scene]&&!followupScenes[s.scene]))return false;
  if(f.c02SourceCheck!==undefined&&!['independent','relay'].includes(f.c02SourceCheck))return false;
  if(f.c02SourceNext!==undefined&&(!['original','comparison'].includes(f.c02SourceNext)||!f.c02SourceCheck))return false;
  if(f.c02ReliefApproach!==undefined&&!['criteria','barrier'].includes(f.c02ReliefApproach))return false;
