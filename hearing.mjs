@@ -1,3 +1,4 @@
+import {diplomacyReaction} from './diplomacy.mjs';
 import {caucusReaction} from './caucus.mjs';
 const c=(id,text,next,effects={},extra={})=>({id,text,next,effects,...extra});
 export const hearingScenes={
@@ -12,7 +13,7 @@ export const hearingScenes={
  chapterEnd:{place:'第一章 · 案件階段結算',speaker:'沈若川',role:'本土協進黨議員',portrait:'senior',text:'第一章的決策流程已完成。事故責任與政治關聯仍需正式調查；第二章尚未製作。',terminal:true,choices:[]}
 };
 export function chapterResult(state){const f=state.flags;if(f.unsupportedClaim)return {id:'storm',title:'失控的聽證',reason:'你在獲得澄清機會後，仍堅持現有證據不支持的動機或賄賂指控。',aftermath:'危機升高；下一章需要回應指控並修復合作關係。'};if(f.hearingAnswer==='party')return {id:'party',title:'黨團的版本',reason:'你以選擇性說法回應聽證，省略了拖船的失誤。',aftermath:'黨團願意協助協商，工會與公眾仍要求完整說明。'};if(f.hearingAnswer==='timeline'&&['E02','E03'].every(k=>state.evidence[k]?.verified&&state.evidence[k]?.authorized))return {id:'credible',title:'可信的時間線',reason:'你以核實且獲授權的資料還原順序，並保留對政治動機的判斷。',aftermath:'時間線納入紀錄；維護責任與政治關聯仍待正式調查。'};return {id:'pending',title:'未完成的調查',reason:'你保留了未能公開證明的部分，或更正了先前的錯誤指控。',aftermath:'聽證要求補件；你沒有因資料限制而失去繼續調查的機會。'};}
-export function consequences(state){const f=state.flags;const notes=[];const negotiation=caucusReaction(state,'chapterEnd');if(negotiation)notes.push(negotiation);
+export function consequences(state){const f=state.flags;const notes=[];const foreignNegotiation=diplomacyReaction(state,'chapterEnd');if(foreignNegotiation)notes.push(foreignNegotiation);const negotiation=caucusReaction(state,'chapterEnd');if(negotiation)notes.push(negotiation);
 if(f.emergencyBill==='amend')notes.push('管制草案：提出限期、司法審查與公開報告修正；尚未表決。');if(f.emergencyBill==='reject')notes.push('管制草案：反對原案，需另尋跨黨合作。');if(f.emergencyBill==='accept')notes.push('管制草案：接受原案，行政效率與權利疑慮將繼續受到追問。');
 if(f.foreignTerms==='oversight')notes.push('外交合作：受議會監督，待提交公開合作報告。');if(f.foreignTerms==='confidential')notes.push('外交合作：限期保密與閉門審查，公開範圍受到限制。');if(f.foreignTerms==='rescue')notes.push('外交合作：先建立民間救援窗口，調查仍需自行補足。');
 if(f.reliefPromise==='report'||f.safetyPlan==='report')notes.push('待履行：七日內回報檢修與救助進度（第二章追蹤，尚未履行）。');else notes.push('待履行：確認檢修時程與救助轉介結果。');
