@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {newGame,advance} from './engine.mjs';
+import {caucusTopics,answerCaucus,caucusReaction} from './caucus.mjs';
+test('Eight negotiation combinations preserve evidence and record later political costs',()=>{for(const a of caucusTopics[0].choices)for(const b of caucusTopics[1].choices)for(const c of caucusTopics[2].choices){let s={...newGame(),scene:'caucus'};const before=structuredClone(s.evidence);for(const [t,o] of caucusTopics.map((t,i)=>[t,[a,b,c][i]])){s=answerCaucus(s,t.key,o.id);assert.throws(()=>answerCaucus(s,t.key,o.id));}assert.deepEqual(s.evidence,before);assert.equal(s.history.length,3);for(const stance of ['amend','reject','accept']){const n=advance(s,stance);assert.match(caucusReaction(n,'hearing2'),/尚未|待處理/);if(stance==='accept'&&(a.id==='narrow'||b.id==='sunset'))assert.match(caucusReaction(n,'postStaff'),/立場落差/);if(stance==='reject')assert.match(caucusReaction(n,'chapterEnd'),/替代提案/);assert.equal(n.flags.emergencyBill,stance);}}});
+test('Existing saves can skip negotiations; answers cannot be made outside caucus',()=>{const s=newGame();assert.equal(caucusReaction(s,'chapterEnd'),'');assert.throws(()=>answerCaucus(s,'caucusScope','narrow'));assert.equal(advance({...s,scene:'caucus'},'amend').scene,'diplomacy');});
