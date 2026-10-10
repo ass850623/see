@@ -1,8 +1,16 @@
 # 霧海之聲
 
+目標為可於 Steam 發行的 Windows 桌面遊戲。已建立離線桌面包裝與打包流程，目前仍是第一章開發版；不是完整 70 小時作品。詳見 [Steam 發行與桌面開發](docs/steam-release.md)。
+
+```sh
+npm ci
+npm run desktop
+npm run build:win
+```
+
 繁體中文、架空政治題材的視覺小說 RPG 原型。玩家扮演主張本土自主的群島議員，目前包含第一章可玩流程，以及保留的五場事件概念序章。含程式繪製角色立繪、響應式介面與瀏覽器自動存檔。
 
-需要 Node.js 18 或更新版本，無第三方套件。
+開發需要 Node.js 22.12 或更新版本。桌面發行使用 Electron 與 electron-builder；玩家執行打包版不需要 Node.js。
 
 ```sh
 npm start

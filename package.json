@@ -7,6 +7,57 @@
     "test": "node --test",
     "playtest": "node scripts/chapter-playtest.mjs",
     "playtest:report": "node scripts/chapter-playtest.mjs --write",
-    "audit:chapter": "node scripts/chapter-content-audit.mjs"
+    "audit:chapter": "node scripts/chapter-content-audit.mjs",
+    "desktop": "electron .",
+    "build:desktop": "electron-builder --dir",
+    "build:win": "electron-builder --win dir --x64",
+    "test:desktop": "node scripts/desktop-smoke.mjs"
+  },
+  "description": "Fictional political visual novel RPG",
+  "main": "desktop/main.cjs",
+  "author": "Voices of the Mist team",
+  "build": {
+    "appId": "com.mistislands.voices",
+    "productName": "Voices of the Mist",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/main.cjs",
+      "*.mjs",
+      "!*.test.mjs",
+      "game.js",
+      "chapter-ui.js",
+      "index.html",
+      "style.css",
+      "assets/*.png",
+      "assets/ART-CREDITS.md",
+      "package.json"
+    ],
+    "asar": true,
+    "win": {
+      "executableName": "VoicesOfTheMist",
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "signAndEditExecutable": false
+    },
+    "linux": {
+      "target": "dir",
+      "category": "Game"
+    }
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3",
+    "playwright": "^1.64.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

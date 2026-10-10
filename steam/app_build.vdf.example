@@ -1,0 +1,12 @@
+"AppBuild"
+{
+    "AppID" "REPLACE_WITH_APP_ID"
+    "Desc" "Voices of the Mist desktop test build"
+    "BuildOutput" "../steam-build-output"
+    "ContentRoot" "../dist/win-unpacked"
+    "Preview" "1"
+    "Depots"
+    {
+        "REPLACE_WITH_WINDOWS_DEPOT_ID" "depot_build_windows.vdf"
+    }
+}
