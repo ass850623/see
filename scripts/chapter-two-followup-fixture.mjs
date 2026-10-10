@@ -14,3 +14,9 @@ export function deliveryFixture(mode='verified'){
  let s=startSecondChapterDelivery(followupFixture({scope:mode==='missing'?'full':'versions',next:'window'}));
  for(const id of [mode==='missing'?'notice':mode==='held'?'hold':'compare','relay','record'])s=advance(s,id);return s;
 }
+
+import {startSecondChapterPublic,startSecondChapterReception} from '../engine.mjs';
+export function receptionFixture({mode='verified',published=true,caucus='coordinate',focus='boundaries',reporter='limits',conflict='delay'}={}){
+ let s=startSecondChapterPublic(deliveryFixture(mode));for(const id of ['records',mode==='verified'?'versions':'progress',published?'publish':'hold'])s=advance(s,id);
+ s.flags.caucusConflict=conflict;s=startSecondChapterReception(s);for(const id of [caucus,reporter,focus])s=advance(s,id);return s;
+}

@@ -1,5 +1,5 @@
-import {receptionScenes,validReception} from './chapter-two-reception.mjs';
-export {receptionScenes} from './chapter-two-reception.mjs';
+import {proposalScenes,receptionScenes,validReception} from './chapter-two-reception.mjs';
+export {proposalScenes,receptionScenes} from './chapter-two-reception.mjs';
 const c=(id,text,next,flags={},extra={})=>({id,text,next,effects:{flags},...extra});
 export const publicScenes={
  c02SourceInquiry:{place:'辦公室 · 來信來源追問',speaker:'許安禾',role:'港口通訊技師',portrait:'worker',
@@ -33,7 +33,7 @@ ${i.detail}`).join('\n\n');return '';
 export function validPublic(s){const f=s.flags,keys=['c02PublicStarted','c02SourceQuestion','c02PublicDraft','c02PublicDisposition','c02PublishedText'];
  if(!validReception(s))return false;
  if(!f.c02PublicStarted)return !keys.some(k=>f[k]!==undefined)&&!publicScenes[s.scene];
- if(f.c02PublicStarted!==true||(!publicScenes[s.scene]&&!receptionScenes[s.scene])||f.c02DeliveryRecorded!==true)return false;
+ if(f.c02PublicStarted!==true||(!publicScenes[s.scene]&&!receptionScenes[s.scene]&&!proposalScenes[s.scene])||f.c02DeliveryRecorded!==true)return false;
  if(s.scene==='c02SourceInquiry'?f.c02SourceQuestion!==undefined:!['records','pause'].includes(f.c02SourceQuestion))return false;
  const drafted=['c02PublicReview','c02PublicEnd'].includes(s.scene)||f.c02ReceptionStarted;
  if(drafted?!['versions','progress'].includes(f.c02PublicDraft):f.c02PublicDraft!==undefined)return false;

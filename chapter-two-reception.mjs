@@ -1,3 +1,5 @@
+import {proposalScenes,validProposal} from './chapter-two-proposal.mjs';
+export {proposalScenes} from './chapter-two-proposal.mjs';
 const c=(id,text,next,flags={},stats={})=>({id,text,next,effects:{flags,stats}});
 export const receptionScenes={
  c02CaucusReply:{place:'議會 · 黨團協商室',speaker:'周岳',role:'黨團協調人',portrait:'politician',
@@ -10,7 +12,7 @@ export const receptionScenes={
  beats:['予澄把黨團的工作意向與記者的問題放成兩疊。「兩邊都想要下一步，但他們要的不是同一件事。黨團問立場，記者問依據；我們還要回答港口的人。」','她拿出一張空白議程：可以先談新聞查證與調查界線，也可以先談協商人手及分工。只選一個先談，不會取消另一個問題；沒有實際回覆，就不能把提議寫成同意。'],
  text:'下一輪協商先處理哪個分歧？本次只保存議程意向，不新增履行期限或改寫原承諾。',choices:[c('boundaries','先談查證與調查界線，保留人手缺口。','c02ReceptionEnd',{c02NegotiationFocus:'boundaries'}),c('staffing','先談人手與分工，保留發言界線爭議。','c02ReceptionEnd',{c02NegotiationFocus:'staffing'})]},
  c02ReceptionEnd:{place:'第二章協商回應 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'黨團回應、記者聯絡與下一輪議程意向已保存。沒有新增黨團決議、記者背書或正式人員到任；來源與個案仍待追蹤。下一段協商桌上的具體提案尚未開放。',choices:[]}
+ text:'黨團回應、記者聯絡與下一輪議程意向已保存。沒有新增黨團決議、記者背書或正式人員到任；來源與個案仍待追蹤。可接續協商桌上的具體提案與條件取捨。',choices:[]}
 };
 export const reporterPaused=s=>s.flags.reporterSource==='bargain'||s.flags.pressFollowup==='spin';
 export function receptionSummary(s){const f=s.flags;return [
@@ -24,9 +26,10 @@ export function receptionReaction(s){const f=s.flags;
  if(['c02Negotiation','c02ReceptionEnd'].includes(s.scene))return receptionSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';
 }
 export function validReception(s){const f=s.flags,keys=['c02ReceptionStarted','c02CaucusReply','c02ReporterReply','c02NegotiationFocus'];
+ if(!validProposal(s))return false;
  if(!f.c02ReceptionStarted)return !keys.some(k=>f[k]!==undefined)&&!receptionScenes[s.scene];
- if(f.c02ReceptionStarted!==true||!receptionScenes[s.scene]||!['published','held'].includes(f.c02PublicDisposition))return false;
+ if(f.c02ReceptionStarted!==true||(!receptionScenes[s.scene]&&!proposalScenes[s.scene])||!['published','held'].includes(f.c02PublicDisposition))return false;
  if(s.scene==='c02CaucusReply'?f.c02CaucusReply!==undefined:!['separate','coordinate'].includes(f.c02CaucusReply))return false;
- if(['c02Negotiation','c02ReceptionEnd'].includes(s.scene)?!['limits','defer'].includes(f.c02ReporterReply):f.c02ReporterReply!==undefined)return false;
- return s.scene==='c02ReceptionEnd'?['boundaries','staffing'].includes(f.c02NegotiationFocus):f.c02NegotiationFocus===undefined;
+ if((['c02Negotiation','c02ReceptionEnd'].includes(s.scene)||f.c02ProposalStarted)?!['limits','defer'].includes(f.c02ReporterReply):f.c02ReporterReply!==undefined)return false;
+ return s.scene==='c02ReceptionEnd'||f.c02ProposalStarted?['boundaries','staffing'].includes(f.c02NegotiationFocus):f.c02NegotiationFocus===undefined;
 }
