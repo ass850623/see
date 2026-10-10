@@ -23,7 +23,7 @@ try{
   }
   assert.ok(++steps<200);
  }
- assert.equal(hubs,3);assert.ok((await page.locator('#journey-hint').textContent()).includes('第二章尚未開放'));
+ assert.equal(hubs,3);assert.ok((await page.locator('#journey-hint').textContent()).includes('第二章開場原型'));
  const objective=await page.locator('#journey-objective').textContent();await page.reload();await page.locator('#continue-story').click();assert.equal(await page.locator('#journey-objective').textContent(),objective);assert.equal(await page.locator('#main-action-title').textContent(),'章末工具');
  assert.deepEqual(errors,[]);console.log('全章導引、三個調查時段、支線焦點、任務面板、大字級窄視窗與讀檔同步通過');
 }finally{await browser.close();}
