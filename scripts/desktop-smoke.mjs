@@ -10,5 +10,11 @@ const finishReading=async()=>{while(await p.getByRole('button',{name:'繼續閱�
 await finishReading();await p.locator('#chapter-choices button').first().click();await finishReading();await p.locator('#chapter-choices button').first().click();await finishReading();
 await p.getByRole('button',{name:'先補核對，暫不送出回覆。',exact:true}).click();await finishReading();await p.getByRole('button',{name:'保留未安排狀態，列出缺少的確認。',exact:true}).click();
 assert.equal(await p.evaluate(()=>JSON.parse(window.mistDesktop.read('mist-chapter-v1-auto').data).scene),'c02End');await app.close();
-app=await launch();p=await app.firstWindow();await p.locator('#continue-story').click();assert.match(await p.locator('#chapter-text').textContent(),/回覆尚未送出/);assert.equal(await p.locator('#main-action-title').textContent(),'章末工具');await app.close();
-console.log('Packaged desktop: offline protocol, artwork, sandbox, import preview/cancel/write, backup preview, restart recovery and second chapter continuation passed');
+app=await launch();p=await app.firstWindow();await p.locator('#continue-story').click();assert.match(await p.locator('#chapter-text').textContent(),/回覆尚未送出/);assert.equal(await p.locator('#main-action-title').textContent(),'章末工具');
+await p.getByRole('button',{name:'接續第二章調查',exact:true}).click();await finishReading();
+for(const branch of ['source','relief']){
+ await p.getByRole('button',{name:branch==='source'?'核對維護來信與受理編號。':'追蹤救助資格與轉介窗口。',exact:true}).click();await finishReading();await p.locator('#chapter-choices button').first().click();await finishReading();await p.locator('#chapter-choices button').first().click();await finishReading();
+}
+assert.equal(await p.evaluate(()=>JSON.parse(window.mistDesktop.read('mist-chapter-v1-auto').data).scene),'c02InvestigationEnd');await app.close();
+app=await launch();p=await app.firstWindow();await p.locator('#continue-story').click();assert.match(await p.locator('#chapter-text').textContent(),/原卷待調閱/);assert.match(await p.locator('#chapter-text').textContent(),/個案待審/);await app.close();
+console.log('Packaged desktop: offline protocol, artwork, sandbox, import preview/cancel/write, backup preview, restart recovery and second chapter opening and investigation continuation passed');
