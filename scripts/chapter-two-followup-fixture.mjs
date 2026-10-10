@@ -8,3 +8,9 @@ import {startSecondChapterFollowup} from '../engine.mjs';
 export function followupFixture({scope='versions',disposition='keep',contact='callback',next='checklist'}={}){
  let s=startSecondChapterFollowup(investigationFixture(true));for(const id of ['files',scope,disposition,'barrier',contact,next])s=advance(s,id);return s;
 }
+
+import {startSecondChapterDelivery} from '../engine.mjs';
+export function deliveryFixture(mode='verified'){
+ let s=startSecondChapterDelivery(followupFixture({scope:mode==='missing'?'full':'versions',next:'window'}));
+ for(const id of [mode==='missing'?'notice':mode==='held'?'hold':'compare','relay','record'])s=advance(s,id);return s;
+}
