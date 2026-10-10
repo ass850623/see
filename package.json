@@ -9,8 +9,8 @@
     "playtest:report": "node scripts/chapter-playtest.mjs --write",
     "audit:chapter": "node scripts/chapter-content-audit.mjs",
     "desktop": "electron .",
-    "build:desktop": "electron-builder --dir",
-    "build:win": "electron-builder --win dir --x64",
+    "build:desktop": "node scripts/write-build-info.mjs && electron-builder --dir",
+    "build:win": "node scripts/write-build-info.mjs && electron-builder --win dir --x64",
     "test:desktop": "node scripts/desktop-smoke.mjs",
     "package:win": "npm run build:win && node scripts/package-windows-kit.mjs",
     "package:win:kit": "node scripts/package-windows-kit.mjs"
@@ -34,7 +34,8 @@
       "style.css",
       "assets/*.png",
       "assets/ART-CREDITS.md",
-      "package.json"
+      "package.json",
+      "desktop/build-info.json"
     ],
     "asar": true,
     "win": {

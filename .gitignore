@@ -3,3 +3,4 @@ dist/
 *.log
 steam/*.vdf
 steam-build-output/
+desktop/build-info.json
