@@ -1,0 +1,4 @@
+import {decodeSave,validState} from './engine.mjs';
+export const maxSaveBytes=8*1024*1024;
+export function exportSave(state){if(!validState(state))throw new Error('目前存檔無法匯出');return {format:'mist-save-export',formatVersion:1,state:structuredClone(state)};}
+export function importSave(raw){if(typeof raw!=='string'||new TextEncoder().encode(raw).length>maxSaveBytes)throw new Error('檔案超過 8 MB 或無法讀取');let record;try{record=JSON.parse(raw);}catch{throw new Error('檔案不是有效 JSON');}let data;if(record?.format==='mist-save-export'&&record.formatVersion===1)data=JSON.stringify(record.state);else if(record?.formatVersion===1&&/^mist-chapter-v1-(auto|1|2|3)$/.test(record.key)&&typeof record.data==='string')data=record.data;else throw new Error('不是支援的遊戲存檔；試玩紀錄不能當作存檔');const state=decodeSave(data);if(!state)throw new Error('存檔版本或內容不相容，未寫入任何欄位');return state;}
