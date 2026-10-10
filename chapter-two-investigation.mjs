@@ -1,4 +1,4 @@
-import {roundScenes,executionScenes,proposalScenes,receptionScenes,publicScenes} from './chapter-two-public.mjs';
+import {accessScenes,roundScenes,executionScenes,proposalScenes,receptionScenes,publicScenes} from './chapter-two-public.mjs';
 import {deliveryScenes} from './chapter-two-delivery.mjs';
 import {followupScenes,validFollowup} from './chapter-two-followup.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
@@ -35,7 +35,7 @@ export function investigationReaction(s){const f=s.flags;if(!f.c02InvestigationS
 export function validInvestigation(s){const f=s.flags;const keys=['c02InvestigationStarted','c02SourceCheck','c02SourceNext','c02ReliefApproach','c02ReliefNext'];
  if(!validFollowup(s))return false;
  if(!f.c02InvestigationStarted)return !keys.some(k=>f[k]!==undefined)&&!investigationScenes[s.scene]&&!f.c02FollowupStarted;
- if(f.c02InvestigationStarted!==true||(!investigationScenes[s.scene]&&!followupScenes[s.scene]&&!deliveryScenes[s.scene]&&!publicScenes[s.scene]&&!receptionScenes[s.scene]&&!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene]))return false;
+ if(f.c02InvestigationStarted!==true||(!investigationScenes[s.scene]&&!followupScenes[s.scene]&&!deliveryScenes[s.scene]&&!publicScenes[s.scene]&&!receptionScenes[s.scene]&&!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene]&&!accessScenes[s.scene]))return false;
  if(f.c02SourceCheck!==undefined&&!['independent','relay'].includes(f.c02SourceCheck))return false;
  if(f.c02SourceNext!==undefined&&(!['original','comparison'].includes(f.c02SourceNext)||!f.c02SourceCheck))return false;
  if(f.c02ReliefApproach!==undefined&&!['criteria','barrier'].includes(f.c02ReliefApproach))return false;

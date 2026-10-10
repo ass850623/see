@@ -16,8 +16,8 @@ export function deliveryFixture(mode='verified'){
 }
 
 import {startSecondChapterPublic,startSecondChapterReception} from '../engine.mjs';
-export function receptionFixture({mode='verified',published=true,caucus='coordinate',focus='boundaries',reporter='limits',conflict='delay'}={}){
- let s=startSecondChapterPublic(deliveryFixture(mode));for(const id of ['records',mode==='verified'?'versions':'progress',published?'publish':'hold'])s=advance(s,id);
+export function receptionFixture({mode='verified',published=true,caucus='coordinate',focus='boundaries',reporter='limits',conflict='delay',inquiry='records'}={}){
+ let s=startSecondChapterPublic(deliveryFixture(mode));for(const id of [inquiry,mode==='verified'?'versions':'progress',published?'publish':'hold'])s=advance(s,id);
  s.flags.caucusConflict=conflict;s=startSecondChapterReception(s);for(const id of [caucus,reporter,focus])s=advance(s,id);return s;
 }
 
@@ -29,4 +29,9 @@ export function proposalFixture({boundary='questions',staff='independent',accept
 import {startSecondChapterExecution} from '../engine.mjs';
 export function executionFixture({action='sort',list='internal',next='files',...previous}={}){
  let s=startSecondChapterExecution(proposalFixture(previous));for(const id of [action,list,next])s=advance(s,id);return s;
+}
+
+import {startSecondChapterRound} from '../engine.mjs';
+export function roundFixture({file='public',staffReply='transfer',...previous}={}){
+ let s=startSecondChapterRound(executionFixture(previous));for(const branch of s.flags.c02WorkNext==='files'?['files','staff']:['staff','files']){s=advance(s,branch);s=advance(s,branch==='files'?file:staffReply);}return advance(s,'record');
 }

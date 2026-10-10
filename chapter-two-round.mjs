@@ -1,3 +1,5 @@
+import {accessScenes,validAccess} from './chapter-two-access.mjs';
+export {accessScenes} from './chapter-two-access.mjs';
 const c=(id,text,next,flags={},evidence={})=>({id,text,next,effects:{flags,evidence}});
 export const roundScenes={
  c02RoundDesk:{place:'辦公室 · 第二輪追蹤桌',speaker:'林予澄',role:'幕僚長',portrait:'aide',
@@ -13,7 +15,7 @@ export const roundScenes={
  beats:['予澄把 E08 放進證據簿的程序資料欄，再把人手結果記入任務簿。她把先前的名額確認與這次到任分成兩筆，不覆蓋原來的回報。','「今天不只是再說待確認了。」她說。「但是公開答覆、申請送出、輪值到任各有範圍。我們仍欠原卷與來源的答案，別讓新進展替未完成的工作蓋章。」'],
  text:'核對本輪結果並保存。程序答覆不是原卷交付，人手安排不是正式調查決議或原承諾完成。',choices:[c('record','保存第二輪結果，保留原期限與未決事項。','c02RoundEnd',{c02RoundRecorded:true})]},
  c02RoundEnd:{place:'第二章第二輪處理 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'調閱範圍答覆、申請方向與人手或修訂結果已保存。來源、非公開原卷與個案結果仍須追蹤。下一段原卷限制的交涉與來源回信尚未開放。',choices:[]}
+ text:'調閱範圍答覆、申請方向與人手或修訂結果已保存。來源、非公開原卷與個案結果仍須追蹤。可接續原卷限制的交涉與來源回信。',choices:[]}
 };
 export const canOnboard=s=>s.flags.c02ProposalOutcome==='limited'&&s.flags.c02StaffTerm==='joint'&&s.flags.c02WorkAction==='confirm';
 export function staffRoundOptions(s){const f=s.flags;
@@ -28,14 +30,14 @@ export function roundSummary(s){const f=s.flags;return [
  {title:'本輪人手與修訂',status:{active:'輪值已到任 · 僅公開索引與窗口',decline:'到任未接受 · 辦公室自行整理',request:'本輪名額已確認 · 人選與到任待定',defer:'共同席未啟用',clarify:'修訂爭點已回覆 · 仍未簽署',retain:'本方修訂保留 · 未回覆新條件',transfer:'窗口轉介已接受 · 沒有新到任人手',solo:'維持原聯絡方式 · 沒有新到任人手'}[f.c02RoundStaff]||'本輪待處理',detail:'未交付私人來源、個案資料或未發布草稿；利益調查、原期限與記者合作分歧保留。'}
  ];}
 export function roundReaction(s){const f=s.flags;if(s.scene==='c02RoundDesk')return '本輪先處理：'+(f.c02WorkNext==='files'?'文件與原卷範圍。':'人手與修訂條件。');if(s.scene==='c02RoundFiles')return s.evidence.E07?'先前公開版 E07 的核實狀態保留；E08 不替代附件比對或來源核對。':'先前尚未取得 E07；這次 E08 只回答調閱程序，不補出缺少的附件。';if(s.scene==='c02RoundStaff')return f.c02ProposalOutcome==='counter'?(f.c02WorkAction==='resend'?'窗口已看過收到的修訂稿，請你確認爭點；尚未同意或簽署。':'本方尚未送回修訂，周岳提出條件確認問題；沒有取得未交付的私人草稿。'):canOnboard(s)?'周岳帶來已確認名額的輪值助理，可在你確認範圍後完成到任登記；拒絕則不啟用。':f.c02StaffTerm==='joint'?'上一輪未啟用共同席，本輪只提供名額確認，尚無到任人員。':'依自行整理約定，本輪提供正式窗口轉介，不增派新到任人手。';if(['c02RoundReport','c02RoundEnd'].includes(s.scene))return roundSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';}
-export function validRound(s){const f=s.flags,keys=['c02RoundStarted','c02RoundFiles','c02RoundStaff','c02RoundRecorded'];if(!f.c02RoundStarted)return !keys.some(k=>f[k]!==undefined)&&!roundScenes[s.scene]&&!s.evidence.E08;
- if(f.c02RoundStarted!==true||!roundScenes[s.scene]||!['files','staff'].includes(f.c02WorkNext))return false;
+export function validRound(s){const f=s.flags,keys=['c02RoundStarted','c02RoundFiles','c02RoundStaff','c02RoundRecorded'];if(!validAccess(s))return false;if(!f.c02RoundStarted)return !keys.some(k=>f[k]!==undefined)&&!roundScenes[s.scene]&&!s.evidence.E08;
+ if(f.c02RoundStarted!==true||(!roundScenes[s.scene]&&!accessScenes[s.scene])||!['files','staff'].includes(f.c02WorkNext))return false;
  if(f.c02RoundFiles!==undefined&&!['public','reasons'].includes(f.c02RoundFiles))return false;
  if(f.c02RoundStaff!==undefined&&!staffRoundOptions(s).some(o=>o.effects.flags.c02RoundStaff===f.c02RoundStaff))return false;
- const both=Boolean(f.c02RoundFiles&&f.c02RoundStaff),report=['c02RoundReport','c02RoundEnd'].includes(s.scene);if(report?!both:both)return false;
+ const both=Boolean(f.c02RoundFiles&&f.c02RoundStaff),report=['c02RoundReport','c02RoundEnd'].includes(s.scene)||f.c02AccessStarted;if(report?!both:both)return false;
  if(s.scene==='c02RoundFiles'&&(f.c02RoundFiles||(f.c02WorkNext==='staff'&&!f.c02RoundStaff)))return false;
  if(s.scene==='c02RoundStaff'&&(f.c02RoundStaff||(f.c02WorkNext==='files'&&!f.c02RoundFiles)))return false;
  if(f.c02WorkNext==='files'&&f.c02RoundStaff&&!f.c02RoundFiles||f.c02WorkNext==='staff'&&f.c02RoundFiles&&!f.c02RoundStaff)return false;
  const e=s.evidence.E08;if(f.c02RoundFiles?!(e?.verified===true&&e?.authorized===true):e!==undefined)return false;
- return s.scene==='c02RoundEnd'?f.c02RoundRecorded===true:f.c02RoundRecorded===undefined;
+ return s.scene==='c02RoundEnd'||f.c02AccessStarted?f.c02RoundRecorded===true:f.c02RoundRecorded===undefined;
 }

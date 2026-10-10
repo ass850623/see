@@ -1,5 +1,6 @@
 import {chapterPhases,chapterPhase} from './chapter-meta.mjs';
 const objectives={
+ c02AccessTalk:'依申請方向處理原卷限制。',c02SourceReply:'保存私人回信並決定是否獨立查核。',c02LeadReview:'區分程序進展與來源線索。',c02AccessEnd:'查看原卷交涉與來源回信結果。',
  c02RoundDesk:'依上輪方向處理文件與人手。',c02RoundFiles:'閱讀程序答覆並選申請方向。',c02RoundStaff:'依簽署與名額處理本輪人手。',c02RoundReport:'核對第二輪結果與未決事項。',c02RoundEnd:'查看程序答覆及人手結果。',
  c02ExecutionDesk:'依簽署與人手條件開始工作。',c02WorkList:'審閱查證清單，依條款保存或發布。',c02FirstReport:'閱讀首輪實際回報並選下一步。',c02ExecutionEnd:'查看工作進展與未完成事項。',
  c02ProposalDesk:'依上輪焦點逐項協商。',c02BoundaryTerms:'選擇查證與發言條款。',c02StaffTerms:'選擇人手與調閱條件。',c02TermsReview:'審閱完整條件，簽署或保留修訂。',c02ProposalEnd:'查看工作約定與待執行事項。',

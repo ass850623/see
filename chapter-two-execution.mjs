@@ -1,5 +1,5 @@
-import {roundScenes,validRound} from './chapter-two-round.mjs';
-export {roundScenes} from './chapter-two-round.mjs';
+import {accessScenes,roundScenes,validRound} from './chapter-two-round.mjs';
+export {accessScenes,roundScenes} from './chapter-two-round.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
 export const executionScenes={
  c02ExecutionDesk:{place:'辦公室 · 工作約定執行桌',speaker:'林予澄',role:'幕僚長',portrait:'aide',
@@ -33,7 +33,7 @@ export function executionReaction(s){const f=s.flags;
 export function validExecution(s){const f=s.flags,keys=['c02ExecutionStarted','c02WorkAction','c02ListDisposition','c02SentQuestions','c02WorkNext'];
  if(!validRound(s))return false;
  if(!f.c02ExecutionStarted)return !keys.some(k=>f[k]!==undefined)&&!executionScenes[s.scene];
- if(f.c02ExecutionStarted!==true||(!executionScenes[s.scene]&&!roundScenes[s.scene])||!['limited','counter'].includes(f.c02ProposalOutcome))return false;
+ if(f.c02ExecutionStarted!==true||(!executionScenes[s.scene]&&!roundScenes[s.scene]&&!accessScenes[s.scene])||!['limited','counter'].includes(f.c02ProposalOutcome))return false;
  const actions=f.c02ProposalOutcome==='counter'?['own','resend']:f.c02StaffTerm==='joint'?['confirm','wait']:['sort'];
  if(s.scene==='c02ExecutionDesk'?f.c02WorkAction!==undefined:!actions.includes(f.c02WorkAction))return false;
  const listed=['c02FirstReport','c02ExecutionEnd'].includes(s.scene)||f.c02RoundStarted;

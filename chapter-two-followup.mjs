@@ -1,4 +1,4 @@
-import {roundScenes,executionScenes,proposalScenes,receptionScenes,publicScenes} from './chapter-two-public.mjs';
+import {accessScenes,roundScenes,executionScenes,proposalScenes,receptionScenes,publicScenes} from './chapter-two-public.mjs';
 import {deliveryScenes,validDelivery} from './chapter-two-delivery.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
 export const followupScenes={
@@ -36,7 +36,7 @@ export function followupReaction(s){if(!s.flags.c02FollowupStarted)return '';con
 export function validFollowup(s){const f=s.flags,keys=['c02FollowupStarted','c02FileScope','c02FileDisposition','c02ReliefContact','c02BarrierNext'];
  if(!validDelivery(s))return false;
  if(!f.c02FollowupStarted)return !keys.some(k=>f[k]!==undefined)&&!followupScenes[s.scene]&&!f.c02DeliveryStarted;
- if(f.c02FollowupStarted!==true||(!followupScenes[s.scene]&&!deliveryScenes[s.scene]&&!publicScenes[s.scene]&&!receptionScenes[s.scene]&&!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene])||!f.c02SourceNext||!f.c02ReliefNext)return false;
+ if(f.c02FollowupStarted!==true||(!followupScenes[s.scene]&&!deliveryScenes[s.scene]&&!publicScenes[s.scene]&&!receptionScenes[s.scene]&&!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene]&&!accessScenes[s.scene])||!f.c02SourceNext||!f.c02ReliefNext)return false;
  if(f.c02FileScope!==undefined&&!['versions','full'].includes(f.c02FileScope))return false;
  if(f.c02FileDisposition!==undefined&&(!['keep','narrow'].includes(f.c02FileDisposition)||!f.c02FileScope))return false;
  if(f.c02ReliefContact!==undefined&&!['callback','explain'].includes(f.c02ReliefContact))return false;
