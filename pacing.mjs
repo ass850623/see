@@ -12,4 +12,4 @@ if(label==='討論後續回覆')return f.meetingReply?'已作答 · 可回看':'
 if(label==='發布與回覆排程')return f.followupConfirmed?'已確認 · 可查看':'尚未確認';
 if(label==='閱讀章末交接')return f.handoffPriority?'已選優先事項 · 可回看':'尚未完成交接';
 return '可選';}
-export function optionalActivity(label){return ['港口走訪：三個人的現場','深入訪談：作證與保護','比對維護合約與報修單','深入採訪：來源與更正','比對原始時間線','夜間補件桌','發布與回覆排程','討論後續回覆','閱讀章末交接','逐條協商 · 管制與利益衝突','逐項協商 · 援助與自主','聽證前答問準備','回應答問稿追問'].includes(label)||label.startsWith('聽證追問 · ');}
+export function optionalActivity(label){return ['章末未決事項總覽','港口走訪：三個人的現場','深入訪談：作證與保護','比對維護合約與報修單','深入採訪：來源與更正','比對原始時間線','夜間補件桌','發布與回覆排程','討論後續回覆','閱讀章末交接','逐條協商 · 管制與利益衝突','逐項協商 · 援助與自主','聽證前答問準備','回應答問稿追問'].includes(label)||label.startsWith('聽證追問 · ');}
