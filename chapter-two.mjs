@@ -1,3 +1,4 @@
+import {executionScenes,executionReaction} from './chapter-two-execution.mjs';
 import {proposalScenes,proposalReaction} from './chapter-two-proposal.mjs';
 import {receptionScenes,receptionReaction} from './chapter-two-reception.mjs';
 import {publicScenes,publicReaction} from './chapter-two-public.mjs';
@@ -13,6 +14,7 @@ export const chapterTwoScenes={
  ...publicScenes,
  ...receptionScenes,
  ...proposalScenes,
+ ...executionScenes,
  c02Morning:{place:'第二章 · 辦公室 · 第 2 日 08:10',speaker:'林予澄',role:'幕僚長',portrait:'aide',
  beats:['雨停了一個鐘頭，窗沿還滴著水。你走進辦公室時，予澄已經把昨天的聽證逐字稿和公共信箱分開放好。桌上沒有新的勝利標語，只有幾張寫著日期的便條。','她把手機螢幕轉向你。昨天的片段仍在流傳，有人只留下你的承諾，有人把更正剪掉。那不是今天能一鍵清除的東西；受影響的人等的是回覆，不是另一支漂亮影片。','「我們先處理一件。」予澄說，「昨天答應了什麼，今天知道了什麼，都要分開寫。若主管單位還沒回信，就不能用我們已經聯絡過代替事情已經辦好。」'],
  text:'今天先開一張承諾追蹤單。昨天留下的期限、資料授權和分工都保留；你可以先查看承諾簿，再決定這個早晨的第一件工作。',choices:[c('open','打開今日追蹤桌。','c02Board')]},
@@ -30,6 +32,7 @@ export const chapterTwoScenes={
 };
 export function secondChapterOptions(s){const items=commitments(s);return (items.length?items:[{id:'investigation',title:'確認事故調查窗口與尚缺資料'}]).map(item=>c(item.id,'先跟進：'+item.title,'c02Contact',{c02Focus:item.id}));}
 export function secondChapterReaction(s){if(s.chapter!=='c02')return '';const f=s.flags;
+ if(f.c02ExecutionStarted)return executionReaction(s);
  if(f.c02ProposalStarted)return proposalReaction(s);
  if(f.c02ReceptionStarted)return receptionReaction(s);
  if(f.c02PublicStarted)return publicReaction(s);

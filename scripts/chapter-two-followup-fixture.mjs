@@ -20,3 +20,8 @@ export function receptionFixture({mode='verified',published=true,caucus='coordin
  let s=startSecondChapterPublic(deliveryFixture(mode));for(const id of ['records',mode==='verified'?'versions':'progress',published?'publish':'hold'])s=advance(s,id);
  s.flags.caucusConflict=conflict;s=startSecondChapterReception(s);for(const id of [caucus,reporter,focus])s=advance(s,id);return s;
 }
+
+import {startSecondChapterProposal} from '../engine.mjs';
+export function proposalFixture({boundary='questions',staff='independent',accepted=true,...previous}={}){
+ let s=startSecondChapterProposal(receptionFixture(previous));for(const branch of s.flags.c02NegotiationFocus==='boundaries'?['boundary','staff']:['staff','boundary']){s=advance(s,branch);s=advance(s,branch==='boundary'?boundary:staff);}return advance(s,accepted?'accept':'revise');
+}

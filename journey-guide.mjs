@@ -1,5 +1,6 @@
 import {chapterPhases,chapterPhase} from './chapter-meta.mjs';
 const objectives={
+ c02ExecutionDesk:'依簽署與人手條件開始工作。',c02WorkList:'審閱查證清單，依條款保存或發布。',c02FirstReport:'閱讀首輪實際回報並選下一步。',c02ExecutionEnd:'查看工作進展與未完成事項。',
  c02ProposalDesk:'依上輪焦點逐項協商。',c02BoundaryTerms:'選擇查證與發言條款。',c02StaffTerms:'選擇人手與調閱條件。',c02TermsReview:'審閱完整條件，簽署或保留修訂。',c02ProposalEnd:'查看工作約定與待執行事項。',
  c02CaucusReply:'回應黨團對下一輪發言的要求。',c02ReporterReply:'處理記者追問與資料界線。',c02Negotiation:'選擇下輪協商的議程焦點。',c02ReceptionEnd:'查看回應與協商意向紀錄。',
  c02SourceInquiry:'選擇來信來源的追問方式。',c02PublicDraft:'依核實與授權範圍準備補充說明。',c02PublicReview:'審閱草稿，選擇發布或暫存。',c02PublicEnd:'查看來源聯絡與本次發言紀錄。',

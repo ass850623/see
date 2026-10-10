@@ -1,3 +1,5 @@
+import {executionScenes,validExecution} from './chapter-two-execution.mjs';
+export {executionScenes} from './chapter-two-execution.mjs';
 const c=(id,text,next,flags={},stats={})=>({id,text,next,effects:{flags,stats}});
 export const proposalScenes={
  c02ProposalDesk:{place:'議會 · 第二輪協商桌',speaker:'周岳',role:'黨團協調人',portrait:'politician',
@@ -13,7 +15,7 @@ export const proposalScenes={
  beats:['予澄逐行念出剛才選定的文字，周岳對照自己的修訂。「這些工作方法我可以簽。但不能寫成全黨團已決議，也不能替記者同意。」他把簽名欄留給你。','你也可以帶回修訂，要求下一輪再談。那會保留自己的條件，但今天沒有雙方約定；人手缺口與發言爭議仍列在工作板上。'],
  text:'審閱完整條件後，接受本次有限工作約定，或保留修訂草案。簽署只確認這份工作方法，不代表執行完畢。',choices:[]},
  c02ProposalEnd:{place:'第二章具體提案 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'本次提案、條件與審閱結果已保存。非公開原卷、來源身分、利益調查與個案審核仍待處理；原期限沒有延後。下一段工作約定的執行與首輪回報尚未開放。',choices:[]}
+ text:'本次提案、條件與審閱結果已保存。非公開原卷、來源身分、利益調查與個案審核仍待處理；原期限沒有延後。可接續工作約定執行與首輪回報。',choices:[]}
 };
 export const canJointDesk=s=>s.flags.c02CaucusReply==='coordinate'&&s.flags.caucusConflict!=='recuse';
 export function proposalOptions(s){const f=s.flags;
@@ -36,14 +38,15 @@ export function proposalReaction(s){const f=s.flags;
  if(['c02TermsReview','c02ProposalEnd'].includes(s.scene))return proposalSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';
 }
 export function validProposal(s){const f=s.flags,keys=['c02ProposalStarted','c02BoundaryTerm','c02StaffTerm','c02ProposalOutcome'];
+ if(!validExecution(s))return false;
  if(!f.c02ProposalStarted)return !keys.some(k=>f[k]!==undefined)&&!proposalScenes[s.scene];
- if(f.c02ProposalStarted!==true||!proposalScenes[s.scene]||!['boundaries','staffing'].includes(f.c02NegotiationFocus))return false;
+ if(f.c02ProposalStarted!==true||(!proposalScenes[s.scene]&&!executionScenes[s.scene])||!['boundaries','staffing'].includes(f.c02NegotiationFocus))return false;
  if(f.c02BoundaryTerm!==undefined&&!['questions','closed'].includes(f.c02BoundaryTerm))return false;
  if(f.c02StaffTerm!==undefined&&(!['independent','joint'].includes(f.c02StaffTerm)||(f.c02StaffTerm==='joint'&&!canJointDesk(s))))return false;
  const both=Boolean(f.c02BoundaryTerm&&f.c02StaffTerm),first=f.c02NegotiationFocus==='boundaries'?'boundary':'staff';
- if(['c02TermsReview','c02ProposalEnd'].includes(s.scene)?!both:both)return false;
+ if((['c02TermsReview','c02ProposalEnd'].includes(s.scene)||f.c02ExecutionStarted)?!both:both)return false;
  if(s.scene==='c02BoundaryTerms'&&(f.c02BoundaryTerm||(first==='staff'&&!f.c02StaffTerm)))return false;
  if(s.scene==='c02StaffTerms'&&(f.c02StaffTerm||(first==='boundary'&&!f.c02BoundaryTerm)))return false;
  if(first==='boundary'&&f.c02StaffTerm&&!f.c02BoundaryTerm||first==='staff'&&f.c02BoundaryTerm&&!f.c02StaffTerm)return false;
- return s.scene==='c02ProposalEnd'?['limited','counter'].includes(f.c02ProposalOutcome):f.c02ProposalOutcome===undefined;
+ return s.scene==='c02ProposalEnd'||f.c02ExecutionStarted?['limited','counter'].includes(f.c02ProposalOutcome):f.c02ProposalOutcome===undefined;
 }
