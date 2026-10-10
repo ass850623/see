@@ -11,7 +11,9 @@
     "desktop": "electron .",
     "build:desktop": "electron-builder --dir",
     "build:win": "electron-builder --win dir --x64",
-    "test:desktop": "node scripts/desktop-smoke.mjs"
+    "test:desktop": "node scripts/desktop-smoke.mjs",
+    "package:win": "npm run build:win && node scripts/package-windows-kit.mjs",
+    "package:win:kit": "node scripts/package-windows-kit.mjs"
   },
   "description": "Fictional political visual novel RPG",
   "main": "desktop/main.cjs",
@@ -53,9 +55,11 @@
     }
   },
   "devDependencies": {
+    "@electron/asar": "^4.3.1",
     "electron": "^44.7.0",
     "electron-builder": "^26.15.3",
-    "playwright": "^1.64.0"
+    "playwright": "^1.64.0",
+    "yazl": "^3.3.1"
   },
   "engines": {
     "node": ">=22.12.0"
