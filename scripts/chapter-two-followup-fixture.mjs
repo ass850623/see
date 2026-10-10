@@ -25,3 +25,8 @@ import {startSecondChapterProposal} from '../engine.mjs';
 export function proposalFixture({boundary='questions',staff='independent',accepted=true,...previous}={}){
  let s=startSecondChapterProposal(receptionFixture(previous));for(const branch of s.flags.c02NegotiationFocus==='boundaries'?['boundary','staff']:['staff','boundary']){s=advance(s,branch);s=advance(s,branch==='boundary'?boundary:staff);}return advance(s,accepted?'accept':'revise');
 }
+
+import {startSecondChapterExecution} from '../engine.mjs';
+export function executionFixture({action='sort',list='internal',next='files',...previous}={}){
+ let s=startSecondChapterExecution(proposalFixture(previous));for(const id of [action,list,next])s=advance(s,id);return s;
+}

@@ -4,6 +4,7 @@ import {narrativeBeats} from './narrative.mjs';
 import {hearingScenes} from './hearing.mjs';
 const choice=(id,text,next,effects={})=>({id,text,next,effects});
 export const evidenceCatalog={
+ E08:{title:'調閱範圍書面答覆（公開版）',source:'正式受理窗口公開版程序答覆',summary:'已核對文號，說明公開附件與非公開原卷的申請範圍；不包含原卷或事故原因，不確認來源身分。'},
  E07:{title:'公開版附件清單與版本紀錄',source:'正式受理窗口交付的公開版',summary:'列有初版與修訂版的附件編號；可公開引用本清單，不含非公開原卷，不能證明竄改或來源身分。'},
  E01:{title:'十秒流傳影片',source:'社群轉傳',summary:'只呈現碰撞末段；來源未明，不能判定政治動機。'},
  E02:{title:'工會原始航行紀錄',source:'陳海寧提供的原始檔',summary:'記錄商船偏航與拖船轉向；必須與通訊紀錄核對。'},
