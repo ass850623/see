@@ -1,3 +1,5 @@
+import {receptionScenes,validReception} from './chapter-two-reception.mjs';
+export {receptionScenes} from './chapter-two-reception.mjs';
 const c=(id,text,next,flags={},extra={})=>({id,text,next,effects:{flags},...extra});
 export const publicScenes={
  c02SourceInquiry:{place:'辦公室 · 來信來源追問',speaker:'許安禾',role:'港口通訊技師',portrait:'worker',
@@ -10,7 +12,7 @@ export const publicScenes={
  beats:['予澄把草稿和資料使用範圍再對一次。寄件者姓名、聯絡方式、個人申請資料與非公開原卷都沒有附在稿件裡。','「要發布，可以。」她說。「但這份只是一則新的補充說明。昨天待辦的正式更正、完整聽證紀錄與原承諾，仍然各有自己的工作，不能全部畫成完成。」'],
  text:'審閱以下草稿，再決定發布或暫存。發布會把本段文字記入發言紀錄；暫存不會出現在公開紀錄中。',choices:[]},
  c02PublicEnd:{place:'第二章公開回覆 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'來源追問與本次補充說明已保存。寄件者身分、非公開原卷與個案結果仍待追蹤；本次說明沒有取代原正式更正或完整聽證紀錄。下一段黨團與記者的回應尚未開放。',choices:[]}
+ text:'來源追問與本次補充說明已保存。寄件者身分、非公開原卷與個案結果仍待追蹤；本次說明沒有取代原正式更正或完整聽證紀錄。可接續黨團與記者回應及協商分歧。',choices:[]}
 };
 export function publicDraftText(s){
  const basis=s.flags.c02PublicDraft==='versions'?'已核對的公開版 E07 列有初版與修訂版附件編號；來信截圖只顯示初版。這能確認版本差異，不能證明竄改或寄件者身分。':'本輪已完成申請與回覆紀錄整理；'+(s.evidence.E07?'收到公開版清單，'+(s.evidence.E07.verified?'版本核對結果已記錄。':'尚未完成與來信截圖的核對。'):'完整卷宗範圍仍待釐清，尚未取得附件清單。');
@@ -29,12 +31,13 @@ export function publicReaction(s){if(!s.flags.c02PublicStarted)return '';
 ${i.detail}`).join('\n\n');return '';
 }
 export function validPublic(s){const f=s.flags,keys=['c02PublicStarted','c02SourceQuestion','c02PublicDraft','c02PublicDisposition','c02PublishedText'];
+ if(!validReception(s))return false;
  if(!f.c02PublicStarted)return !keys.some(k=>f[k]!==undefined)&&!publicScenes[s.scene];
- if(f.c02PublicStarted!==true||!publicScenes[s.scene]||f.c02DeliveryRecorded!==true)return false;
+ if(f.c02PublicStarted!==true||(!publicScenes[s.scene]&&!receptionScenes[s.scene])||f.c02DeliveryRecorded!==true)return false;
  if(s.scene==='c02SourceInquiry'?f.c02SourceQuestion!==undefined:!['records','pause'].includes(f.c02SourceQuestion))return false;
- const drafted=['c02PublicReview','c02PublicEnd'].includes(s.scene);
+ const drafted=['c02PublicReview','c02PublicEnd'].includes(s.scene)||f.c02ReceptionStarted;
  if(drafted?!['versions','progress'].includes(f.c02PublicDraft):f.c02PublicDraft!==undefined)return false;
  if(f.c02PublicDraft==='versions'&&(!s.evidence.E07?.verified||!s.evidence.E07?.authorized))return false;
  if(f.c02PublicDisposition==='published'?f.c02PublishedText!==publicDraftText(s):f.c02PublishedText!==undefined)return false;
- return s.scene==='c02PublicEnd'?['published','held'].includes(f.c02PublicDisposition):f.c02PublicDisposition===undefined;
+ return s.scene==='c02PublicEnd'||f.c02ReceptionStarted?['published','held'].includes(f.c02PublicDisposition):f.c02PublicDisposition===undefined;
 }

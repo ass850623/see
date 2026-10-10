@@ -1,4 +1,4 @@
-import {publicScenes,validPublic} from './chapter-two-public.mjs';
+import {receptionScenes,publicScenes,validPublic} from './chapter-two-public.mjs';
 const c=(id,text,next,flags={},evidence={})=>({id,text,next,effects:{flags,evidence}});
 export const deliveryScenes={
  c02Delivery:{place:'第二章 · 辦公室 · 文件交付桌',speaker:'許安禾',role:'港口通訊技師',portrait:'worker',
@@ -31,7 +31,7 @@ export function deliveryReaction(s){const f=s.flags;if(!validPublic(s))return fa
 export function validDelivery(s){const f=s.flags,keys=['c02DeliveryStarted','c02DocumentResult','c02FormalReply','c02DeliveryRecorded'];
  if(!validPublic(s))return false;
  if(!f.c02DeliveryStarted)return !keys.some(k=>f[k]!==undefined)&&!deliveryScenes[s.scene]&&!s.evidence.E07&&!f.c02PublicStarted;
- if(f.c02DeliveryStarted!==true||(!deliveryScenes[s.scene]&&!publicScenes[s.scene])||!f.c02FileDisposition||!f.c02BarrierNext)return false;
+ if(f.c02DeliveryStarted!==true||(!deliveryScenes[s.scene]&&!publicScenes[s.scene]&&!receptionScenes[s.scene])||!f.c02FileDisposition||!f.c02BarrierNext)return false;
  const result=f.c02DocumentResult,focused=s.scene!=='c02Delivery',answered=['c02DeliveryReview','c02DeliveryEnd'].includes(s.scene)||f.c02PublicStarted;
  if(focused?!(canReceiveVersions(s)?['compared','held']:['resubmitted','notice']).includes(result):result!==undefined)return false;
  if(answered?!['relayed','clarify'].includes(f.c02FormalReply):f.c02FormalReply!==undefined)return false;

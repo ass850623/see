@@ -78,3 +78,9 @@ export function startSecondChapterPublic(state){
  const next=structuredClone(state);next.scene='c02SourceInquiry';next.pageIndex=0;next.flags.c02PublicStarted=true;
  next.history.push({scene:'c02DeliveryEnd',speaker:'林予澄',text:chapterScenes.c02DeliveryEnd.text+'\n'+secondChapterReaction(state),choice:'接續來源追問與公開補充說明。'});return next;
 }
+
+export function startSecondChapterReception(state){
+ if(!validState(state)||state.chapter!=='c02'||state.scene!=='c02PublicEnd')throw new Error('請先完成補充說明審閱');
+ const next=structuredClone(state);next.scene='c02CaucusReply';next.pageIndex=0;next.flags.c02ReceptionStarted=true;
+ next.history.push({scene:'c02PublicEnd',speaker:'林予澄',text:chapterScenes.c02PublicEnd.text+'\n'+secondChapterReaction(state),choice:'接續黨團與記者回應。'});return next;
+}

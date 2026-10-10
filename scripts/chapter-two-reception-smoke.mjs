@@ -1,0 +1,14 @@
+import {chromium} from 'playwright';import assert from 'node:assert/strict';import {deliveryFixture} from './chapter-two-followup-fixture.mjs';import {advance,startSecondChapterPublic} from '../engine.mjs';
+const browser=await chromium.launch({executablePath:'/usr/bin/chromium',args:['--no-sandbox']});
+try{for(const published of [true,false]){
+ const context=await browser.newContext({viewport:{width:390,height:844}}),p=await context.newPage();p.setDefaultTimeout(8000);const errors=[];p.on('pageerror',e=>errors.push(e.message));
+ let old=startSecondChapterPublic(deliveryFixture(published?'verified':'missing'));for(const id of ['pause',published?'versions':'progress',published?'publish':'hold'])old=advance(old,id);old.flags.reporterSource='bargain';
+ await p.addInitScript(s=>{if(!localStorage.getItem('mist-chapter-v1-auto'))localStorage.setItem('mist-chapter-v1-auto',JSON.stringify(s));},old);
+ await p.goto(process.env.MIST_TEST_URL||'http://127.0.0.1:3000');await p.locator('#continue-story').click();await p.getByRole('button',{name:'接續黨團與記者回應',exact:true}).click();
+ const read=async()=>{while(await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).count())await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).click();};await read();assert.match(await p.locator('#chapter-text').textContent(),published?/公開版本差異/:/未發布草稿沒有交給黨團/);
+ await p.getByRole('button',{name:published?'要求分開列明資料界線與各方立場。':'交黨團整合下一輪答問，要求保留未確認事項。',exact:true}).click();await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).click();await p.reload();await p.locator('#continue-story').click();await read();assert.match(await p.locator('#chapter-text').textContent(),/原專訪合作仍暫停/);
+ await p.getByRole('button',{name:published?'回覆可回答的界線，保留記者獨立追問。':'暫緩新增答問，先補資料核對。',exact:true}).click();await read();await p.getByRole('button',{name:published?'先談查證與調查界線，保留人手缺口。':'先談人手與分工，保留發言界線爭議。',exact:true}).click();
+ await p.getByRole('button',{name:'任務簿',exact:true}).click();assert.match(await p.locator('#panel-content').textContent(),/回應與協商分歧/);assert.match(await p.locator('#panel-content').textContent(),/原專訪合作仍暫停/);await p.keyboard.press('Escape');
+ await p.getByRole('button',{name:'補充說明紀錄',exact:true}).click();assert.match(await p.locator('#panel-content').textContent(),published?/故事第 2 日/:/沒有本輪已發布/);await p.keyboard.press('Escape');
+ await p.getByRole('button',{name:'遊戲設定',exact:true}).click();await p.getByRole('button',{name:'最大',exact:true}).click();await p.keyboard.press('Escape');assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await p.reload();await p.locator('#continue-story').click();assert.match(await p.locator('#chapter-location').textContent(),/協商回應/);assert.deepEqual(errors,[]);await context.close();
+}console.log('發布與暫存兩路、專訪分歧、協商紀錄、途中讀檔與窄視窗通過');}finally{await browser.close();}
