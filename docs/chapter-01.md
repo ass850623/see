@@ -165,3 +165,9 @@ harbor-cafe.png 用於 journalist，diplomacy-room.png 用於 diplomacy，parlia
 ### 主角、議員與外交代表美術
 
 沈若川立繪用於 checkpoint 與 chapterEnd，延續主視覺造型；周岳用於 caucus、hearing2、clarify2；艾琳用於 diplomacy。caucus-room.png 為黨團專用場所背景。每人目前一種表情，港口廣播仍為原型示意圖。只補充美術，不改變劇情、數值或存檔。
+
+### 聽證追問與證據交鋒
+
+三輪聽證各加兩頁現場敘事，兩處澄清各加一頁。hearing1／hearing2／hearing3 可開啟對應追問，每題兩種回答、一次作答；hearing2 需已取得核實 E04。主線選項仍可直接推進，追問沒有額外行程消耗。
+
+方法不透明、誤把驗收當修復及越權保證補助均由夜談和夜間會議追蹤。越權保證追加更正待辦，不取代原救助進度報告。沒有授權的資料仍不可出示；追問不能更改主線案件結果，原正式回答仍留在紀錄。
