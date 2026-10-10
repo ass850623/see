@@ -1,5 +1,5 @@
-import {readingScenes,validReading} from './chapter-two-reading.mjs';
-export {readingScenes} from './chapter-two-reading.mjs';
+import {inquiryScenes,readingScenes,validReading} from './chapter-two-reading.mjs';
+export {inquiryScenes,readingScenes} from './chapter-two-reading.mjs';
 const c=(id,text,next,flags={},evidence={})=>({id,text,next,effects:{flags,evidence}});
 const reply={E09:{verified:false,authorized:false}};
 export const accessScenes={
@@ -23,7 +23,7 @@ export function accessSummary(s){const f=s.flags;return [
  ];}
 export function accessReaction(s){const f=s.flags;if(s.scene==='c02AccessTalk')return f.c02RoundFiles==='public'?'公開範圍補申請後，窗口提出可談受限閱覽方式，沒有交付原卷。':'分項限制說明指出值班與個人資料須另審；你可以覆核理由或拆列需求。';if(s.scene==='c02SourceReply')return f.c02SourceQuestion==='records'?'這封回信延續先前的日期追問，仍只補充自述與公開索引線索；沒有身分或原件佐證。':'先前追問已暫停，這次是來源主動補充；收到回信不代表恢復具名作證或取得公開同意。';if(['c02LeadReview','c02AccessEnd'].includes(s.scene))return accessSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';}
 export function validAccess(s){const f=s.flags,keys=['c02AccessStarted','c02AccessAction','c02SourceFollowup','c02AccessNext'];if(!validReading(s))return false;if(!f.c02AccessStarted)return !keys.some(k=>f[k]!==undefined)&&!accessScenes[s.scene]&&!s.evidence.E09;
- if(f.c02AccessStarted!==true||(!accessScenes[s.scene]&&!readingScenes[s.scene])||f.c02RoundRecorded!==true)return false;
+ if(f.c02AccessStarted!==true||(!accessScenes[s.scene]&&!readingScenes[s.scene]&&!inquiryScenes[s.scene])||f.c02RoundRecorded!==true)return false;
  const acted=s.scene!=='c02AccessTalk';if(acted?!accessOptions(s).some(o=>o.effects.flags.c02AccessAction===f.c02AccessAction):f.c02AccessAction!==undefined)return false;
  const e=s.evidence.E09;if(acted?!(e?.verified===false&&e?.authorized===false):e!==undefined)return false;
  if((['c02LeadReview','c02AccessEnd'].includes(s.scene)||f.c02ReadingStarted)?!['check','hold'].includes(f.c02SourceFollowup):f.c02SourceFollowup!==undefined)return false;

@@ -1,5 +1,6 @@
 import {chapterPhases,chapterPhase} from './chapter-meta.mjs';
 const objectives={
+ c02InternalAsk:'依閱覽結果選內部追問。',c02QuestionDraft:'分開事實與待查問題。',c02QuestionReview:'審閱內部問題稿，安排核對或暫存。',c02InquiryEnd:'查看問題稿與未取得的回覆。',
  c02ReadingDesk:'依上輪重點處理閱覽與日期。',c02RestrictedRead:'核對有效閱覽或限制範圍。',c02DateCrosscheck:'分清收件與修訂登錄日期。',c02ReadingReport:'整理可支持的結果與使用界線。',c02ReadingEnd:'查看受限閱覽與日期結果。',
  c02AccessTalk:'依申請方向處理原卷限制。',c02SourceReply:'保存私人回信並決定是否獨立查核。',c02LeadReview:'區分程序進展與來源線索。',c02AccessEnd:'查看原卷交涉與來源回信結果。',
  c02RoundDesk:'依上輪方向處理文件與人手。',c02RoundFiles:'閱讀程序答覆並選申請方向。',c02RoundStaff:'依簽署與名額處理本輪人手。',c02RoundReport:'核對第二輪結果與未決事項。',c02RoundEnd:'查看程序答覆及人手結果。',

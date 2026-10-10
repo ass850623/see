@@ -40,3 +40,8 @@ import {startSecondChapterAccess} from '../engine.mjs';
 export function accessFixture({accessAction='onsite',sourceCheck='check',accessNext='access',...previous}={}){
  let s=startSecondChapterAccess(roundFixture(previous));for(const id of [accessAction,sourceCheck,accessNext])s=advance(s,id);return s;
 }
+
+import {startSecondChapterReading} from '../engine.mjs';
+export function readingFixture({readingChoice='read',dateChoice='compare',...previous}={}){
+ let s=startSecondChapterReading(accessFixture(previous));for(const branch of s.flags.c02AccessNext==='access'?['reading','dates']:['dates','reading']){s=advance(s,branch);s=advance(s,branch==='reading'?readingChoice:dateChoice);}return advance(s,'record');
+}

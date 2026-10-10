@@ -1,5 +1,5 @@
-import {readingScenes,accessScenes,roundScenes,executionScenes,proposalScenes,validProposal} from './chapter-two-proposal.mjs';
-export {readingScenes,accessScenes,roundScenes,executionScenes,proposalScenes} from './chapter-two-proposal.mjs';
+import {inquiryScenes,readingScenes,accessScenes,roundScenes,executionScenes,proposalScenes,validProposal} from './chapter-two-proposal.mjs';
+export {inquiryScenes,readingScenes,accessScenes,roundScenes,executionScenes,proposalScenes} from './chapter-two-proposal.mjs';
 const c=(id,text,next,flags={},stats={})=>({id,text,next,effects:{flags,stats}});
 export const receptionScenes={
  c02CaucusReply:{place:'議會 · 黨團協商室',speaker:'周岳',role:'黨團協調人',portrait:'politician',
@@ -28,7 +28,7 @@ export function receptionReaction(s){const f=s.flags;
 export function validReception(s){const f=s.flags,keys=['c02ReceptionStarted','c02CaucusReply','c02ReporterReply','c02NegotiationFocus'];
  if(!validProposal(s))return false;
  if(!f.c02ReceptionStarted)return !keys.some(k=>f[k]!==undefined)&&!receptionScenes[s.scene];
- if(f.c02ReceptionStarted!==true||(!receptionScenes[s.scene]&&!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene]&&!accessScenes[s.scene]&&!readingScenes[s.scene])||!['published','held'].includes(f.c02PublicDisposition))return false;
+ if(f.c02ReceptionStarted!==true||(!receptionScenes[s.scene]&&!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene]&&!accessScenes[s.scene]&&!readingScenes[s.scene]&&!inquiryScenes[s.scene])||!['published','held'].includes(f.c02PublicDisposition))return false;
  if(s.scene==='c02CaucusReply'?f.c02CaucusReply!==undefined:!['separate','coordinate'].includes(f.c02CaucusReply))return false;
  if((['c02Negotiation','c02ReceptionEnd'].includes(s.scene)||f.c02ProposalStarted)?!['limits','defer'].includes(f.c02ReporterReply):f.c02ReporterReply!==undefined)return false;
  return s.scene==='c02ReceptionEnd'||f.c02ProposalStarted?['boundaries','staffing'].includes(f.c02NegotiationFocus):f.c02NegotiationFocus===undefined;
