@@ -1,5 +1,5 @@
-import {accessScenes,roundScenes,executionScenes,validExecution} from './chapter-two-execution.mjs';
-export {accessScenes,roundScenes,executionScenes} from './chapter-two-execution.mjs';
+import {readingScenes,accessScenes,roundScenes,executionScenes,validExecution} from './chapter-two-execution.mjs';
+export {readingScenes,accessScenes,roundScenes,executionScenes} from './chapter-two-execution.mjs';
 const c=(id,text,next,flags={},stats={})=>({id,text,next,effects:{flags,stats}});
 export const proposalScenes={
  c02ProposalDesk:{place:'議會 · 第二輪協商桌',speaker:'周岳',role:'黨團協調人',portrait:'politician',
@@ -40,7 +40,7 @@ export function proposalReaction(s){const f=s.flags;
 export function validProposal(s){const f=s.flags,keys=['c02ProposalStarted','c02BoundaryTerm','c02StaffTerm','c02ProposalOutcome'];
  if(!validExecution(s))return false;
  if(!f.c02ProposalStarted)return !keys.some(k=>f[k]!==undefined)&&!proposalScenes[s.scene];
- if(f.c02ProposalStarted!==true||(!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene]&&!accessScenes[s.scene])||!['boundaries','staffing'].includes(f.c02NegotiationFocus))return false;
+ if(f.c02ProposalStarted!==true||(!proposalScenes[s.scene]&&!executionScenes[s.scene]&&!roundScenes[s.scene]&&!accessScenes[s.scene]&&!readingScenes[s.scene])||!['boundaries','staffing'].includes(f.c02NegotiationFocus))return false;
  if(f.c02BoundaryTerm!==undefined&&!['questions','closed'].includes(f.c02BoundaryTerm))return false;
  if(f.c02StaffTerm!==undefined&&(!['independent','joint'].includes(f.c02StaffTerm)||(f.c02StaffTerm==='joint'&&!canJointDesk(s))))return false;
  const both=Boolean(f.c02BoundaryTerm&&f.c02StaffTerm),first=f.c02NegotiationFocus==='boundaries'?'boundary':'staff';

@@ -1,5 +1,5 @@
-import {accessScenes,validAccess} from './chapter-two-access.mjs';
-export {accessScenes} from './chapter-two-access.mjs';
+import {readingScenes,accessScenes,validAccess} from './chapter-two-access.mjs';
+export {readingScenes,accessScenes} from './chapter-two-access.mjs';
 const c=(id,text,next,flags={},evidence={})=>({id,text,next,effects:{flags,evidence}});
 export const roundScenes={
  c02RoundDesk:{place:'辦公室 · 第二輪追蹤桌',speaker:'林予澄',role:'幕僚長',portrait:'aide',
@@ -31,7 +31,7 @@ export function roundSummary(s){const f=s.flags;return [
  ];}
 export function roundReaction(s){const f=s.flags;if(s.scene==='c02RoundDesk')return '本輪先處理：'+(f.c02WorkNext==='files'?'文件與原卷範圍。':'人手與修訂條件。');if(s.scene==='c02RoundFiles')return s.evidence.E07?'先前公開版 E07 的核實狀態保留；E08 不替代附件比對或來源核對。':'先前尚未取得 E07；這次 E08 只回答調閱程序，不補出缺少的附件。';if(s.scene==='c02RoundStaff')return f.c02ProposalOutcome==='counter'?(f.c02WorkAction==='resend'?'窗口已看過收到的修訂稿，請你確認爭點；尚未同意或簽署。':'本方尚未送回修訂，周岳提出條件確認問題；沒有取得未交付的私人草稿。'):canOnboard(s)?'周岳帶來已確認名額的輪值助理，可在你確認範圍後完成到任登記；拒絕則不啟用。':f.c02StaffTerm==='joint'?'上一輪未啟用共同席，本輪只提供名額確認，尚無到任人員。':'依自行整理約定，本輪提供正式窗口轉介，不增派新到任人手。';if(['c02RoundReport','c02RoundEnd'].includes(s.scene))return roundSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';}
 export function validRound(s){const f=s.flags,keys=['c02RoundStarted','c02RoundFiles','c02RoundStaff','c02RoundRecorded'];if(!validAccess(s))return false;if(!f.c02RoundStarted)return !keys.some(k=>f[k]!==undefined)&&!roundScenes[s.scene]&&!s.evidence.E08;
- if(f.c02RoundStarted!==true||(!roundScenes[s.scene]&&!accessScenes[s.scene])||!['files','staff'].includes(f.c02WorkNext))return false;
+ if(f.c02RoundStarted!==true||(!roundScenes[s.scene]&&!accessScenes[s.scene]&&!readingScenes[s.scene])||!['files','staff'].includes(f.c02WorkNext))return false;
  if(f.c02RoundFiles!==undefined&&!['public','reasons'].includes(f.c02RoundFiles))return false;
  if(f.c02RoundStaff!==undefined&&!staffRoundOptions(s).some(o=>o.effects.flags.c02RoundStaff===f.c02RoundStaff))return false;
  const both=Boolean(f.c02RoundFiles&&f.c02RoundStaff),report=['c02RoundReport','c02RoundEnd'].includes(s.scene)||f.c02AccessStarted;if(report?!both:both)return false;

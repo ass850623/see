@@ -35,3 +35,8 @@ import {startSecondChapterRound} from '../engine.mjs';
 export function roundFixture({file='public',staffReply='transfer',...previous}={}){
  let s=startSecondChapterRound(executionFixture(previous));for(const branch of s.flags.c02WorkNext==='files'?['files','staff']:['staff','files']){s=advance(s,branch);s=advance(s,branch==='files'?file:staffReply);}return advance(s,'record');
 }
+
+import {startSecondChapterAccess} from '../engine.mjs';
+export function accessFixture({accessAction='onsite',sourceCheck='check',accessNext='access',...previous}={}){
+ let s=startSecondChapterAccess(roundFixture(previous));for(const id of [accessAction,sourceCheck,accessNext])s=advance(s,id);return s;
+}

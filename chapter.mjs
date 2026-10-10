@@ -4,6 +4,7 @@ import {narrativeBeats} from './narrative.mjs';
 import {hearingScenes} from './hearing.mjs';
 const choice=(id,text,next,effects={})=>({id,text,next,effects});
 export const evidenceCatalog={
+ E10:{title:'受限閱覽工作筆記',source:'窗口准許抄記的流程欄位，現場核對',summary:'記錄收件、移交與修訂登錄流程，不含值班姓名或原因認定；沒有原卷複本，未獲公開授權。'},
  E09:{title:'來源補充回信（私人）',source:'原來信聯絡管道再次寄來的私人補充',summary:'自述受理日期與公開索引線索，沒有原件或身分佐證；來源未核實、未獲公開授權。核對公開日期不等於核實本信。'},
  E08:{title:'調閱範圍書面答覆（公開版）',source:'正式受理窗口公開版程序答覆',summary:'已核對文號，說明公開附件與非公開原卷的申請範圍；不包含原卷或事故原因，不確認來源身分。'},
  E07:{title:'公開版附件清單與版本紀錄',source:'正式受理窗口交付的公開版',summary:'列有初版與修訂版的附件編號；可公開引用本清單，不含非公開原卷，不能證明竄改或來源身分。'},
