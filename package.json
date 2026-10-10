@@ -6,6 +6,7 @@
     "start": "node server.mjs",
     "test": "node --test",
     "playtest": "node scripts/chapter-playtest.mjs",
-    "playtest:report": "node scripts/chapter-playtest.mjs --write"
+    "playtest:report": "node scripts/chapter-playtest.mjs --write",
+    "audit:chapter": "node scripts/chapter-content-audit.mjs"
   }
 }
