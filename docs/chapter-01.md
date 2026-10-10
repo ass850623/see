@@ -177,3 +177,9 @@ harbor-cafe.png 用於 journalist，diplomacy-room.png 用於 diplomacy，parlia
 night 與 postStaff 可整理方法、維護及救助稿，僅列出聽證追問中的 authority、closed、guarantee 問題。每份三段說明、兩種整理方式；錯誤稿為 review，可修正，完整稿為 ready，不能重複取得效果。沒有數值獎勵，不改變證據授權、事故結論或原聽證發言。
 
 chapterEnd 僅閱讀稿件成果，不再編修。救助更正承諾在 ready 時顯示稿件已備妥、尚未發布／聯絡，狀態仍待履行。舊存檔沒有追問問題時不憑空新增補件。
+
+### 工會與記者的外部審閱
+
+先在 night 補件桌備妥稿件，postUnion 由海寧審閱，postPress 由知言審閱。每位對每份稿件可選 incorporate／reserve，一次作答；納入限制或保存異議均寫入稿件附註、存檔與對話紀錄。不得把會員文件視為政治背書，也不以更正稿換取友善報導。
+
+沒有備妥稿件時不提供外部審閱選項；在 postStaff 才備妥時，較早回訪不會被虛構為已審閱。專訪暫停、公開授權、原聽證回答及待履行承諾保持原狀。章末仍可查閱各方意見，但不能補做審閱。
