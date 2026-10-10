@@ -161,3 +161,7 @@ maintenance-room.png 接入 technician，呈現雨天通訊維護室、工具與
 ### 咖啡店、代表處與議會走廊
 
 harbor-cafe.png 用於 journalist，diplomacy-room.png 用於 diplomacy，parliament-corridor.png 用於 checkpoint。場所保持劇本原設定，不把黨團會議室套用為走廊。周岳、艾琳及主角仍為示意圖，角色多表情亦未完成。此次只增加美術，不改動劇情、時長或存檔 ID。
+
+### 主角、議員與外交代表美術
+
+沈若川立繪用於 checkpoint 與 chapterEnd，延續主視覺造型；周岳用於 caucus、hearing2、clarify2；艾琳用於 diplomacy。caucus-room.png 為黨團專用場所背景。每人目前一種表情，港口廣播仍為原型示意圖。只補充美術，不改變劇情、數值或存檔。
