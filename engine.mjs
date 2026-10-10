@@ -22,6 +22,8 @@ if(!Object.keys(initialStats).every(k=>Number.isFinite(s.stats[k])&&s.stats[k]>=
 if(!Number.isInteger(s.slots)||s.slots<0||s.slots>3||new Set(s.visited).size!==s.visited.length||s.visited.length!==3-s.slots||!s.visited.every(k=>visits.some(v=>v.id===k)))return false;
 if(!Object.keys(taskCatalog).every(k=>['pending','active','complete','missed'].includes(s.tasks[k])))return false;
 if(!Object.entries(s.evidence).every(([k,v])=>evidenceCatalog[k]&&obj(v)&&typeof v.verified==='boolean'&&typeof v.authorized==='boolean'))return false;
+if(s.flags.handoffPage!==undefined&&!['0','1','2','3','4','5'].includes(s.flags.handoffPage))return false;
+if(s.flags.handoffPriority!==undefined&&(!['source','relief'].includes(s.flags.handoffPriority)||s.flags.handoffPage!=='5'))return false;
 if(!validFollowupPlan(s))return false;
 if(!validStaffFlags(s.flags))return false;
 if(!Object.values(s.flags).every(v=>typeof v==='string'||typeof v==='boolean'))return false;
