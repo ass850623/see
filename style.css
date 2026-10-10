@@ -11,3 +11,5 @@
 #chapter-activities{margin-top:1.5rem;border-top:1px solid #536477;padding-top:1rem}#chapter-activities h3{margin:.3rem 0}.activity-row{display:flex;align-items:center;gap:.75rem;margin:.5rem 0;flex-wrap:wrap}.activity-row span{font-size:.85rem;color:#b9ccd9}#chapter-activities details{margin-top:1rem}#chapter-activities summary{cursor:pointer}#chapter-activities p{white-space:pre-line}
 
 #panel-content form label{display:block;margin:1rem 0}#panel-content form input,#panel-content form textarea,#panel-content form select{display:block;width:100%;box-sizing:border-box;margin-top:.4rem;padding:.6rem;background:#172a38;color:#f0f5fa;border:1px solid #708695;border-radius:.3rem;font:inherit}
+
+#chapter-text,#chapter-note,#panel-content p{font-size:calc(1rem * var(--dialogue-scale,1));line-height:1.8}.high-contrast .dialogue{background:#07131f!important;color:#fff}.high-contrast #case-panel{background:#07131f;color:#fff}

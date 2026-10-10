@@ -20,7 +20,12 @@ Windows 完整發行資料夾為 `dist/win-unpacked`，執行檔為 `VoicesOfThe
 
 ## 存檔
 
-桌面資料固定保存在 Electron appData 下的 `voices-of-the-mist` 資料夾，Windows 通常位於 `%APPDATA%\voices-of-the-mist`。當前存檔仍使用 Chromium localStorage，保留自動與三個手動欄位。新桌面版不會自動讀取瀏覽器網頁版的存檔；兩者屬不同來源與資料目錄。未實作存檔匯入匯出、遷移、備份或 Steam Cloud；Steam Cloud 不應直接同步整個 Chromium profile，後續先做獨立且具版本的存檔檔案。
+桌面資料固定保存在 Electron appData 下的 `voices-of-the-mist/saves` 資料夾，Windows 通常位於 `%APPDATA%\voices-of-the-mist\saves`。正式第一章每個欄位保存為獨立、帶版本的 JSON envelope；內容仍使用既有 schemaVersion 1，先驗證後寫入暫存檔再 rename。上一次有效資料保存為 `.bak`，主檔損壞時讀取有效備份並提示。損壞原檔讀取時不改寫；後續保存前將其另存 `.corrupt-時間戳`。主檔與備份均損壞時提示錯誤，不拿舊瀏覽器資料覆蓋。
+
+首次升級會把同一桌面來源內有效的 localStorage 欄位遷移至空白檔案欄位，原資料保留；已有檔案優先，無效或損壞檔案不自動遷移覆寫。網頁瀏覽器屬另一來源，不會自動匯入。概念序章與試玩回饋目前仍存於 localStorage，正式存檔與遊戲設定使用獨立檔案。尚未實作手動匯入匯出或 Steam Cloud；後續 Cloud 只考慮正式 saves 目錄的有效檔案，不同步整個 Chromium profile。
+
+設定介面可在主畫面或遊玩中開啟，提供三種對話字級、高對比文字底色及桌面全螢幕操作。設定獨立保存，不隨讀檔回退。尚無音訊，因此沒有音量控制。Tab 與 Enter 使用原生按鈕鍵盤操作；全螢幕與中文輸入法仍待 Windows 實機確認。
+
 
 ## Steamworks 銜接
 
@@ -39,4 +44,4 @@ Windows 完整發行資料夾為 `dist/win-unpacked`，執行檔為 `VoicesOfThe
 - 素材與商店：核對所有圖片、字型、音樂與聲音的發行權利；目前生成美術須按 Steam 內容問卷如實填寫預生成 AI 素材使用情況。製作 capsule、截圖、預告片與準確的內容描述。
 - 平台測試：Windows 10/11 支援版本、低配設備、重啟及更新存檔、下載與桌面路徑、鍵盤與中文輸入法；未承諾控制器或 Steam Deck 支援。
 
-本輪驗證：Windows x64 與 Linux 發行資料夾均成功建置；Linux 打包版的離線圖片、渲染隔離、存檔與重開續玩通過。54 項遊戲測試及章節內容整合檢查通過。Windows 實機、Steam 上傳與完整內容均未驗收。
+本輪驗證：Windows x64 與 Linux 發行資料夾均成功建置；Linux 打包版的離線圖片、渲染隔離、存檔與重開續玩通過。56 項遊戲測試及章節內容整合檢查通過。Windows 實機、Steam 上傳與完整內容均未驗收。

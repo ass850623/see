@@ -23,7 +23,7 @@
       "output": "dist"
     },
     "files": [
-      "desktop/main.cjs",
+      "desktop/*.cjs",
       "*.mjs",
       "!*.test.mjs",
       "game.js",
