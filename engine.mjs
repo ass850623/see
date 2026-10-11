@@ -204,3 +204,9 @@ export function startThirdChapterConfirmation(state){
  const next=structuredClone(state);next.scene='c03ConfirmationDesk';next.pageIndex=0;next.flags.c03ConfirmationStarted=true;next.note='外方回函、國內未決與限定安排另存，原提案與案件紀錄保留。';
  next.history.push({scene:'c03ReceptionEnd',speaker:'林予澄',text:chapterScenes.c03ReceptionEnd.text+'\n'+thirdChapterReaction(state),choice:'接續外方確認與國內未決。'});return next;
 }
+
+export function startThirdChapterExecution(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03ConfirmationEnd')throw new Error('請先保存外方確認與國內未決');
+ const next=structuredClone(state);next.scene='c03ExecutionDesk';next.pageIndex=0;next.flags.c03ExecutionStarted=true;next.note='故事第 4 日開始，方法執行與國內後續另存，原邀請、公開原文與期限保留。';
+ next.history.push({scene:'c03ConfirmationEnd',speaker:'林予澄',text:chapterScenes.c03ConfirmationEnd.text+'\n'+thirdChapterReaction(state),choice:'接續方法執行與國內後續。'});return next;
+}

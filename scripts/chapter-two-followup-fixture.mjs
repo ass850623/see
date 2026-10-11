@@ -105,3 +105,8 @@ import {startThirdChapterReception} from '../engine.mjs';
 export function thirdReceptionFixture({pressApproach='bounds',caucusApproach='agenda',partner='west',foreignDecision='continue',receptionNext='terms',...previous}={}){
  let s=startThirdChapterReception(thirdRoundFixture(previous));for(const id of [pressApproach,caucusApproach,partner,foreignDecision,receptionNext])s=advance(s,id);return s;
 }
+
+import {startThirdChapterConfirmation} from '../engine.mjs';
+export function thirdConfirmationFixture({termsAction='request',domesticAction='follow',termsOutcome='method',confirmationNext='meeting',...previous}={}){
+ let s=startThirdChapterConfirmation(thirdReceptionFixture(previous));for(const id of [termsAction,'record',domesticAction,termsOutcome,confirmationNext])s=advance(s,id);return s;
+}
