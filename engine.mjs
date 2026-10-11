@@ -252,3 +252,9 @@ export function startThirdChapterDaySeven(state){
  const next=structuredClone(state);next.scene='c03DaySevenDesk';next.pageIndex=0;next.flags.c03DaySevenStarted=true;next.note='故事第 7 日實際安排與本版答覆另存，舊公開原文、授權與期限保留。';
  next.history.push({scene:'c03HandlingEnd',speaker:'林予澄',text:chapterScenes.c03HandlingEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第 7 日安排與書面答覆準備。'});return next;
 }
+
+export function startThirdChapterDeadline(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03DaySevenEnd')throw new Error('請先完成第 7 日安排與書面答覆準備');
+ const next=structuredClone(state);next.scene='c03DeadlineDesk';next.pageIndex=0;next.flags.c03DeadlineStarted=true;next.note='答覆追蹤與內部期限工作表另存，原承諾日期與狀態保留。';
+ next.history.push({scene:'c03DaySevenEnd',speaker:'林予澄',text:chapterScenes.c03DaySevenEnd.text+'\n'+thirdChapterReaction(state),choice:'接續答覆追蹤與期限前整理。'});return next;
+}

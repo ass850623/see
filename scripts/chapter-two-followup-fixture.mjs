@@ -131,3 +131,6 @@ export function thirdScopeFixture({scopeAction='supplement',councilPlan='procedu
 
 import {startThirdChapterHandling} from '../engine.mjs';
 export function thirdHandlingFixture({handling='receive',windowAction='follow',arrangement='meeting',...previous}={}){let s=startThirdChapterHandling(thirdScopeFixture(previous));for(const id of [handling,'record',windowAction,'record',arrangement])s=advance(s,id);return s;}
+
+import {startThirdChapterDaySeven} from '../engine.mjs';
+export function thirdDaySevenFixture({daySevenAction='attend',answerFocus='materials',answerDisposition='send',...previous}={}){let s=startThirdChapterDaySeven(thirdHandlingFixture(previous));for(const id of [daySevenAction,'record',answerFocus,'review',answerDisposition])s=advance(s,id);return s;}
