@@ -234,3 +234,9 @@ export function startThirdChapterMaterials(state){
  const next=structuredClone(state);next.scene='c03MaterialsDesk';next.pageIndex=0;next.flags.c03MaterialsStarted=true;next.note='第 5 日傍晚材料回報與持續交涉另存，舊公開原文與家庭決定保留。';
  next.history.push({scene:'c03ProcessingEnd',speaker:'林予澄',text:chapterScenes.c03ProcessingEnd.text+'\n'+thirdChapterReaction(state),choice:'接續新材料回報與持續交涉。'});return next;
 }
+
+export function startThirdChapterScope(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03MaterialsEnd')throw new Error('請先完成新材料回報與持續交涉');
+ const next=structuredClone(state);next.scene='c03ScopeDesk';next.pageIndex=0;next.flags.c03ScopeStarted=true;next.note='故事第 6 日範圍補列與議會問題另存，舊公開原文、授權與承諾期限保留。';
+ next.history.push({scene:'c03MaterialsEnd',speaker:'林予澄',text:chapterScenes.c03MaterialsEnd.text+'\n'+thirdChapterReaction(state),choice:'接續範圍補列與議會整理。'});return next;
+}

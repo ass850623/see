@@ -122,3 +122,6 @@ export function thirdDayFiveFixture({dayFiveMethod='review',application='submit'
 
 import {startThirdChapterProcessing} from '../engine.mjs';
 export function thirdProcessingFixture({processing='receive',processingGap='check',processingNext='report',...previous}={}){let s=startThirdChapterProcessing(thirdDayFiveFixture(previous));for(const id of [processing,'record',processingGap,'record',processingNext])s=advance(s,id);return s;}
+
+import {startThirdChapterMaterials} from '../engine.mjs';
+export function thirdMaterialsFixture({materialsDisposition='publish',continuing='follow',materialsNext='scope',...previous}={}){let s=startThirdChapterMaterials(thirdProcessingFixture(previous));for(const id of [materialsDisposition,'record',continuing,'record',materialsNext])s=advance(s,id);return s;}
