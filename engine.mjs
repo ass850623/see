@@ -174,3 +174,9 @@ export function startThirdChapterRevision(state){
  const next=structuredClone(state);next.scene='c03RevisionDesk';next.pageIndex=0;next.flags.c03RevisionStarted=true;next.note='本輪另存改稿與發布前確認，原稿與原案件狀態保留。';
  next.history.push({scene:'c03ManuscriptEnd',speaker:'林予澄',text:chapterScenes.c03ManuscriptEnd.text+'\n'+thirdChapterReaction(state),choice:'接續改稿與發布前確認。'});return next;
 }
+
+export function startThirdChapterPublication(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03RevisionEnd')throw new Error('請先完成改稿與發布前確認');
+ const next=structuredClone(state);next.scene='c03PublicationDesk';next.pageIndex=0;next.flags.c03PublicationStarted=true;next.note='本輪發布須另行決定，原稿、確認版本與案件狀態保留。';
+ next.history.push({scene:'c03RevisionEnd',speaker:'林予澄',text:chapterScenes.c03RevisionEnd.text+'\n'+thirdChapterReaction(state),choice:'接續發布決定與角色反應。'});return next;
+}

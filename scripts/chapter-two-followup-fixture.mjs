@@ -80,3 +80,8 @@ import {startThirdChapterManuscript} from '../engine.mjs';
 export function thirdManuscriptFixture({gap='document',manuscript='joint',manuscriptDisposition='send',manuscriptNext='revise',...previous}={}){
  let s=startThirdChapterManuscript(thirdTrackingFixture(previous));for(const id of [gap,manuscript,manuscriptDisposition,manuscriptNext])s=advance(s,id);return s;
 }
+
+import {startThirdChapterRevision} from '../engine.mjs';
+export function thirdRevisionFixture({revisionAction='revise',signature='joint',readiness='ready',...previous}={}){
+ let s=startThirdChapterRevision(thirdManuscriptFixture(previous));for(const id of [revisionAction,signature,readiness,'record'])s=advance(s,id);return s;
+}
