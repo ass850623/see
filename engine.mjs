@@ -246,3 +246,9 @@ export function startThirdChapterHandling(state){
  const next=structuredClone(state);next.scene='c03HandlingDesk';next.pageIndex=0;next.flags.c03HandlingStarted=true;next.note='第 6 日範圍處理與議會窗口另存，第 7 日邀請不當作已執行。';
  next.history.push({scene:'c03ScopeEnd',speaker:'林予澄',text:chapterScenes.c03ScopeEnd.text+'\n'+thirdChapterReaction(state),choice:'接續範圍處理與議會窗口回覆。'});return next;
 }
+
+export function startThirdChapterDaySeven(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03HandlingEnd')throw new Error('請先完成範圍處理與議會窗口回覆');
+ const next=structuredClone(state);next.scene='c03DaySevenDesk';next.pageIndex=0;next.flags.c03DaySevenStarted=true;next.note='故事第 7 日實際安排與本版答覆另存，舊公開原文、授權與期限保留。';
+ next.history.push({scene:'c03HandlingEnd',speaker:'林予澄',text:chapterScenes.c03HandlingEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第 7 日安排與書面答覆準備。'});return next;
+}
