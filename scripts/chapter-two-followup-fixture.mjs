@@ -95,3 +95,8 @@ import {startThirdChapterFollowup} from '../engine.mjs';
 export function thirdFollowupFixture({followupAction='follow',recheck='archive',followupNext='inquiry',...previous}={}){
  let s=startThirdChapterFollowup(thirdPublicationFixture(previous));for(const id of [followupAction,'record',recheck,followupNext])s=advance(s,id);return s;
 }
+
+import {startThirdChapterRound} from '../engine.mjs';
+export function thirdRoundFixture({roundAction='follow',version='addendum',roundSignature='joint',roundDisposition='publish',...previous}={}){
+ let s=startThirdChapterRound(thirdFollowupFixture(previous));for(const id of [roundAction,'record',version,roundSignature,roundDisposition])s=advance(s,id);return s;
+}
