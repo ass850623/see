@@ -258,3 +258,9 @@ export function startThirdChapterDeadline(state){
  const next=structuredClone(state);next.scene='c03DeadlineDesk';next.pageIndex=0;next.flags.c03DeadlineStarted=true;next.note='答覆追蹤與內部期限工作表另存，原承諾日期與狀態保留。';
  next.history.push({scene:'c03DaySevenEnd',speaker:'林予澄',text:chapterScenes.c03DaySevenEnd.text+'\n'+thirdChapterReaction(state),choice:'接續答覆追蹤與期限前整理。'});return next;
 }
+
+export function startThirdChapterPreReport(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03DeadlineEnd')throw new Error('請先完成答覆追蹤與期限前整理');
+ const next=structuredClone(state);next.scene=state.flags.c03DeadlineNext==='contact'?'c03WaitDesk':'c03PreReportDesk';next.pageIndex=0;next.flags.c03PreReportStarted=true;next.note='期限前新稿與單項聯絡另存，原優先決定本輪先後順序。';
+ next.history.push({scene:'c03DeadlineEnd',speaker:'林予澄',text:chapterScenes.c03DeadlineEnd.text+'\n'+thirdChapterReaction(state),choice:'接續期限前回報與等待者聯絡。'});return next;
+}

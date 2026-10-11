@@ -134,3 +134,6 @@ export function thirdHandlingFixture({handling='receive',windowAction='follow',a
 
 import {startThirdChapterDaySeven} from '../engine.mjs';
 export function thirdDaySevenFixture({daySevenAction='attend',answerFocus='materials',answerDisposition='send',...previous}={}){let s=startThirdChapterDaySeven(thirdHandlingFixture(previous));for(const id of [daySevenAction,'record',answerFocus,'review',answerDisposition])s=advance(s,id);return s;}
+
+import {startThirdChapterDeadline} from '../engine.mjs';
+export function thirdDeadlineFixture({answerTrack='follow',deadlineFocus='dated',deadlineNext='report',...previous}={}){let s=startThirdChapterDeadline(thirdDaySevenFixture(previous));for(const id of [answerTrack,'record',deadlineFocus,'review',deadlineNext])s=advance(s,id);return s;}
