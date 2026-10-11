@@ -1,5 +1,5 @@
-import {stageScenes,validStage} from './chapter-two-stage.mjs';
-export {stageScenes} from './chapter-two-stage.mjs';
+import {endingScenes,stageScenes,validStage} from './chapter-two-stage.mjs';
+export {endingScenes,stageScenes} from './chapter-two-stage.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
 export const inquiryScenes={
  c02InternalAsk:{place:'辦公室 · 內部調查追問',speaker:'許安禾',role:'港口通訊技師',portrait:'worker',
@@ -24,7 +24,7 @@ export function inquirySummary(s){const f=s.flags;return [
  ];}
 export function inquiryReaction(s){const f=s.flags;if(s.scene==='c02InternalAsk')return f.c02ReadResult==='read'?'已有 E10 受限流程筆記，本輪可以追問欄位或移交核對方法，仍不能轉交輪值席。':'沒有 E10 工作筆記，本輪只追閱覽條件或限制理由。';if(s.scene==='c02QuestionDraft')return (f.c02DateResult==='compared'?'公開日期已分列，可選日期與流程問題稿。':'公開日期尚未分列判定，本輪只提供程序與缺件問題稿。')+'\n'+inquirySummary(s)[0].status;if(s.scene==='c02QuestionReview')return '待審閱內部問題稿：\n'+f.c02QuestionText;if(s.scene==='c02InquiryEnd')return inquirySummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';}
 export function validInquiry(s){const f=s.flags,keys=['c02InquiryStarted','c02InternalTopic','c02QuestionFocus','c02QuestionText','c02QuestionDisposition'];if(!validStage(s))return false;if(!f.c02InquiryStarted)return !keys.some(k=>f[k]!==undefined)&&!inquiryScenes[s.scene];
- if(f.c02InquiryStarted!==true||(!inquiryScenes[s.scene]&&!stageScenes[s.scene])||f.c02ReadingRecorded!==true)return false;
+ if(f.c02InquiryStarted!==true||(!inquiryScenes[s.scene]&&!stageScenes[s.scene]&&!endingScenes[s.scene])||f.c02ReadingRecorded!==true)return false;
  if(s.scene==='c02InternalAsk'?f.c02InternalTopic!==undefined:!(f.c02ReadResult==='read'?['flow','handoff']:['access','limits']).includes(f.c02InternalTopic))return false;
  const drafted=['c02QuestionReview','c02InquiryEnd'].includes(s.scene)||f.c02StageStarted;if(drafted?!(f.c02DateResult==='compared'?['procedure','dates']:['procedure']).includes(f.c02QuestionFocus):f.c02QuestionFocus!==undefined)return false;
  if(drafted?f.c02QuestionText!==questionOutline(s):f.c02QuestionText!==undefined)return false;

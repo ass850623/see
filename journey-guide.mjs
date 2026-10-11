@@ -1,5 +1,6 @@
 import {chapterPhases,chapterPhase} from './chapter-meta.mjs';
 const objectives={
+ c02ClosingNotice:'準備隔日答問方式，保留安排待確認。',c02ClosingTalk:'依優先方向選開場準備方式。',c02NextChapterBrief:'審閱第三章內部準備頁。',c02ChapterEnd:'保存章末並查看下一章準備。',
  c02CheckReply:'依核對或草稿狀態處理實際回覆。',c02StageBoard:'選下一段優先意向。',c02StageReview:'審閱成果與未決事項。',c02StageEnd:'查看第二章內部階段整理。',
  c02InternalAsk:'依閱覽結果選內部追問。',c02QuestionDraft:'分開事實與待查問題。',c02QuestionReview:'審閱內部問題稿，安排核對或暫存。',c02InquiryEnd:'查看問題稿與未取得的回覆。',
  c02ReadingDesk:'依上輪重點處理閱覽與日期。',c02RestrictedRead:'核對有效閱覽或限制範圍。',c02DateCrosscheck:'分清收件與修訂登錄日期。',c02ReadingReport:'整理可支持的結果與使用界線。',c02ReadingEnd:'查看受限閱覽與日期結果。',

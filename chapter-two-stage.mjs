@@ -1,3 +1,5 @@
+import {endingScenes,validEnding} from './chapter-two-ending.mjs';
+export {endingScenes} from './chapter-two-ending.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
 export const stageScenes={
  c02CheckReply:{place:'辦公室 · 內部核對回覆',speaker:'林予澄',role:'幕僚長',portrait:'aide',
@@ -10,7 +12,7 @@ export const stageScenes={
  beats:['予澄逐項讀出階段紀錄，把已收到、已核對、已發布、已到任和仍待處理分開。「這份是我們辦公室的整理，不是調查結論，也不是對外發稿。」','她把原承諾與期限夾在最後一頁。私人來信和受限筆記沒有作成可公開附件，原公開說明保留原文，沒有用新整理去覆蓋舊發言。'],
  text:'審閱以下階段整理，再保存交接意向。',choices:[]},
  c02StageEnd:{place:'第二章階段整理 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'內部核對處理與第二章階段整理已保存。這是開發原型的階段暫停，來源、原卷、救助及原承諾仍有未決事項。下一段第二章收束事件與第三章開場準備尚未開放。',choices:[]}
+ text:'內部核對處理與第二章階段整理已保存。這是開發原型的階段暫停，來源、原卷、救助及原承諾仍有未決事項。可接續第二章收束事件與第三章開場準備。',choices:[]}
 };
 export function internalReplyText(s){return {flow:'收件欄記錄受理登錄，移交欄記錄工作流轉，修訂登錄是另一筆流程紀錄。這些欄位不直接辨認實際經手者，也不說明修訂原因。',handoff:'現有公開索引只能核對文號與登錄順序；移交細節仍須符合閱覽範圍的原卷欄位佐證。日期相同不等於同一個人經手。',access:'已有交涉與安排結果須分開追蹤；下一次閱覽仍要確認有效範圍與時段。內部核對沒有新增時段、原卷複本或公開權限。',limits:'E08 說明公開附件與非公開原卷的申請界線，分項理由可沿既有管道追問或覆核。這份內部整理不替窗口作新的覆核決定。'}[s.flags.c02InternalTopic]+'\n這是辦公室與安禾核對現有材料後的內部回覆；沒有新的來源身分、事故動機或個案核定結果。';}
 export function stageOptions(s){const f=s.flags;if(s.scene==='c02CheckReply')return f.c02QuestionDisposition==='review'?[c('record','保存已收到的內部回覆，保留未解問題。','c02StageBoard',{c02CheckOutcome:'received',c02InternalReply:internalReplyText(s)}),c('clarify','保存回覆，再列需補釐清的問題。','c02StageBoard',{c02CheckOutcome:'clarifying',c02InternalReply:internalReplyText(s)})]:[c('schedule','現在列入內部核對，回覆另行追蹤。','c02StageBoard',{c02CheckOutcome:'late-request'}),c('keep','繼續保存草稿，保留核對未安排。','c02StageBoard',{c02CheckOutcome:'kept'})];
@@ -30,10 +32,10 @@ export function stageSummary(s){const f=s.flags;return [
  {title:'第二章階段整理',status:f.c02StageRecorded?'內部階段整理已保存':f.c02StagePriority?'階段整理待審閱':'優先意向尚未選定',detail:f.c02StageText||(f.c02StagePriority?stageText(s):'沒有對外發布，原公開紀錄與承諾期限保留。')}
  ];}
 export function stageReaction(s){const f=s.flags;if(s.scene==='c02CheckReply')return f.c02QuestionDisposition==='review'?'本輪已收到的內部回覆：\n'+internalReplyText(s):'前輪只保存草稿，沒有核對回覆；可現在列入核對，或繼續保留。';if(s.scene==='c02StageReview')return '待審閱階段整理：\n'+stageText(s);if(['c02StageBoard','c02StageEnd'].includes(s.scene))return stageSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';}
-export function validStage(s){const f=s.flags,keys=['c02StageStarted','c02CheckOutcome','c02InternalReply','c02StagePriority','c02StageRecorded','c02StageText'];if(!f.c02StageStarted)return !keys.some(k=>f[k]!==undefined)&&!stageScenes[s.scene];
- if(f.c02StageStarted!==true||!stageScenes[s.scene]||!['review','draft'].includes(f.c02QuestionDisposition))return false;
+export function validStage(s){const f=s.flags,keys=['c02StageStarted','c02CheckOutcome','c02InternalReply','c02StagePriority','c02StageRecorded','c02StageText'];if(!validEnding(s))return false;if(!f.c02StageStarted)return !keys.some(k=>f[k]!==undefined)&&!stageScenes[s.scene];
+ if(f.c02StageStarted!==true||(!stageScenes[s.scene]&&!endingScenes[s.scene])||!['review','draft'].includes(f.c02QuestionDisposition))return false;
  if(s.scene==='c02CheckReply'?f.c02CheckOutcome!==undefined:!(f.c02QuestionDisposition==='review'?['received','clarifying']:['late-request','kept']).includes(f.c02CheckOutcome))return false;
  if(['received','clarifying'].includes(f.c02CheckOutcome)?f.c02InternalReply!==internalReplyText(s):f.c02InternalReply!==undefined)return false;
- const focused=['c02StageReview','c02StageEnd'].includes(s.scene);if(focused?!['files','source','relief'].includes(f.c02StagePriority):f.c02StagePriority!==undefined)return false;
- return s.scene==='c02StageEnd'?f.c02StageRecorded===true&&f.c02StageText===stageText(s):f.c02StageRecorded===undefined&&f.c02StageText===undefined;
+ const focused=['c02StageReview','c02StageEnd'].includes(s.scene)||f.c02EndingStarted;if(focused?!['files','source','relief'].includes(f.c02StagePriority):f.c02StagePriority!==undefined)return false;
+ return s.scene==='c02StageEnd'||f.c02EndingStarted?f.c02StageRecorded===true&&f.c02StageText===stageText(s):f.c02StageRecorded===undefined&&f.c02StageText===undefined;
 }

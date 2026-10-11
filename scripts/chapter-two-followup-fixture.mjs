@@ -50,3 +50,8 @@ import {startSecondChapterInquiry} from '../engine.mjs';
 export function inquiryFixture({topic='flow',questionFocus='procedure',disposition='review',...previous}={}){
  let s=startSecondChapterInquiry(readingFixture(previous));for(const id of [topic,questionFocus,disposition==='review'?'review':'hold'])s=advance(s,id);return s;
 }
+
+import {startSecondChapterStage} from '../engine.mjs';
+export function stageFixture({checkAction='record',priority='files',...previous}={}){
+ let s=startSecondChapterStage(inquiryFixture(previous));for(const id of [checkAction,priority,'save'])s=advance(s,id);return s;
+}
