@@ -240,3 +240,9 @@ export function startThirdChapterScope(state){
  const next=structuredClone(state);next.scene='c03ScopeDesk';next.pageIndex=0;next.flags.c03ScopeStarted=true;next.note='故事第 6 日範圍補列與議會問題另存，舊公開原文、授權與承諾期限保留。';
  next.history.push({scene:'c03MaterialsEnd',speaker:'林予澄',text:chapterScenes.c03MaterialsEnd.text+'\n'+thirdChapterReaction(state),choice:'接續範圍補列與議會整理。'});return next;
 }
+
+export function startThirdChapterHandling(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03ScopeEnd')throw new Error('請先完成範圍補列與議會整理');
+ const next=structuredClone(state);next.scene='c03HandlingDesk';next.pageIndex=0;next.flags.c03HandlingStarted=true;next.note='第 6 日範圍處理與議會窗口另存，第 7 日邀請不當作已執行。';
+ next.history.push({scene:'c03ScopeEnd',speaker:'林予澄',text:chapterScenes.c03ScopeEnd.text+'\n'+thirdChapterReaction(state),choice:'接續範圍處理與議會窗口回覆。'});return next;
+}

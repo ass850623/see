@@ -125,3 +125,6 @@ export function thirdProcessingFixture({processing='receive',processingGap='chec
 
 import {startThirdChapterMaterials} from '../engine.mjs';
 export function thirdMaterialsFixture({materialsDisposition='publish',continuing='follow',materialsNext='scope',...previous}={}){let s=startThirdChapterMaterials(thirdProcessingFixture(previous));for(const id of [materialsDisposition,'record',continuing,'record',materialsNext])s=advance(s,id);return s;}
+
+import {startThirdChapterScope} from '../engine.mjs';
+export function thirdScopeFixture({scopeAction='supplement',councilPlan='procedure',councilDisposition='send',scopeNext='council',...previous}={}){let s=startThirdChapterScope(thirdMaterialsFixture(previous));for(const id of [scopeAction,'record',councilPlan,councilDisposition,scopeNext])s=advance(s,id);return s;}
