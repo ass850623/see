@@ -100,3 +100,8 @@ import {startThirdChapterRound} from '../engine.mjs';
 export function thirdRoundFixture({roundAction='follow',version='addendum',roundSignature='joint',roundDisposition='publish',...previous}={}){
  let s=startThirdChapterRound(thirdFollowupFixture(previous));for(const id of [roundAction,'record',version,roundSignature,roundDisposition])s=advance(s,id);return s;
 }
+
+import {startThirdChapterReception} from '../engine.mjs';
+export function thirdReceptionFixture({pressApproach='bounds',caucusApproach='agenda',partner='west',foreignDecision='continue',receptionNext='terms',...previous}={}){
+ let s=startThirdChapterReception(thirdRoundFixture(previous));for(const id of [pressApproach,caucusApproach,partner,foreignDecision,receptionNext])s=advance(s,id);return s;
+}

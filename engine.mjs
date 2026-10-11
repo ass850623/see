@@ -198,3 +198,9 @@ export function startThirdChapterReception(state){
  const next=structuredClone(state);next.scene='c03ReceptionPress';next.pageIndex=0;next.flags.c03ReceptionStarted=true;next.note='新版追問與分案協商另存，原公開／內部版本與有效授權保留。';
  next.history.push({scene:'c03RoundEnd',speaker:'林予澄',text:chapterScenes.c03RoundEnd.text+'\n'+thirdChapterReaction(state),choice:'接續新版追問與跨方協商。'});return next;
 }
+
+export function startThirdChapterConfirmation(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03ReceptionEnd')throw new Error('請先保存新版追問與跨方協商');
+ const next=structuredClone(state);next.scene='c03ConfirmationDesk';next.pageIndex=0;next.flags.c03ConfirmationStarted=true;next.note='外方回函、國內未決與限定安排另存，原提案與案件紀錄保留。';
+ next.history.push({scene:'c03ReceptionEnd',speaker:'林予澄',text:chapterScenes.c03ReceptionEnd.text+'\n'+thirdChapterReaction(state),choice:'接續外方確認與國內未決。'});return next;
+}
