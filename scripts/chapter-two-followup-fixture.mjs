@@ -85,3 +85,8 @@ import {startThirdChapterRevision} from '../engine.mjs';
 export function thirdRevisionFixture({revisionAction='revise',signature='joint',readiness='ready',...previous}={}){
  let s=startThirdChapterRevision(thirdManuscriptFixture(previous));for(const id of [revisionAction,signature,readiness,'record'])s=advance(s,id);return s;
 }
+
+import {startThirdChapterPublication} from '../engine.mjs';
+export function thirdPublicationFixture({publication='publish',reporter='bounds',caucus='separate',publicationNext='files',...previous}={}){
+ let s=startThirdChapterPublication(thirdRevisionFixture(previous));for(const id of [publication,reporter,caucus,publicationNext])s=advance(s,id);return s;
+}
