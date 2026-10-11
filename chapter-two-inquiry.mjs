@@ -1,3 +1,5 @@
+import {stageScenes,validStage} from './chapter-two-stage.mjs';
+export {stageScenes} from './chapter-two-stage.mjs';
 const c=(id,text,next,flags={})=>({id,text,next,effects:{flags}});
 export const inquiryScenes={
  c02InternalAsk:{place:'辦公室 · 內部調查追問',speaker:'許安禾',role:'港口通訊技師',portrait:'worker',
@@ -10,7 +12,7 @@ export const inquiryScenes={
  beats:['你逐行讀過問題稿。每一個問題都列出所依據的範圍，不寫來源姓名，不附 E09 原文或 E10 筆記複本。內部使用不等於可以轉給黨團輪值席或記者。','予澄可以把它列入辦公室內部核對，也可以先存作草稿。列入核對表示開始安排下一輪回覆，不代表回答已經取得，更沒有新增對外發布或履行期限。'],
  text:'審閱以下內部問題稿，再選擇列入核對或保存草稿。',choices:[c('review','列入辦公室內部核對，另追實際回覆。','c02InquiryEnd',{c02QuestionDisposition:'review'}),c('hold','保存內部問題草稿，暫不安排核對。','c02InquiryEnd',{c02QuestionDisposition:'draft'})]},
  c02InquiryEnd:{place:'第二章內部追問與問題整理 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,
- text:'本輪內部追問、調查問題稿與處理狀態已保存。沒有對外發布，也沒有替私人或受限資料補寫授權。下一段內部核對回覆與第二章階段整理尚未開放。',choices:[]}
+ text:'本輪內部追問、調查問題稿與處理狀態已保存。沒有對外發布，也沒有替私人或受限資料補寫授權。可接續內部核對回覆與第二章階段整理。',choices:[]}
 };
 export function inquiryOptions(s){const f=s.flags;if(s.scene==='c02InternalAsk')return f.c02ReadResult==='read'?[c('flow','追問收件、移交與修訂登錄各欄的定義。','c02QuestionDraft',{c02InternalTopic:'flow'}),c('handoff','追問移交紀錄如何核對，保留身分與動機未明。','c02QuestionDraft',{c02InternalTopic:'handoff'})]:[c('access','追問有效閱覽的下一個條件或時間卡點。','c02QuestionDraft',{c02InternalTopic:'access'}),c('limits','追問未交付欄位的限制理由與覆核路徑。','c02QuestionDraft',{c02InternalTopic:'limits'})];
  if(s.scene==='c02QuestionDraft'){const make=(id,text,focus)=>{const next={...s,flags:{...f,c02QuestionFocus:focus}};return c(id,text,'c02QuestionReview',{c02QuestionFocus:focus,c02QuestionText:questionOutline(next)});};return [make('procedure','整理閱覽條件、程序與仍缺材料。','procedure'),...(f.c02DateResult==='compared'?[make('dates','分列已核對日期，整理尚缺的流程問題。','dates')]:[])];}return inquiryScenes[s.scene]?.choices||[];
@@ -21,10 +23,10 @@ export function inquirySummary(s){const f=s.flags;return [
  {title:'內部調查問題稿',status:f.c02QuestionDisposition==='review'?'已列入內部核對 · 回覆待收':f.c02QuestionDisposition==='draft'?'內部草稿已保存 · 核對未安排':f.c02QuestionText?'問題稿待審閱':'尚未整理',detail:f.c02QuestionText||'尚未生成問題稿；本輪沒有對外發布。'}
  ];}
 export function inquiryReaction(s){const f=s.flags;if(s.scene==='c02InternalAsk')return f.c02ReadResult==='read'?'已有 E10 受限流程筆記，本輪可以追問欄位或移交核對方法，仍不能轉交輪值席。':'沒有 E10 工作筆記，本輪只追閱覽條件或限制理由。';if(s.scene==='c02QuestionDraft')return (f.c02DateResult==='compared'?'公開日期已分列，可選日期與流程問題稿。':'公開日期尚未分列判定，本輪只提供程序與缺件問題稿。')+'\n'+inquirySummary(s)[0].status;if(s.scene==='c02QuestionReview')return '待審閱內部問題稿：\n'+f.c02QuestionText;if(s.scene==='c02InquiryEnd')return inquirySummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';}
-export function validInquiry(s){const f=s.flags,keys=['c02InquiryStarted','c02InternalTopic','c02QuestionFocus','c02QuestionText','c02QuestionDisposition'];if(!f.c02InquiryStarted)return !keys.some(k=>f[k]!==undefined)&&!inquiryScenes[s.scene];
- if(f.c02InquiryStarted!==true||!inquiryScenes[s.scene]||f.c02ReadingRecorded!==true)return false;
+export function validInquiry(s){const f=s.flags,keys=['c02InquiryStarted','c02InternalTopic','c02QuestionFocus','c02QuestionText','c02QuestionDisposition'];if(!validStage(s))return false;if(!f.c02InquiryStarted)return !keys.some(k=>f[k]!==undefined)&&!inquiryScenes[s.scene];
+ if(f.c02InquiryStarted!==true||(!inquiryScenes[s.scene]&&!stageScenes[s.scene])||f.c02ReadingRecorded!==true)return false;
  if(s.scene==='c02InternalAsk'?f.c02InternalTopic!==undefined:!(f.c02ReadResult==='read'?['flow','handoff']:['access','limits']).includes(f.c02InternalTopic))return false;
- const drafted=['c02QuestionReview','c02InquiryEnd'].includes(s.scene);if(drafted?!(f.c02DateResult==='compared'?['procedure','dates']:['procedure']).includes(f.c02QuestionFocus):f.c02QuestionFocus!==undefined)return false;
+ const drafted=['c02QuestionReview','c02InquiryEnd'].includes(s.scene)||f.c02StageStarted;if(drafted?!(f.c02DateResult==='compared'?['procedure','dates']:['procedure']).includes(f.c02QuestionFocus):f.c02QuestionFocus!==undefined)return false;
  if(drafted?f.c02QuestionText!==questionOutline(s):f.c02QuestionText!==undefined)return false;
- return s.scene==='c02InquiryEnd'?['review','draft'].includes(f.c02QuestionDisposition):f.c02QuestionDisposition===undefined;
+ return s.scene==='c02InquiryEnd'||f.c02StageStarted?['review','draft'].includes(f.c02QuestionDisposition):f.c02QuestionDisposition===undefined;
 }

@@ -1,5 +1,5 @@
-import {inquiryScenes,validInquiry} from './chapter-two-inquiry.mjs';
-export {inquiryScenes} from './chapter-two-inquiry.mjs';
+import {stageScenes,inquiryScenes,validInquiry} from './chapter-two-inquiry.mjs';
+export {stageScenes,inquiryScenes} from './chapter-two-inquiry.mjs';
 const c=(id,text,next,flags={},evidence={})=>({id,text,next,effects:{flags,evidence}});
 export const readingScenes={
  c02ReadingDesk:{place:'辦公室 · 閱覽與日期核對桌',speaker:'林予澄',role:'幕僚長',portrait:'aide',
@@ -30,7 +30,7 @@ export function readingSummary(s){const f=s.flags;return [
  ];}
 export function readingReaction(s){const f=s.flags;if(s.scene==='c02ReadingDesk')return '上一輪重點：'+(f.c02AccessNext==='access'?'先追閱覽與限制理由。':'先列日期核對問題。');if(s.scene==='c02RestrictedRead')return {onsite:'窗口已確認本次時段與允許抄記的流程欄位，可選完成閱覽或暫緩。',defer:'書面範圍釐清已收到，尚未安排閱覽時段；本輪可接受範圍或繼續追問。',appeal:'覆核回覆保留值班與個人資料限制，列出可談的流程欄位；沒有完整交付。',split:'公開與非公開需求已分列回覆，本輪只能談條件，尚未排閱覽時段。'}[f.c02AccessAction];if(s.scene==='c02DateCrosscheck')return (f.c02SourceFollowup==='check'?'前輪只查到公開日期有收件登錄，本輪可進一步區分收件與修訂。':'前輪私人回信尚未查核，本輪可先核對公開索引，不替回信背書。')+'\n'+(s.evidence.E07?.verified?'既有 E07 版本核對保留，本輪只核對公開日期欄位。':'E07 缺件或尚未核實的狀態保留；查到公開索引日期不等於取得或核實附件清單。');if(['c02ReadingReport','c02ReadingEnd'].includes(s.scene))return readingSummary(s).map(i=>`${i.title}｜${i.status}\n${i.detail}`).join('\n\n');return '';}
 export function validReading(s){const f=s.flags,keys=['c02ReadingStarted','c02ReadResult','c02DateResult','c02ReadingRecorded'];if(!validInquiry(s))return false;if(!f.c02ReadingStarted)return !keys.some(k=>f[k]!==undefined)&&!readingScenes[s.scene]&&!s.evidence.E10;
- if(f.c02ReadingStarted!==true||(!readingScenes[s.scene]&&!inquiryScenes[s.scene])||!['timeline','access'].includes(f.c02AccessNext))return false;
+ if(f.c02ReadingStarted!==true||(!readingScenes[s.scene]&&!inquiryScenes[s.scene]&&!stageScenes[s.scene])||!['timeline','access'].includes(f.c02AccessNext))return false;
  if(f.c02ReadResult!==undefined&&!restrictedOptions(s).some(o=>o.effects.flags.c02ReadResult===f.c02ReadResult))return false;
  if(f.c02DateResult!==undefined&&!['compared','held'].includes(f.c02DateResult))return false;
  const both=Boolean(f.c02ReadResult&&f.c02DateResult),report=['c02ReadingReport','c02ReadingEnd'].includes(s.scene)||f.c02InquiryStarted;if(report?!both:both)return false;

@@ -45,3 +45,8 @@ import {startSecondChapterReading} from '../engine.mjs';
 export function readingFixture({readingChoice='read',dateChoice='compare',...previous}={}){
  let s=startSecondChapterReading(accessFixture(previous));for(const branch of s.flags.c02AccessNext==='access'?['reading','dates']:['dates','reading']){s=advance(s,branch);s=advance(s,branch==='reading'?readingChoice:dateChoice);}return advance(s,'record');
 }
+
+import {startSecondChapterInquiry} from '../engine.mjs';
+export function inquiryFixture({topic='flow',questionFocus='procedure',disposition='review',...previous}={}){
+ let s=startSecondChapterInquiry(readingFixture(previous));for(const id of [topic,questionFocus,disposition==='review'?'review':'hold'])s=advance(s,id);return s;
+}
