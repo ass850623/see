@@ -150,3 +150,9 @@ export function startThirdChapter(state){
  const next=structuredClone(state);next.chapter='c03';next.scene='c03Morning';next.pageIndex=0;next.flags.c03Started=true;next.note='故事第 3 日開始：原準備頁、案件與承諾期限保留。';
  next.history.push({scene:'c02ChapterEnd',speaker:'林予澄',text:chapterScenes.c02ChapterEnd.text+'\n'+secondChapterReaction(state),choice:'開始第三章追加詢問開場。'});return next;
 }
+
+export function startThirdChapterReply(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03OpeningEnd')throw new Error('請先完成第三章第一輪答覆審閱');
+ const next=structuredClone(state);next.scene='c03CouncilReply';next.pageIndex=0;next.flags.c03ReplyStarted=true;next.note='本輪議會回應與正式窗口追問開始，原答覆與案件狀態保留。';
+ next.history.push({scene:'c03OpeningEnd',speaker:'林予澄',text:chapterScenes.c03OpeningEnd.text+'\n'+thirdChapterReaction(state),choice:'接續議會回應與正式窗口追問。'});return next;
+}

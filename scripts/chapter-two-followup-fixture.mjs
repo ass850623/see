@@ -60,3 +60,8 @@ import {startSecondChapterEnding} from '../engine.mjs';
 export function endingFixture({response='attend',preparation='facts',...previous}={}){
  let s=startSecondChapterEnding(stageFixture(previous));for(const id of [response,preparation,'finish'])s=advance(s,id);return s;
 }
+
+import {startThirdChapter} from '../engine.mjs';
+export function thirdOpeningFixture({arrangement='confirm',opening='facts',approach='bounded',outcome='answer',...previous}={}){
+ let s=startThirdChapter(endingFixture(previous));for(const id of [arrangement,opening,approach,outcome])s=advance(s,id);return s;
+}
