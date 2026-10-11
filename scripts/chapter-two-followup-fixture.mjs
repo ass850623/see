@@ -110,3 +110,6 @@ import {startThirdChapterConfirmation} from '../engine.mjs';
 export function thirdConfirmationFixture({termsAction='request',domesticAction='follow',termsOutcome='method',confirmationNext='meeting',...previous}={}){
  let s=startThirdChapterConfirmation(thirdReceptionFixture(previous));for(const id of [termsAction,'record',domesticAction,termsOutcome,confirmationNext])s=advance(s,id);return s;
 }
+
+import {startThirdChapterExecution} from '../engine.mjs';
+export function thirdExecutionFixture({method='attend',national='follow',methodFollowup='archive',executionNext='report',...previous}={}){let s=startThirdChapterExecution(thirdConfirmationFixture(previous));for(const id of [method,'record',national,methodFollowup,executionNext])s=advance(s,id);return s;}

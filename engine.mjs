@@ -210,3 +210,9 @@ export function startThirdChapterExecution(state){
  const next=structuredClone(state);next.scene='c03ExecutionDesk';next.pageIndex=0;next.flags.c03ExecutionStarted=true;next.note='故事第 4 日開始，方法執行與國內後續另存，原邀請、公開原文與期限保留。';
  next.history.push({scene:'c03ConfirmationEnd',speaker:'林予澄',text:chapterScenes.c03ConfirmationEnd.text+'\n'+thirdChapterReaction(state),choice:'接續方法執行與國內後續。'});return next;
 }
+
+export function startThirdChapterReport(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03ExecutionEnd')throw new Error('請先完成方法執行與國內後續');
+ const next=structuredClone(state);next.scene='c03ReportDesk';next.pageIndex=0;next.flags.c03ReportStarted=true;next.note='故事第 4 日午後進度稿與程序交涉另存，舊公開原文與署名保留。';
+ next.history.push({scene:'c03ExecutionEnd',speaker:'林予澄',text:chapterScenes.c03ExecutionEnd.text+'\n'+thirdChapterReaction(state),choice:'接續成果回報與未決事項交涉。'});return next;
+}
