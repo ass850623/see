@@ -75,3 +75,8 @@ import {startThirdChapterTracking} from '../engine.mjs';
 export function thirdTrackingFixture({trackTopic='files',trackAction='follow',coordination='limited',...previous}={}){
  let s=startThirdChapterTracking(thirdReplyFixture(previous));for(const id of [trackTopic,trackAction,'record',coordination])s=advance(s,id);return s;
 }
+
+import {startThirdChapterManuscript} from '../engine.mjs';
+export function thirdManuscriptFixture({gap='document',manuscript='joint',manuscriptDisposition='send',manuscriptNext='revise',...previous}={}){
+ let s=startThirdChapterManuscript(thirdTrackingFixture(previous));for(const id of [gap,manuscript,manuscriptDisposition,manuscriptNext])s=advance(s,id);return s;
+}

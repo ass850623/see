@@ -168,3 +168,9 @@ export function startThirdChapterManuscript(state){
  const next=structuredClone(state);next.scene='c03GapDesk';next.pageIndex=0;next.flags.c03ManuscriptStarted=true;next.note='案件缺口與稿件審閱開始，原文件、協調狀態與期限保留。';
  next.history.push({scene:'c03TrackEnd',speaker:'林予澄',text:chapterScenes.c03TrackEnd.text+'\n'+thirdChapterReaction(state),choice:'接續案件缺口與共同稿審閱。'});return next;
 }
+
+export function startThirdChapterRevision(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03ManuscriptEnd')throw new Error('請先保存案件缺口稿與審閱結果');
+ const next=structuredClone(state);next.scene='c03RevisionDesk';next.pageIndex=0;next.flags.c03RevisionStarted=true;next.note='本輪另存改稿與發布前確認，原稿與原案件狀態保留。';
+ next.history.push({scene:'c03ManuscriptEnd',speaker:'林予澄',text:chapterScenes.c03ManuscriptEnd.text+'\n'+thirdChapterReaction(state),choice:'接續改稿與發布前確認。'});return next;
+}
