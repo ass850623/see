@@ -186,3 +186,9 @@ export function startThirdChapterFollowup(state){
  const next=structuredClone(state);next.scene='c03FollowupDesk';next.pageIndex=0;next.flags.c03FollowupStarted=true;next.note='本輪正式追問與重審另存，原公開／內部版本與案件紀錄保留。';
  next.history.push({scene:'c03PublicationEnd',speaker:'林予澄',text:chapterScenes.c03PublicationEnd.text+'\n'+thirdChapterReaction(state),choice:'接續後續追問與留稿重審。'});return next;
 }
+
+export function startThirdChapterRound(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03FollowupEnd')throw new Error('請先保存後續追問與留稿重審');
+ const next=structuredClone(state);next.scene='c03RoundDesk';next.pageIndex=0;next.flags.c03RoundStarted=true;next.note='第二輪答覆與本輪稿件另存，原確認與公開紀錄保留。';
+ next.history.push({scene:'c03FollowupEnd',speaker:'林予澄',text:chapterScenes.c03FollowupEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第二輪答覆與稿件處理。'});return next;
+}

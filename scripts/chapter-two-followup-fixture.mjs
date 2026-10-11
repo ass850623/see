@@ -90,3 +90,8 @@ import {startThirdChapterPublication} from '../engine.mjs';
 export function thirdPublicationFixture({publication='publish',reporter='bounds',caucus='separate',publicationNext='files',...previous}={}){
  let s=startThirdChapterPublication(thirdRevisionFixture(previous));for(const id of [publication,reporter,caucus,publicationNext])s=advance(s,id);return s;
 }
+
+import {startThirdChapterFollowup} from '../engine.mjs';
+export function thirdFollowupFixture({followupAction='follow',recheck='archive',followupNext='inquiry',...previous}={}){
+ let s=startThirdChapterFollowup(thirdPublicationFixture(previous));for(const id of [followupAction,'record',recheck,followupNext])s=advance(s,id);return s;
+}
