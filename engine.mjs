@@ -156,3 +156,9 @@ export function startThirdChapterReply(state){
  const next=structuredClone(state);next.scene='c03CouncilReply';next.pageIndex=0;next.flags.c03ReplyStarted=true;next.note='本輪議會回應與正式窗口追問開始，原答覆與案件狀態保留。';
  next.history.push({scene:'c03OpeningEnd',speaker:'林予澄',text:chapterScenes.c03OpeningEnd.text+'\n'+thirdChapterReaction(state),choice:'接續議會回應與正式窗口追問。'});return next;
 }
+
+export function startThirdChapterTracking(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03ReplyEnd')throw new Error('請先保存議會回應與窗口追問');
+ const next=structuredClone(state);next.scene='c03TrackDesk';next.pageIndex=0;next.flags.c03TrackingStarted=true;next.note='分項追蹤開始；原實際送件、答覆與利益立場保留。';
+ next.history.push({scene:'c03ReplyEnd',speaker:'林予澄',text:chapterScenes.c03ReplyEnd.text+'\n'+thirdChapterReaction(state),choice:'接續分項窗口追蹤與利益協調。'});return next;
+}

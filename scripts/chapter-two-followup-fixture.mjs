@@ -65,3 +65,8 @@ import {startThirdChapter} from '../engine.mjs';
 export function thirdOpeningFixture({arrangement='confirm',opening='facts',approach='bounded',outcome='answer',...previous}={}){
  let s=startThirdChapter(endingFixture(previous));for(const id of [arrangement,opening,approach,outcome])s=advance(s,id);return s;
 }
+
+import {startThirdChapterReply} from '../engine.mjs';
+export function thirdReplyFixture({position='separate',scope='broader',delivery='send',windowNext='track',...previous}={}){
+ let s=startThirdChapterReply(thirdOpeningFixture(previous));for(const id of [position,scope,delivery,windowNext])s=advance(s,id);return s;
+}
