@@ -162,3 +162,9 @@ export function startThirdChapterTracking(state){
  const next=structuredClone(state);next.scene='c03TrackDesk';next.pageIndex=0;next.flags.c03TrackingStarted=true;next.note='分項追蹤開始；原實際送件、答覆與利益立場保留。';
  next.history.push({scene:'c03ReplyEnd',speaker:'林予澄',text:chapterScenes.c03ReplyEnd.text+'\n'+thirdChapterReaction(state),choice:'接續分項窗口追蹤與利益協調。'});return next;
 }
+
+export function startThirdChapterManuscript(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03TrackEnd')throw new Error('請先保存分項追蹤與利益協調');
+ const next=structuredClone(state);next.scene='c03GapDesk';next.pageIndex=0;next.flags.c03ManuscriptStarted=true;next.note='案件缺口與稿件審閱開始，原文件、協調狀態與期限保留。';
+ next.history.push({scene:'c03TrackEnd',speaker:'林予澄',text:chapterScenes.c03TrackEnd.text+'\n'+thirdChapterReaction(state),choice:'接續案件缺口與共同稿審閱。'});return next;
+}

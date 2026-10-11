@@ -1,5 +1,6 @@
 import {chapterPhases,chapterPhase} from './chapter-meta.mjs';
 const objectives={
+ c03GapDesk:'依實際進展選案件缺口起點。',c03DraftMethod:'依協調結果選稿件方式。',c03DraftReview:'審閱原文，送審或保留草稿。',c03ManuscriptReply:'按實際送審狀態保存回覆與意向。',c03ManuscriptEnd:'查看稿件與尚未發布的處理狀態。',
  c03TrackDesk:'在原追問範圍中選本輪分項。',c03TrackContact:'依實際送件狀態追蹤或處理草稿。',c03UnitResult:'保存實際承辦答覆、收件或草稿狀態。',c03InterestTalk:'依前輪立場決定限定協調或重談。',c03TrackEnd:'查看分項文件與本輪利益協調結果。',
  c03CouncilReply:'處理協調意向與原利益分歧。',c03WindowDraft:'選擇正式追問涵蓋的程序問題。',c03WindowReview:'審閱正式追問，決定送交或暫存。',c03WindowReceipt:'按實際送件狀態保存程序回覆或草稿。',c03ReplyEnd:'查看議會立場、窗口回覆與下一輪意向。',
  c03Morning:'確認昨日答問意向或暫緩安排。',c03Checkin:'決定答覆從事實或等待者說起。',c03Question:'依優先方向回答第一輪追問。',c03AnswerReview:'審閱答覆，選擇使用或保留草稿。',c03OpeningEnd:'查看第一輪答覆與未決事項。',
@@ -32,7 +33,7 @@ export function journeyGuide(state,scene){
   title:`目前目標 · ${phase.label}`,
   objective:objectives[state.scene],
   actionTitle:scene.terminal?'章末工具':reading?'閱讀對話':state.scene==='c02Followup'?'選擇回訪順序':state.scene==='c02Investigate'?'選擇調查順序':state.scene==='c02Board'?'選定追蹤焦點':scene.hub?'安排調查訪談':'主線回應',
-  hint:state.chapter==='c03'?(scene.terminal?(state.scene==='c03OpeningEnd'?'可接續議會回應與正式窗口追問，進入會更新自動存檔；想保留暫停點可先保存手動欄位。':state.scene==='c03ReplyEnd'?'可接續分項窗口追蹤與利益協調，進入會更新自動存檔。':'本輪分項結果已保存；下一輪案件缺口與共同稿審閱尚未開放。'):reading?'先閱讀本場對話，再準備追加詢問答覆。':'確認安排、準備稿與實際答覆分開記錄；原承諾與期限保留。'):scene.terminal?(state.scene==='c02ChapterEnd'?'可開始第三章追加詢問原型。進入會更新自動存檔；想保留章末，可先存入手動欄位。':state.chapter==='c02'?'第二章原型紀錄已保存。開場與調查暫停點可接續後段；回訪暫停點可接續交付核對；交付暫停點可接續來源與公開回覆；最後暫停點的後續反應與個案結果尚未開放。':'第一章流程已完成。可查看交接與未決事項，或開始第二章開場原型。進入會更新自動存檔；想保留結算點，可先存入手動欄位。'):state.chapter==='c02'?(reading?'先讀完本場對話，再決定這次追蹤如何進行。':state.scene==='c02Investigate'?'兩條分支均可處理；每次調查會記錄結果，另一條仍保留。':state.scene==='c02Board'?'本次原型先跟進一項原承諾；其他承諾與原期限保留。':'選擇本次聯絡方式或後續安排。回覆不代表原承諾已履行。'):scene.hub?`剩餘 ${state.slots} 個調查時段。每次拜訪消耗 1 個時段；最後一次訪談結束後進入案件整理。`:
+  hint:state.chapter==='c03'?(scene.terminal?(state.scene==='c03OpeningEnd'?'可接續議會回應與正式窗口追問，進入會更新自動存檔；想保留暫停點可先保存手動欄位。':state.scene==='c03ReplyEnd'?'可接續分項窗口追蹤與利益協調，進入會更新自動存檔。':state.scene==='c03TrackEnd'?'可接續案件缺口與共同稿審閱，進入會更新自動存檔。':'本輪稿件審閱已保存；下一輪改稿與發布前確認尚未開放。'):reading?'先閱讀本場對話，再準備追加詢問答覆。':'確認安排、準備稿與實際答覆分開記錄；原承諾與期限保留。'):scene.terminal?(state.scene==='c02ChapterEnd'?'可開始第三章追加詢問原型。進入會更新自動存檔；想保留章末，可先存入手動欄位。':state.chapter==='c02'?'第二章原型紀錄已保存。開場與調查暫停點可接續後段；回訪暫停點可接續交付核對；交付暫停點可接續來源與公開回覆；最後暫停點的後續反應與個案結果尚未開放。':'第一章流程已完成。可查看交接與未決事項，或開始第二章開場原型。進入會更新自動存檔；想保留結算點，可先存入手動欄位。'):state.chapter==='c02'?(reading?'先讀完本場對話，再決定這次追蹤如何進行。':state.scene==='c02Investigate'?'兩條分支均可處理；每次調查會記錄結果，另一條仍保留。':state.scene==='c02Board'?'本次原型先跟進一項原承諾；其他承諾與原期限保留。':'選擇本次聯絡方式或後續安排。回覆不代表原承諾已履行。'):scene.hub?`剩餘 ${state.slots} 個調查時段。每次拜訪消耗 1 個時段；最後一次訪談結束後進入案件整理。`:
    reading?'先閱讀本場對話，再選擇主線回應；本場支線可隨時查看。':'選擇主線回應會推進故事；離開前可先查看本場支線，未完成內容不會自動補做。'
  };
 }

@@ -70,3 +70,8 @@ import {startThirdChapterReply} from '../engine.mjs';
 export function thirdReplyFixture({position='separate',scope='broader',delivery='send',windowNext='track',...previous}={}){
  let s=startThirdChapterReply(thirdOpeningFixture(previous));for(const id of [position,scope,delivery,windowNext])s=advance(s,id);return s;
 }
+
+import {startThirdChapterTracking} from '../engine.mjs';
+export function thirdTrackingFixture({trackTopic='files',trackAction='follow',coordination='limited',...previous}={}){
+ let s=startThirdChapterTracking(thirdReplyFixture(previous));for(const id of [trackTopic,trackAction,'record',coordination])s=advance(s,id);return s;
+}
