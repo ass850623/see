@@ -222,3 +222,9 @@ export function startThirdChapterDayFive(state){
  const next=structuredClone(state);next.scene='c03DayFiveDesk';next.pageIndex=0;next.flags.c03DayFiveStarted=true;next.note='故事第 5 日方法安排與有效申請另存，舊公開稿、署名與承諾期限保留。';
  next.history.push({scene:'c03ReportEnd',speaker:'林予澄',text:chapterScenes.c03ReportEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第 5 日方法安排與有效申請。'});return next;
 }
+
+export function startThirdChapterProcessing(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03DayFiveEnd')throw new Error('請先完成第 5 日方法安排與有效申請');
+ const next=structuredClone(state);next.scene='c03ProcessingDesk';next.pageIndex=0;next.flags.c03ProcessingStarted=true;next.note='第 5 日午後申請處理與缺件另存，舊公開原文、資料授權與期限保留。';
+ next.history.push({scene:'c03DayFiveEnd',speaker:'林予澄',text:chapterScenes.c03DayFiveEnd.text+'\n'+thirdChapterReaction(state),choice:'接續申請處理與缺件追蹤。'});return next;
+}
