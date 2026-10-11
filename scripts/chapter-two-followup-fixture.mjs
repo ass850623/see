@@ -119,3 +119,6 @@ export function thirdReportFixture({reportDisposition='publish',negotiation='fol
 
 import {startThirdChapterDayFive} from '../engine.mjs';
 export function thirdDayFiveFixture({dayFiveMethod='review',application='submit',dayFiveNext='results',...previous}={}){let s=startThirdChapterDayFive(thirdReportFixture(previous));for(const id of [dayFiveMethod,'record',application,'record',dayFiveNext])s=advance(s,id);return s;}
+
+import {startThirdChapterProcessing} from '../engine.mjs';
+export function thirdProcessingFixture({processing='receive',processingGap='check',processingNext='report',...previous}={}){let s=startThirdChapterProcessing(thirdDayFiveFixture(previous));for(const id of [processing,'record',processingGap,'record',processingNext])s=advance(s,id);return s;}

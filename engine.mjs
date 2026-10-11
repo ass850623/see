@@ -228,3 +228,9 @@ export function startThirdChapterProcessing(state){
  const next=structuredClone(state);next.scene='c03ProcessingDesk';next.pageIndex=0;next.flags.c03ProcessingStarted=true;next.note='第 5 日午後申請處理與缺件另存，舊公開原文、資料授權與期限保留。';
  next.history.push({scene:'c03DayFiveEnd',speaker:'林予澄',text:chapterScenes.c03DayFiveEnd.text+'\n'+thirdChapterReaction(state),choice:'接續申請處理與缺件追蹤。'});return next;
 }
+
+export function startThirdChapterMaterials(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03ProcessingEnd')throw new Error('請先完成申請處理與缺件追蹤');
+ const next=structuredClone(state);next.scene='c03MaterialsDesk';next.pageIndex=0;next.flags.c03MaterialsStarted=true;next.note='第 5 日傍晚材料回報與持續交涉另存，舊公開原文與家庭決定保留。';
+ next.history.push({scene:'c03ProcessingEnd',speaker:'林予澄',text:chapterScenes.c03ProcessingEnd.text+'\n'+thirdChapterReaction(state),choice:'接續新材料回報與持續交涉。'});return next;
+}
