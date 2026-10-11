@@ -55,3 +55,8 @@ import {startSecondChapterStage} from '../engine.mjs';
 export function stageFixture({checkAction='record',priority='files',...previous}={}){
  let s=startSecondChapterStage(inquiryFixture(previous));for(const id of [checkAction,priority,'save'])s=advance(s,id);return s;
 }
+
+import {startSecondChapterEnding} from '../engine.mjs';
+export function endingFixture({response='attend',preparation='facts',...previous}={}){
+ let s=startSecondChapterEnding(stageFixture(previous));for(const id of [response,preparation,'finish'])s=advance(s,id);return s;
+}

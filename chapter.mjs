@@ -1,3 +1,4 @@
+import {chapterThreeScenes} from './chapter-three.mjs';
 import {chapterTwoScenes} from './chapter-two.mjs';
 import {aftermathScenes} from './aftermath.mjs';
 import {narrativeBeats} from './narrative.mjs';
@@ -33,6 +34,7 @@ export const chapterScenes={
  checkpoint:{place:'議會走廊 · 聽證準備',speaker:'沈若川',role:'本土協進黨議員',portrait:'senior',text:'窗外天色開始轉暗。證據有了，承諾也留下了。接下來是黨團協商與公開聽證。你仍可以查看案件簿，或先存檔再前進。',choices:[choice('continue','前往黨團協商。','caucus')]},
  ...hearingScenes,
  ...chapterTwoScenes,
+ ...chapterThreeScenes,
  ...aftermathScenes
 };
 export const visits=[{id:'technician',title:'拜訪技師 · 通訊與維護資料'},{id:'family',title:'探望船員家庭 · 停航之後',task:'S01'},{id:'journalist',title:'與記者核對 · 報導時間線',task:'S02'},{id:'aide',title:'和予澄談談 · 幕僚工作量',task:'S03'}];

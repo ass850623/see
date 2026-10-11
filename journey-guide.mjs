@@ -1,5 +1,6 @@
 import {chapterPhases,chapterPhase} from './chapter-meta.mjs';
 const objectives={
+ c03Morning:'確認昨日答問意向或暫緩安排。',c03Checkin:'決定答覆從事實或等待者說起。',c03Question:'依優先方向回答第一輪追問。',c03AnswerReview:'審閱答覆，選擇使用或保留草稿。',c03OpeningEnd:'查看第一輪答覆與未決事項。',
  c02ClosingNotice:'準備隔日答問方式，保留安排待確認。',c02ClosingTalk:'依優先方向選開場準備方式。',c02NextChapterBrief:'審閱第三章內部準備頁。',c02ChapterEnd:'保存章末並查看下一章準備。',
  c02CheckReply:'依核對或草稿狀態處理實際回覆。',c02StageBoard:'選下一段優先意向。',c02StageReview:'審閱成果與未決事項。',c02StageEnd:'查看第二章內部階段整理。',
  c02InternalAsk:'依閱覽結果選內部追問。',c02QuestionDraft:'分開事實與待查問題。',c02QuestionReview:'審閱內部問題稿，安排核對或暫存。',c02InquiryEnd:'查看問題稿與未取得的回覆。',
@@ -29,7 +30,7 @@ export function journeyGuide(state,scene){
   title:`目前目標 · ${phase.label}`,
   objective:objectives[state.scene],
   actionTitle:scene.terminal?'章末工具':reading?'閱讀對話':state.scene==='c02Followup'?'選擇回訪順序':state.scene==='c02Investigate'?'選擇調查順序':state.scene==='c02Board'?'選定追蹤焦點':scene.hub?'安排調查訪談':'主線回應',
-  hint:scene.terminal?(state.chapter==='c02'?'第二章原型紀錄已保存。開場與調查暫停點可接續後段；回訪暫停點可接續交付核對；交付暫停點可接續來源與公開回覆；最後暫停點的後續反應與個案結果尚未開放。':'第一章流程已完成。可查看交接與未決事項，或開始第二章開場原型。進入會更新自動存檔；想保留結算點，可先存入手動欄位。'):state.chapter==='c02'?(reading?'先讀完本場對話，再決定這次追蹤如何進行。':state.scene==='c02Investigate'?'兩條分支均可處理；每次調查會記錄結果，另一條仍保留。':state.scene==='c02Board'?'本次原型先跟進一項原承諾；其他承諾與原期限保留。':'選擇本次聯絡方式或後續安排。回覆不代表原承諾已履行。'):scene.hub?`剩餘 ${state.slots} 個調查時段。每次拜訪消耗 1 個時段；最後一次訪談結束後進入案件整理。`:
+  hint:state.chapter==='c03'?(scene.terminal?'第三章開場紀錄已保存；後續議會交鋒與正式窗口答覆尚未開放。':reading?'先閱讀本場對話，再準備追加詢問答覆。':'確認安排、準備稿與實際答覆分開記錄；原承諾與期限保留。'):scene.terminal?(state.scene==='c02ChapterEnd'?'可開始第三章追加詢問原型。進入會更新自動存檔；想保留章末，可先存入手動欄位。':state.chapter==='c02'?'第二章原型紀錄已保存。開場與調查暫停點可接續後段；回訪暫停點可接續交付核對；交付暫停點可接續來源與公開回覆；最後暫停點的後續反應與個案結果尚未開放。':'第一章流程已完成。可查看交接與未決事項，或開始第二章開場原型。進入會更新自動存檔；想保留結算點，可先存入手動欄位。'):state.chapter==='c02'?(reading?'先讀完本場對話，再決定這次追蹤如何進行。':state.scene==='c02Investigate'?'兩條分支均可處理；每次調查會記錄結果，另一條仍保留。':state.scene==='c02Board'?'本次原型先跟進一項原承諾；其他承諾與原期限保留。':'選擇本次聯絡方式或後續安排。回覆不代表原承諾已履行。'):scene.hub?`剩餘 ${state.slots} 個調查時段。每次拜訪消耗 1 個時段；最後一次訪談結束後進入案件整理。`:
    reading?'先閱讀本場對話，再選擇主線回應；本場支線可隨時查看。':'選擇主線回應會推進故事；離開前可先查看本場支線，未完成內容不會自動補做。'
  };
 }
