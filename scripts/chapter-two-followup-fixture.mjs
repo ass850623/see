@@ -140,3 +140,6 @@ export function thirdDeadlineFixture({answerTrack='follow',deadlineFocus='dated'
 
 import {startThirdChapterPreReport} from '../engine.mjs';
 export function thirdPreReportFixture({preReportFocus='progress',preReportDisposition='publish',waitAction='notify-relief-report',preReportNext='reply',...previous}={}){let s=startThirdChapterPreReport(thirdDeadlineFixture(previous));const actions=s.flags.c03DeadlineNext==='contact'?[waitAction,'record',preReportFocus,preReportDisposition,'record',preReportNext]:[preReportFocus,preReportDisposition,'record',waitAction,'record',preReportNext];for(const id of actions)s=advance(s,id);return s;}
+
+import {startThirdChapterSchedule} from '../engine.mjs';
+export function thirdScheduleFixture({scheduleAction='receive',promiseTarget='relief-report',scheduleNext='response',...previous}={}){let s=startThirdChapterSchedule(thirdPreReportFixture(previous));for(const id of [scheduleAction,'record',promiseTarget,'review',scheduleNext])s=advance(s,id);return s;}
