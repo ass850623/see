@@ -137,3 +137,6 @@ export function thirdDaySevenFixture({daySevenAction='attend',answerFocus='mater
 
 import {startThirdChapterDeadline} from '../engine.mjs';
 export function thirdDeadlineFixture({answerTrack='follow',deadlineFocus='dated',deadlineNext='report',...previous}={}){let s=startThirdChapterDeadline(thirdDaySevenFixture(previous));for(const id of [answerTrack,'record',deadlineFocus,'review',deadlineNext])s=advance(s,id);return s;}
+
+import {startThirdChapterPreReport} from '../engine.mjs';
+export function thirdPreReportFixture({preReportFocus='progress',preReportDisposition='publish',waitAction='notify-relief-report',preReportNext='reply',...previous}={}){let s=startThirdChapterPreReport(thirdDeadlineFixture(previous));const actions=s.flags.c03DeadlineNext==='contact'?[waitAction,'record',preReportFocus,preReportDisposition,'record',preReportNext]:[preReportFocus,preReportDisposition,'record',waitAction,'record',preReportNext];for(const id of actions)s=advance(s,id);return s;}

@@ -264,3 +264,9 @@ export function startThirdChapterPreReport(state){
  const next=structuredClone(state);next.scene=state.flags.c03DeadlineNext==='contact'?'c03WaitDesk':'c03PreReportDesk';next.pageIndex=0;next.flags.c03PreReportStarted=true;next.note='期限前新稿與單項聯絡另存，原優先決定本輪先後順序。';
  next.history.push({scene:'c03DeadlineEnd',speaker:'林予澄',text:chapterScenes.c03DeadlineEnd.text+'\n'+thirdChapterReaction(state),choice:'接續期限前回報與等待者聯絡。'});return next;
 }
+
+export function startThirdChapterSchedule(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03PreReportEnd')throw new Error('請先完成期限前回報與等待者聯絡');
+ const next=structuredClone(state);next.scene='c03ScheduleDesk';next.pageIndex=0;next.flags.c03ScheduleStarted=true;next.note='時程回覆與原承諾缺口內部另存，原日期、狀態與公開稿保留。';
+ next.history.push({scene:'c03PreReportEnd',speaker:'林予澄',text:chapterScenes.c03PreReportEnd.text+'\n'+thirdChapterReaction(state),choice:'接續時程回覆與承諾缺口核對。'});return next;
+}
