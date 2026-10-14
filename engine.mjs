@@ -300,3 +300,9 @@ export function startThirdChapterDayEight(state){
  const next=structuredClone(state);next.scene=state.flags.c03PrecloseNext==='contact'?'c03DayEightWaitDesk':'c03DayEightDesk';next.pageIndex=0;next.flags.c03DayEightStarted=true;next.note='故事第 8 日開始，原期限已到，新稿與本日單項聯絡另存。';
  next.history.push({scene:'c03PrecloseEnd',speaker:'林予澄',text:chapterScenes.c03PrecloseEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第 8 日開場與到期回報。'});return next;
 }
+
+export function startThirdChapterDueTrack(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03DayEightEnd')throw new Error('請先完成第 8 日開場與到期回報');
+ const next=structuredClone(state);next.scene='c03DueTrackDesk';next.pageIndex=0;next.flags.c03DueTrackStarted=true;next.note='第 8 日實際回覆與到期缺口另存，不補記為期限前履行。';
+ next.history.push({scene:'c03DayEightEnd',speaker:'林予澄',text:chapterScenes.c03DayEightEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第 8 日回覆與到期缺口追蹤。'});return next;
+}

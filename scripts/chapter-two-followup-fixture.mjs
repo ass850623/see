@@ -155,3 +155,6 @@ export function thirdResponsibilityFixture({responsibilityAction='check',respons
 
 import {startThirdChapterPreclose} from '../engine.mjs';
 export function thirdPrecloseFixture({supplementAction='receive',precloseFocus='progress',precloseNext='report',...previous}={}){let s=startThirdChapterPreclose(thirdResponsibilityFixture(previous));for(const id of [supplementAction,'record',precloseFocus,'review',precloseNext])s=advance(s,id);return s;}
+
+import {startThirdChapterDayEight} from '../engine.mjs';
+export function thirdDayEightFixture({dayEightFocus='progress',dayEightDisposition='publish',dayEightWaitAction='notify-relief-report',dayEightNext='reply',...previous}={}){let s=startThirdChapterDayEight(thirdPrecloseFixture(previous));const actions=s.flags.c03PrecloseNext==='contact'?[dayEightWaitAction,'record',dayEightFocus,dayEightDisposition,'record',dayEightNext]:[dayEightFocus,dayEightDisposition,'record',dayEightWaitAction,'record',dayEightNext];for(const id of actions)s=advance(s,id);return s;}
