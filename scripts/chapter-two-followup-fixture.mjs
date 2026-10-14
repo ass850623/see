@@ -158,3 +158,6 @@ export function thirdPrecloseFixture({supplementAction='receive',precloseFocus='
 
 import {startThirdChapterDayEight} from '../engine.mjs';
 export function thirdDayEightFixture({dayEightFocus='progress',dayEightDisposition='publish',dayEightWaitAction='notify-relief-report',dayEightNext='reply',...previous}={}){let s=startThirdChapterDayEight(thirdPrecloseFixture(previous));const actions=s.flags.c03PrecloseNext==='contact'?[dayEightWaitAction,'record',dayEightFocus,dayEightDisposition,'record',dayEightNext]:[dayEightFocus,dayEightDisposition,'record',dayEightWaitAction,'record',dayEightNext];for(const id of actions)s=advance(s,id);return s;}
+
+import {startThirdChapterDueTrack} from '../engine.mjs';
+export function thirdDueTrackFixture({dueTrackAction='receive',duePromiseTarget='relief-report',dueTrackNext='response',...previous}={}){let s=startThirdChapterDueTrack(thirdDayEightFixture(previous));for(const id of [dueTrackAction,'record',duePromiseTarget,'review',dueTrackNext])s=advance(s,id);return s;}

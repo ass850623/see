@@ -306,3 +306,9 @@ export function startThirdChapterDueTrack(state){
  const next=structuredClone(state);next.scene='c03DueTrackDesk';next.pageIndex=0;next.flags.c03DueTrackStarted=true;next.note='第 8 日實際回覆與到期缺口另存，不補記為期限前履行。';
  next.history.push({scene:'c03DayEightEnd',speaker:'林予澄',text:chapterScenes.c03DayEightEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第 8 日回覆與到期缺口追蹤。'});return next;
 }
+
+export function startThirdChapterDueReply(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03DueTrackEnd')throw new Error('請先完成第 8 日回覆與到期缺口追蹤');
+ const next=structuredClone(state);next.scene=state.flags.c03DueTrackNext==='window'?'c03DueQueryDesk':'c03DueReplyDesk';next.pageIndex=0;next.flags.c03DueReplyStarted=true;next.note='第 8 日單項到期回覆與責任追問另存，原優先決定先後。';
+ next.history.push({scene:'c03DueTrackEnd',speaker:'林予澄',text:chapterScenes.c03DueTrackEnd.text+'\n'+thirdChapterReaction(state),choice:'接續到期缺口回覆與責任追問。'});return next;
+}
