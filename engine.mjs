@@ -294,3 +294,9 @@ export function startThirdChapterPreclose(state){
  const next=structuredClone(state);next.scene='c03PrecloseDesk';next.pageIndex=0;next.flags.c03PrecloseStarted=true;next.note='補列處理與內部期限前收束表另存，原日期與公開原文保留。';
  next.history.push({scene:'c03ResponsibilityEnd',speaker:'林予澄',text:chapterScenes.c03ResponsibilityEnd.text+'\n'+thirdChapterReaction(state),choice:'接續補列處理與期限前收束。'});return next;
 }
+
+export function startThirdChapterDayEight(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03PrecloseEnd')throw new Error('請先完成補列處理與期限前收束');
+ const next=structuredClone(state);next.scene=state.flags.c03PrecloseNext==='contact'?'c03DayEightWaitDesk':'c03DayEightDesk';next.pageIndex=0;next.flags.c03DayEightStarted=true;next.note='故事第 8 日開始，原期限已到，新稿與本日單項聯絡另存。';
+ next.history.push({scene:'c03PrecloseEnd',speaker:'林予澄',text:chapterScenes.c03PrecloseEnd.text+'\n'+thirdChapterReaction(state),choice:'接續第 8 日開場與到期回報。'});return next;
+}

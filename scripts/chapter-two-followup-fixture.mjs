@@ -152,3 +152,6 @@ export function thirdGapFollowFixture({gapFollowAction='receive',queryFollowActi
 
 import {startThirdChapterResponsibility} from '../engine.mjs';
 export function thirdResponsibilityFixture({responsibilityAction='check',responsibilityFocus='scope',responsibilityDisposition='send',...previous}={}){let s=startThirdChapterResponsibility(thirdGapFollowFixture(previous));for(const id of [responsibilityAction,'record',responsibilityFocus,'review',responsibilityDisposition])s=advance(s,id);return s;}
+
+import {startThirdChapterPreclose} from '../engine.mjs';
+export function thirdPrecloseFixture({supplementAction='receive',precloseFocus='progress',precloseNext='report',...previous}={}){let s=startThirdChapterPreclose(thirdResponsibilityFixture(previous));for(const id of [supplementAction,'record',precloseFocus,'review',precloseNext])s=advance(s,id);return s;}
