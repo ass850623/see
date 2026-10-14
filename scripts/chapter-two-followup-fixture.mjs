@@ -149,3 +149,6 @@ export function thirdGapReplyFixture({gapReplyFocus='progress',gapReplyDispositi
 
 import {startThirdChapterGapFollow} from '../engine.mjs';
 export function thirdGapFollowFixture({gapFollowAction='receive',queryFollowAction='receive',gapFollowNext='check',...previous}={}){let s=startThirdChapterGapFollow(thirdGapReplyFixture(previous));const actions=s.flags.c03GapReplyNext==='query'?[queryFollowAction,'record',gapFollowAction,'record',gapFollowNext]:[gapFollowAction,'record',queryFollowAction,'record',gapFollowNext];for(const id of actions)s=advance(s,id);return s;}
+
+import {startThirdChapterResponsibility} from '../engine.mjs';
+export function thirdResponsibilityFixture({responsibilityAction='check',responsibilityFocus='scope',responsibilityDisposition='send',...previous}={}){let s=startThirdChapterResponsibility(thirdGapFollowFixture(previous));for(const id of [responsibilityAction,'record',responsibilityFocus,'review',responsibilityDisposition])s=advance(s,id);return s;}
