@@ -161,3 +161,6 @@ export function thirdDayEightFixture({dayEightFocus='progress',dayEightDispositi
 
 import {startThirdChapterDueTrack} from '../engine.mjs';
 export function thirdDueTrackFixture({dueTrackAction='receive',duePromiseTarget='relief-report',dueTrackNext='response',...previous}={}){let s=startThirdChapterDueTrack(thirdDayEightFixture(previous));for(const id of [dueTrackAction,'record',duePromiseTarget,'review',dueTrackNext])s=advance(s,id);return s;}
+
+import {startThirdChapterDueReply} from '../engine.mjs';
+export function thirdDueReplyFixture({dueReplyFocus='progress',dueReplyDisposition='send',dueQuery='send',dueReplyNext='reply',...previous}={}){let s=startThirdChapterDueReply(thirdDueTrackFixture(previous));const actions=s.flags.c03DueTrackNext==='window'?[dueQuery,'record',dueReplyFocus,dueReplyDisposition,dueReplyNext]:[dueReplyFocus,dueReplyDisposition,'record',dueQuery,dueReplyNext];for(const id of actions)s=advance(s,id);return s;}

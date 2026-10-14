@@ -312,3 +312,9 @@ export function startThirdChapterDueReply(state){
  const next=structuredClone(state);next.scene=state.flags.c03DueTrackNext==='window'?'c03DueQueryDesk':'c03DueReplyDesk';next.pageIndex=0;next.flags.c03DueReplyStarted=true;next.note='第 8 日單項到期回覆與責任追問另存，原優先決定先後。';
  next.history.push({scene:'c03DueTrackEnd',speaker:'林予澄',text:chapterScenes.c03DueTrackEnd.text+'\n'+thirdChapterReaction(state),choice:'接續到期缺口回覆與責任追問。'});return next;
 }
+
+export function startThirdChapterDueFollow(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03DueReplyEnd')throw new Error('請先完成到期缺口回覆與責任追問');
+ const next=structuredClone(state);next.scene=state.flags.c03DueReplyNext==='query'?'c03DueWindowDesk':'c03DueFollowDesk';next.pageIndex=0;next.flags.c03DueFollowStarted=true;next.note='第 8 日到期回信與責任窗口回覆另存，原日期與公開稿保留。';
+ next.history.push({scene:'c03DueReplyEnd',speaker:'林予澄',text:chapterScenes.c03DueReplyEnd.text+'\n'+thirdChapterReaction(state),choice:'接續到期回信與責任窗口回覆。'});return next;
+}
