@@ -282,3 +282,9 @@ export function startThirdChapterGapFollow(state){
  const next=structuredClone(state);next.scene=state.flags.c03GapReplyNext==='query'?'c03QueryFollowDesk':'c03GapFollowDesk';next.pageIndex=0;next.flags.c03GapFollowStarted=true;next.note='單項回信與本版補問處理另存，保留原日期與公開原文。';
  next.history.push({scene:'c03GapReplyEnd',speaker:'林予澄',text:chapterScenes.c03GapReplyEnd.text+'\n'+thirdChapterReaction(state),choice:'接續缺口回信與補問處理。'});return next;
 }
+
+export function startThirdChapterResponsibility(state){
+ if(!validState(state)||state.chapter!=='c03'||state.scene!=='c03GapFollowEnd')throw new Error('請先完成缺口回信與補問處理');
+ const next=structuredClone(state);next.scene='c03ResponsibilityDesk';next.pageIndex=0;next.flags.c03ResponsibilityStarted=true;next.note='責任窗口核對與本版補列另存，原日期與公開原文保留。';
+ next.history.push({scene:'c03GapFollowEnd',speaker:'林予澄',text:chapterScenes.c03GapFollowEnd.text+'\n'+thirdChapterReaction(state),choice:'接續責任窗口核對與補列整理。'});return next;
+}

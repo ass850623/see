@@ -146,3 +146,6 @@ export function thirdScheduleFixture({scheduleAction='receive',promiseTarget='re
 
 import {startThirdChapterGapReply} from '../engine.mjs';
 export function thirdGapReplyFixture({gapReplyFocus='progress',gapReplyDisposition='send',gapQuery='send',gapReplyNext='reply',...previous}={}){let s=startThirdChapterGapReply(thirdScheduleFixture(previous));const actions=s.flags.c03ScheduleNext==='window'?[gapQuery,'record',gapReplyFocus,gapReplyDisposition,gapReplyNext]:[gapReplyFocus,gapReplyDisposition,'record',gapQuery,gapReplyNext];for(const id of actions)s=advance(s,id);return s;}
+
+import {startThirdChapterGapFollow} from '../engine.mjs';
+export function thirdGapFollowFixture({gapFollowAction='receive',queryFollowAction='receive',gapFollowNext='check',...previous}={}){let s=startThirdChapterGapFollow(thirdGapReplyFixture(previous));const actions=s.flags.c03GapReplyNext==='query'?[queryFollowAction,'record',gapFollowAction,'record',gapFollowNext]:[gapFollowAction,'record',queryFollowAction,'record',gapFollowNext];for(const id of actions)s=advance(s,id);return s;}
