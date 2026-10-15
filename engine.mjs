@@ -352,3 +352,9 @@ export function startFourthChapterReturn(state){
  const next=structuredClone(state);next.scene=state.flags.c04ContactNext==='window'?'c04ReturnWindowDesk':'c04ReturnVisitDesk';next.pageIndex=0;next.flags.c04ReturnStarted=true;next.note='依已選優先順序開始窗口後續與在地回訪；原送件、公開原文與期限保留。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04ContactBrief,choice:'接續第四章窗口後續與在地回訪。'});return next;
 }
+
+export function startFourthChapterPreparation(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04ReturnEnd')throw new Error('請先保存第四章窗口後續與在地回訪');
+ const next=structuredClone(state);next.scene=state.flags.c04ReturnNext==='list'?'c04PrepListDesk':'c04PrepReadyDesk';next.pageIndex=0;next.flags.c04PrepStarted=true;next.note='依原優先順序準備清單與現場內部稿，原送件、到場紀錄與期限保留。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04ReturnBrief,choice:'接續第四章清單與現場應變準備。'});return next;
+}
