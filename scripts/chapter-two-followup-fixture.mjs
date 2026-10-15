@@ -164,3 +164,6 @@ export function thirdDueTrackFixture({dueTrackAction='receive',duePromiseTarget=
 
 import {startThirdChapterDueReply} from '../engine.mjs';
 export function thirdDueReplyFixture({dueReplyFocus='progress',dueReplyDisposition='send',dueQuery='send',dueReplyNext='reply',...previous}={}){let s=startThirdChapterDueReply(thirdDueTrackFixture(previous));const actions=s.flags.c03DueTrackNext==='window'?[dueQuery,'record',dueReplyFocus,dueReplyDisposition,dueReplyNext]:[dueReplyFocus,dueReplyDisposition,'record',dueQuery,dueReplyNext];for(const id of actions)s=advance(s,id);return s;}
+
+import {startThirdChapterDueFollow} from '../engine.mjs';
+export function thirdDueFollowFixture({dueFollowAction='receive',dueWindowAction='receive',dueFollowNext='check',...previous}={}){let s=startThirdChapterDueFollow(thirdDueReplyFixture(previous));const actions=s.flags.c03DueReplyNext==='query'?[dueWindowAction,'record',dueFollowAction,'record',dueFollowNext]:[dueFollowAction,'record',dueWindowAction,'record',dueFollowNext];for(const id of actions)s=advance(s,id);return s;}
