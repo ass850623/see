@@ -340,3 +340,9 @@ export function startFourthChapter(state){
  const next=structuredClone(state);next.chapter='c04';next.scene='c04Morning';next.pageIndex=0;next.flags.c04Started=true;next.flags.c04Handoff=state.flags.c03NextBrief;next.note='故事第 9 日開始：第三章章末原文與優先方向保留，原期限不重設。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c03EndingBrief,choice:'開始第四章開場。'});return next;
 }
+
+export function startFourthChapterContact(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04OpeningEnd')throw new Error('請先保存第四章開場與行動稿審閱');
+ const next=structuredClone(state);next.scene='c04ContactDesk';next.pageIndex=0;next.flags.c04ContactStarted=true;next.note='本輪正式接洽另存，早上待辦或留稿未自動送交，原期限與公開原文保留。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04Record,choice:'接續第四章正式接洽與窗口回應。'});return next;
+}
