@@ -358,3 +358,9 @@ export function startFourthChapterPreparation(state){
  const next=structuredClone(state);next.scene=state.flags.c04ReturnNext==='list'?'c04PrepListDesk':'c04PrepReadyDesk';next.pageIndex=0;next.flags.c04PrepStarted=true;next.note='依原優先順序準備清單與現場內部稿，原送件、到場紀錄與期限保留。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04ReturnBrief,choice:'接續第四章清單與現場應變準備。'});return next;
 }
+
+export function startFourthChapterVerification(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04PrepEnd')throw new Error('請先保存第四章兩份準備稿與擬分工');
+ const next=structuredClone(state);next.scene=state.flags.c04PrepNext==='verify'?'c04VerifyListDesk':'c04VerifyFieldDesk';next.pageIndex=0;next.flags.c04VerifyStarted=true;next.note='依原優先順序執行或暫緩清單與現場核對，原稿、觀察與期限保留。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04PrepBrief,choice:'接續第四章現場核對與應變分工執行。'});return next;
+}
