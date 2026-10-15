@@ -6,6 +6,7 @@ import {narrativeBeats} from './narrative.mjs';
 import {hearingScenes} from './hearing.mjs';
 const choice=(id,text,next,effects={})=>({id,text,next,effects});
 export const evidenceCatalog={
+ E12:{title:'港區夜間照明通報（公開範圍）',source:'本夜實際核對的港務公開公告或值班窗口公開通報，來源與原文見任務簿',summary:'僅確認本次候船區一般照明中斷及備用照明啟用；影響範圍、原因與復電時間仍待核對，不代表全港停電、設備安全或政治動機。取得不代表辦公室已發布新聲明。'},
  E11:{title:'分項承辦公開程序答覆',source:'本輪選定承辦單位的公開程序書面答覆，已核對文號',summary:'依本輪選定分項說明索引申請、登錄欄位核對或救助替代文件程序；只授權引用公開程序，不含完整原卷、來源身分、事故原因或個案結果。原文見任務簿。'},
  E10:{title:'受限閱覽工作筆記',source:'窗口准許抄記的流程欄位，現場核對',summary:'記錄收件、移交與修訂登錄流程，不含值班姓名或原因認定；沒有原卷複本，未獲公開授權。'},
  E09:{title:'來源補充回信（私人）',source:'原來信聯絡管道再次寄來的私人補充',summary:'自述受理日期與公開索引線索，沒有原件或身分佐證；來源未核實、未獲公開授權。核對公開日期不等於核實本信。'},
