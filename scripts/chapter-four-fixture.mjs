@@ -1,6 +1,7 @@
+import {accessPrimaryAction} from '../chapter-four-access.mjs';
 import {triageWindowAction} from '../chapter-four-triage.mjs';
 import {thirdDueCloseFixture} from './chapter-two-followup-fixture.mjs';
-import {startFourthChapterTriage,startFourthChapterInitial,startThirdChapterEnding,startFourthChapter,startFourthChapterContact,startFourthChapterReturn,startFourthChapterPreparation,startFourthChapterVerification,startFourthChapterNight,advance} from '../engine.mjs';
+import {startFourthChapterAccess,startFourthChapterTriage,startFourthChapterInitial,startThirdChapterEnding,startFourthChapter,startFourthChapterContact,startFourthChapterReturn,startFourthChapterPreparation,startFourthChapterVerification,startFourthChapterNight,advance} from '../engine.mjs';
 export function thirdEndingFixture({nextFocus='files',endingFocus='facts',...prior}={}){let s=startThirdChapterEnding(thirdDueCloseFixture(prior));for(const id of [endingFocus,'review',nextFocus,'review','finish'])s=advance(s,id);return s;}
 
 export function fourthOpeningFixture({orientation='facts',pressApproach='limits',workApproach='contact',disposition='queued',...prior}={}){let s=startFourthChapter(thirdEndingFixture(prior));for(const id of [orientation,'review',pressApproach,workApproach,disposition,'finish'])s=advance(s,id);return s;}
@@ -18,3 +19,5 @@ export function fourthNightFixture({nightListAction='follow',nightDutyAction='co
 export function fourthInitialFixture({initialAction,initialFocus='facts',initialDisposition='published',initialConcern='information',initialNext='window',...prior}={}){let s=startFourthChapterInitial(fourthNightFixture(prior));const action=initialAction||(s.flags.c04NightResponse==='query'?'receive':s.flags.c04NightDutyAction==='contact'?'send':'connect');for(const id of [action,'confirm','continue',initialFocus,initialDisposition,initialConcern==='unheard'?'hold':'call',initialConcern==='unheard'?'keep':initialConcern,initialNext])s=advance(s,id);return s;}
 
 export function fourthTriageFixture({triageAction,triageCall='call',triageFocus='mobility',triageDisposition='queued',triageNext='access',...prior}={}){let s=startFourthChapterTriage(fourthInitialFixture(prior));const action=triageAction||triageWindowAction(s),w=[action,'confirm','review'],p=[triageCall,triageFocus,triageDisposition,'review'];for(const id of [...(s.flags.c04InitialNext==='window'?[...w,...p]:[...p,...w]),triageNext])s=advance(s,id);return s;}
+
+export function fourthAccessFixture({accessAction,accessOwner='delegate',accessNext='updates',...prior}={}){let s=startFourthChapterAccess(fourthTriageFixture(prior));const a=[accessAction||accessPrimaryAction(s),'confirm','review'],h=[accessOwner==='unassigned'?'keep':s.flags.c04TriageDisposition==='queued'?'assign':'activate',accessOwner==='unassigned'?'keep':accessOwner,'confirm','review'];for(const id of [...(s.flags.c04TriageNext==='access'?[...a,...h]:[...h,...a]),accessNext])s=advance(s,id);return s;}

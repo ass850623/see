@@ -388,3 +388,9 @@ export function startFourthChapterAccess(state){
  const next=structuredClone(state);next.scene=state.flags.c04TriageNext==='access'?'c04AccessDesk':'c04AccessHandoffDesk';next.pageIndex=0;next.flags.c04AccessStarted=true;next.note='依原優先順序追通行問題與安排內部承接，交班當時版本不隨後來回覆改寫。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04TriageBrief,choice:'接續第四章通行追問與夜間交班。'});return next;
 }
+
+export function startFourthChapterUpdate(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04AccessEnd')throw new Error('請先保存第四章通行追問與夜間交班');
+ const next=structuredClone(state);next.scene=state.flags.c04AccessNext==='updates'?'c04UpdateDesk':'c04UpdateFieldDesk';next.pageIndex=0;next.flags.c04UpdateStarted=true;next.note='依原優先順序核對新公告與電話回報，原通報、初報及交班原版不覆寫。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04AccessBrief,choice:'接續第四章夜間公告更新與現場回報。'});return next;
+}
