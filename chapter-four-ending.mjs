@@ -8,7 +8,7 @@ export const endingScenes={
  c04NextChapterDesk:scene('第五章的門',['若川傳來夜末訊息：「黨內明天會問，你今晚到底答應了什麼。別只帶一張看起來都完成的表。」他沒有附上一場已確認的會議邀請。','你可以先準備黨內責任追問、一般通行未決或原承諾。其他工作仍會帶進下一章，沒有因優先順序改變而消失。'],'選第五章「黨內的門」的內部優先方向。',{speaker:'沈若川',role:'本土協進黨議員',portrait:'senior'}),
  c04NextChapterReview:scene('第五章內部準備全文',['予澄核對下一章要帶走的版本與界線。原留稿仍是留稿，已接受的內部準備也只限原本範圍。','先做下一章準備時，後來完成的章末核對會另存，不追加成起稿時早已完成。第五章尚未開場，明天的聯絡還要實際進行。'],'審閱完整準備頁，再保存這項工作。'),
  c04EndingRecord:scene('第四章收束',['若川讀完交接，沒有要求你把所有空格填滿。「至少別讓明天的人，以為今天沒有留下問題。」','予澄將本章核對與第五章準備各留原文。第九日的這一章可以在這裡保存，案件與等待的人並沒有因此全部完成。'],'另保存第四章章末與已審閱的第五章準備頁。',{speaker:'沈若川',role:'本土協進黨議員',portrait:'senior'}),
- c04ChapterEnd:{place:'第四章章末 · 可玩流程初版收束',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'第四章可玩流程初版已收束，章末核對與第五章內部準備已保存。原公開原文、資料限制、待收、承諾與期限保留。故事仍在第 9 日夜末，第五章開場尚未開放；可查看任務、保存手動欄位或返回主畫面。',choices:[]}
+ c04ChapterEnd:{place:'第四章章末 · 可玩流程初版收束',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'第四章可玩流程初版已收束，章末核對與第五章內部準備已保存。原公開原文、資料限制、待收、承諾與期限保留。故事仍在第 9 日夜末，可開始第五章開場與黨內追問，或查看任務、保存手動欄位或返回主畫面。',choices:[]}
 };
 const focusNames={caucus:'黨內責任分工與政治追問',access:'一般通行與尚待窗口答覆',promises:'原承諾、等待者與程序未決'};
 export function endingPending(s){const f=s.flags;for(const[k,v]of [['c04CloseAction','close'],['c04ProgressAction','progress'],['c04AccessAction','access'],['c04TriageWindowAction','triage']]){if(f[k]==='send')return v;if(f[k]==='receive')return null;}if(f.c04InitialSourceResult==='receipt')return 'initial';if(f.c04NightResponse==='query'&&f.c04InitialSourceAction!=='receive')return 'night';return null;}
