@@ -394,3 +394,9 @@ export function startFourthChapterUpdate(state){
  const next=structuredClone(state);next.scene=state.flags.c04AccessNext==='updates'?'c04UpdateDesk':'c04UpdateFieldDesk';next.pageIndex=0;next.flags.c04UpdateStarted=true;next.note='依原優先順序核對新公告與電話回報，原通報、初報及交班原版不覆寫。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04AccessBrief,choice:'接續第四章夜間公告更新與現場回報。'});return next;
 }
+
+export function startFourthChapterProgress(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04UpdateEnd')throw new Error('請先保存第四章夜間公告更新與現場回報');
+ const next=structuredClone(state);next.scene=state.flags.c04UpdateNext==='statement'?'c04ProgressStatementDesk':'c04ProgressTrafficDesk';next.pageIndex=0;next.flags.c04ProgressStarted=true;next.note='依原優先順序準備獨立進展說明與追蹤通行，發布或留稿原文不隨後來回覆改寫。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04UpdateBrief,choice:'接續第四章停電進展說明與通行追蹤。'});return next;
+}
