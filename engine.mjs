@@ -382,3 +382,9 @@ export function startFourthChapterTriage(state){
  const next=structuredClone(state);next.scene=state.flags.c04InitialNext==='window'?'c04TriageWindowDesk':'c04TriagePeopleDesk';next.pageIndex=0;next.flags.c04TriageStarted=true;next.note='依原優先順序處理窗口與需求分流，初報原文與前輪協調不覆寫。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04InitialBrief,choice:'接續第四章停電回覆與需求分流。'});return next;
 }
+
+export function startFourthChapterAccess(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04TriageEnd')throw new Error('請先保存第四章停電回覆與需求分流');
+ const next=structuredClone(state);next.scene=state.flags.c04TriageNext==='access'?'c04AccessDesk':'c04AccessHandoffDesk';next.pageIndex=0;next.flags.c04AccessStarted=true;next.note='依原優先順序追通行問題與安排內部承接，交班當時版本不隨後來回覆改寫。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04TriageBrief,choice:'接續第四章通行追問與夜間交班。'});return next;
+}
