@@ -1,8 +1,9 @@
+import {closePrimaryAction} from '../chapter-four-close.mjs';
 import {progressPrimaryAction} from '../chapter-four-progress.mjs';
 import {accessPrimaryAction} from '../chapter-four-access.mjs';
 import {triageWindowAction} from '../chapter-four-triage.mjs';
 import {thirdDueCloseFixture} from './chapter-two-followup-fixture.mjs';
-import {startFourthChapterProgress,startFourthChapterUpdate,startFourthChapterAccess,startFourthChapterTriage,startFourthChapterInitial,startThirdChapterEnding,startFourthChapter,startFourthChapterContact,startFourthChapterReturn,startFourthChapterPreparation,startFourthChapterVerification,startFourthChapterNight,advance} from '../engine.mjs';
+import {startFourthChapterClose,startFourthChapterProgress,startFourthChapterUpdate,startFourthChapterAccess,startFourthChapterTriage,startFourthChapterInitial,startThirdChapterEnding,startFourthChapter,startFourthChapterContact,startFourthChapterReturn,startFourthChapterPreparation,startFourthChapterVerification,startFourthChapterNight,advance} from '../engine.mjs';
 export function thirdEndingFixture({nextFocus='files',endingFocus='facts',...prior}={}){let s=startThirdChapterEnding(thirdDueCloseFixture(prior));for(const id of [endingFocus,'review',nextFocus,'review','finish'])s=advance(s,id);return s;}
 
 export function fourthOpeningFixture({orientation='facts',pressApproach='limits',workApproach='contact',disposition='queued',...prior}={}){let s=startFourthChapter(thirdEndingFixture(prior));for(const id of [orientation,'review',pressApproach,workApproach,disposition,'finish'])s=advance(s,id);return s;}
@@ -26,3 +27,5 @@ export function fourthAccessFixture({accessAction,accessOwner='delegate',accessN
 export function fourthUpdateFixture({updateAction='check',updateConcern='lights',updateNext='statement',...prior}={}){let s=startFourthChapterUpdate(fourthAccessFixture(prior));const u=[updateAction,'confirm','review'],f=[updateConcern==='unheard'?'hold':'call',updateConcern,'confirm','review'];for(const id of [...(s.flags.c04AccessNext==='updates'?[...u,...f]:[...f,...u]),updateNext])s=advance(s,id);return s;}
 
 export function fourthProgressFixture({progressAction,progressFocus='facts',progressDisposition='published',progressNext='access',...prior}={}){let s=startFourthChapterProgress(fourthUpdateFixture(prior));const t=[progressAction||progressPrimaryAction(s),'confirm','review'],p=[progressFocus,progressDisposition,'continue','review'];for(const id of [...(s.flags.c04UpdateNext==='statement'?[...p,...t]:[...t,...p]),progressNext])s=advance(s,id);return s;}
+
+export function fourthCloseFixture({closeAction,closeFocus='people',closeDisposition='confirmed',closeNext='morning',...prior}={}){let s=startFourthChapterClose(fourthProgressFixture(prior));const t=[closeAction||closePrimaryAction(s),'confirm','review'],p=[closeFocus,closeDisposition,'review'];for(const id of [...(s.flags.c04ProgressNext==='access'?[...t,...p]:[...p,...t]),closeNext])s=advance(s,id);return s;}
