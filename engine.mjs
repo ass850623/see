@@ -376,3 +376,9 @@ export function startFourthChapterInitial(state){
  const next=structuredClone(state);next.scene='c04InitialSourceDesk';next.pageIndex=0;next.flags.c04InitialStarted=true;next.note='本輪初報、來源核對與工會協調另存，原通報與公開版本不覆寫。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04NightBrief,choice:'接續第四章停電初報與現場協調。'});return next;
 }
+
+export function startFourthChapterTriage(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04InitialEnd')throw new Error('請先保存第四章停電初報與現場協調');
+ const next=structuredClone(state);next.scene=state.flags.c04InitialNext==='window'?'c04TriageWindowDesk':'c04TriagePeopleDesk';next.pageIndex=0;next.flags.c04TriageStarted=true;next.note='依原優先順序處理窗口與需求分流，初報原文與前輪協調不覆寫。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04InitialBrief,choice:'接續第四章停電回覆與需求分流。'});return next;
+}
