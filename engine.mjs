@@ -426,3 +426,9 @@ export function startFifthChapter(state){
  const next=structuredClone(state);next.chapter='c05';next.scene='c05Morning';next.pageIndex=0;next.flags.c05Started=true;next.flags.c05Handoff=state.flags.c04NextBrief;next.note='故事第 10 日開始：昨日交接、公開版本與原期限保留，本日工作另行決定。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04EndingBrief,choice:'開始第五章開場與黨內追問。'});return next;
 }
+
+export function startFifthChapterWork(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05OpeningEnd')throw new Error('請先保存第五章開場與黨內追問');
+ const next=structuredClone(state);next.scene=state.flags.c05Next==='terms'?'c05TermsDesk':'c05OfficeDesk';next.pageIndex=0;next.flags.c05WorkStarted=true;next.note='按原優先處理黨內條件與辦公室分工，聯絡、收到、接受準備與完成各自記錄。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05OpeningBrief,choice:'接續第五章黨內條件與辦公室分工。'});return next;
+}
