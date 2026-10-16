@@ -412,3 +412,9 @@ export function startFourthChapterFinal(state){
  const next=structuredClone(state);next.scene=state.flags.c04CloseNext==='night'?'c04FinalAuditDesk':'c04FinalPlanDesk';next.pageIndex=0;next.flags.c04FinalStarted=true;next.note='依原優先順序核對夜末與安排次日內部準備；不自動跨日、送件或改寫原版本。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04CloseBrief,choice:'接續第四章夜末核對與次日準備。'});return next;
 }
+
+export function startFourthChapterEnding(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04FinalEnd')throw new Error('請先保存第四章夜末核對與次日準備');
+ const next=structuredClone(state);next.scene=state.flags.c04FinalNext==='versions'?'c04EndingDesk':'c04NextChapterDesk';next.pageIndex=0;next.flags.c04EndingStarted=true;next.note='分別審閱第四章章末與第五章內部準備，原來源、公開版本及期限保留；不自動跨章。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04FinalBrief,choice:'接續第四章章末收束與第五章準備。'});return next;
+}
