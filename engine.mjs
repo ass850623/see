@@ -400,3 +400,9 @@ export function startFourthChapterProgress(state){
  const next=structuredClone(state);next.scene=state.flags.c04UpdateNext==='statement'?'c04ProgressStatementDesk':'c04ProgressTrafficDesk';next.pageIndex=0;next.flags.c04ProgressStarted=true;next.note='依原優先順序準備獨立進展說明與追蹤通行，發布或留稿原文不隨後來回覆改寫。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04UpdateBrief,choice:'接續第四章停電進展說明與通行追蹤。'});return next;
 }
+
+export function startFourthChapterClose(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04ProgressEnd')throw new Error('請先保存第四章停電進展說明與通行追蹤');
+ const next=structuredClone(state);next.scene=state.flags.c04ProgressNext==='access'?'c04CloseTrafficDesk':'c04CloseTableDesk';next.pageIndex=0;next.flags.c04CloseStarted=true;next.note='依原優先順序處理通行與夜間未決表；內部收束不自動結案、跨日或改寫公開原文。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04ProgressBrief,choice:'接續第四章通行回覆與夜間收束。'});return next;
+}
