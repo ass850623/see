@@ -370,3 +370,9 @@ export function startFourthChapterNight(state){
  const next=structuredClone(state);next.scene=state.flags.c04VerifyNext==='files'?'c04NightListDesk':'c04NightDutyDesk';next.pageIndex=0;next.flags.c04NightStarted=true;next.note='故事第 9 日進入夜間：按原優先順序處理清單與值班聯絡，停電尚未發生。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04VerifyBrief,choice:'接續第四章夜間值班與停電事件開場。'});return next;
 }
+
+export function startFourthChapterInitial(state){
+ if(!validState(state)||state.chapter!=='c04'||state.scene!=='c04NightEnd')throw new Error('請先保存第四章夜間值班與停電開場');
+ const next=structuredClone(state);next.scene='c04InitialSourceDesk';next.pageIndex=0;next.flags.c04InitialStarted=true;next.note='本輪初報、來源核對與工會協調另存，原通報與公開版本不覆寫。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c04NightBrief,choice:'接續第四章停電初報與現場協調。'});return next;
+}
