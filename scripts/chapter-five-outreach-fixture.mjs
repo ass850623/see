@@ -1,0 +1,3 @@
+import {fifthOpeningFixture} from './chapter-five-work-fixture.mjs';
+import {startFifthChapterWork,advance} from '../engine.mjs';
+export function fifthWorkFixture({workContact='call',workDisposition='spoken',workPosition='limited',workOwner='aideVersions',workOfficeDisposition='confirmed',workNext='press',...prior}={}){let s=startFifthChapterWork(fifthOpeningFixture(prior));const terms=[workContact,workPosition,workDisposition,'next'],office=[workOwner,workOfficeDisposition,'next'];for(const id of [...(s.flags.c05Next==='terms'?[...terms,...office]:[...office,...terms]),workNext])s=advance(s,id);return s;}

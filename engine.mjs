@@ -432,3 +432,9 @@ export function startFifthChapterWork(state){
  const next=structuredClone(state);next.scene=state.flags.c05Next==='terms'?'c05TermsDesk':'c05OfficeDesk';next.pageIndex=0;next.flags.c05WorkStarted=true;next.note='按原優先處理黨內條件與辦公室分工，聯絡、收到、接受準備與完成各自記錄。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05OpeningBrief,choice:'接續第五章黨內條件與辦公室分工。'});return next;
 }
+
+export function startFifthChapterOutreach(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05WorkEnd')throw new Error('請先保存第五章黨內條件與辦公室分工');
+ const next=structuredClone(state);next.scene=state.flags.c05WorkNext==='press'?'c05OutPressDesk':'c05OutAccessDesk';next.pageIndex=0;next.flags.c05OutStarted=true;next.note='按原優先處理記者說明與一般通行新詢問，回答、收件與實質結果分列。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05WorkBrief,choice:'接續第五章記者說明與一般通行待問。'});return next;
+}
