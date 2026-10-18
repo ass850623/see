@@ -438,3 +438,9 @@ export function startFifthChapterOutreach(state){
  const next=structuredClone(state);next.scene=state.flags.c05WorkNext==='press'?'c05OutPressDesk':'c05OutAccessDesk';next.pageIndex=0;next.flags.c05OutStarted=true;next.note='按原優先處理記者說明與一般通行新詢問，回答、收件與實質結果分列。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05WorkBrief,choice:'接續第五章記者說明與一般通行待問。'});return next;
 }
+
+export function startFifthChapterFollow(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05OutEnd')throw new Error('請先保存第五章記者說明與一般通行待問');
+ const next=structuredClone(state);next.scene=state.flags.c05OutNext==='replies'?'c05FollowReplyDesk':'c05FollowSourceDesk';next.pageIndex=0;next.flags.c05FollowStarted=true;next.note='按原優先處理本件窗口後續與內部來源核對；原留稿須重審送出，不補造回覆或現況。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05OutBrief,choice:'接續第五章窗口回覆與來源核對。'});return next;
+}

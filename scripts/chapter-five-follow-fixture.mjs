@@ -1,0 +1,3 @@
+import {fifthWorkFixture} from './chapter-five-outreach-fixture.mjs';
+import {startFifthChapterOutreach,advance} from '../engine.mjs';
+export function fifthOutreachFixture({outContact='call',outDisposition='spoken',outAngle='sources',outFocus='status',outAccessDisposition='sent',outNext='replies',...prior}={}){let s=startFifthChapterOutreach(fifthWorkFixture(prior));const press=[outContact,outAngle,outDisposition,'next'],access=[outFocus,outAccessDisposition,'next'];for(const id of [...(s.flags.c05WorkNext==='press'?[...press,...access]:[...access,...press]),outNext])s=advance(s,id);return s;}
