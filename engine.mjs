@@ -444,3 +444,9 @@ export function startFifthChapterFollow(state){
  const next=structuredClone(state);next.scene=state.flags.c05OutNext==='replies'?'c05FollowReplyDesk':'c05FollowSourceDesk';next.pageIndex=0;next.flags.c05FollowStarted=true;next.note='按原優先處理本件窗口後續與內部來源核對；原留稿須重審送出，不補造回覆或現況。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05OutBrief,choice:'接續第五章窗口回覆與來源核對。'});return next;
 }
+
+export function startFifthChapterResult(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05FollowEnd')throw new Error('請先保存第五章窗口回覆與來源核對');
+ const next=structuredClone(state);next.scene=state.flags.c05FollowNext==='report'?'c05ResultReportDesk':'c05ResultQuestionDesk';next.pageIndex=0;next.flags.c05ResultStarted=true;next.note='按原優先準備第十日獨立說明與本輪新問題，原件狀態及公開原文不回填。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05FollowBrief,choice:'接續第五章結果說明與後續補問。'});return next;
+}

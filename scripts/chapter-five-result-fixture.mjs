@@ -1,0 +1,3 @@
+import {fifthOutreachFixture} from './chapter-five-follow-fixture.mjs';
+import {startFifthChapterFollow,advance} from '../engine.mjs';
+export function fifthFollowFixture({followAction,followExecution='execute',followFocus='versions',followDisposition='checked',followNext='report',...prior}={}){let s=startFifthChapterFollow(fifthOutreachFixture(prior));const action=followAction||(s.flags.c05OutAccessDisposition==='sent'?'receive':'send'),reply=[action,action==='keep'?'hold':followExecution,'next'],source=[followFocus,followDisposition,'next'];for(const id of [...(s.flags.c05OutNext==='replies'?[...reply,...source]:[...source,...reply]),followNext])s=advance(s,id);return s;}
