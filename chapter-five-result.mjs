@@ -9,7 +9,7 @@ export const resultScenes={
  c05ResultQuestionReview:scene('後續詢問全文',['予澄讀出問題、收件對象與原案件狀態。她沒有替家屬提出需求，也沒有把個案資料放進一般詢問。','送出只取得這一輪新問題的收件，不代表舊問題已回答；留稿則沒有這一輪送出或收件。先起稿時的公開狀態也會保留。'],'審閱後，送出本輪問題或留稿。'),
  c05ResultQuestionResult:scene('新回條不是新答案',['予澄將本輪問題的收件與原來仍待答覆的事項分列。沒有班次、接駁或資格結果，就不替空白欄補字。','如果這一輪仍留稿，原先已送的詢問不會被撤回；如果首次送出，也不會倒填成上一輪就已送件。'],'核對本輪詢問處置，再接續。'),
  c05ResultRecord:scene('說明與補問的交接',['你們保存本版說明與本輪新問題，讓公開文字、內部留稿與各次收件各有自己的位置。','下一輪可以先追本輪新問題的答覆，或先處理說明的後續反應。現在選優先，不代表聯絡已完成，也不會自動把任何承諾結案。'],'保存本輪並選下一項優先。'),
- c05ResultEnd:{place:'第五章結果說明與後續補問 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'第十日結果說明與本輪詢問已保存。公開版本、原稿快照、原承諾與各件待收保留；後續補問回覆與說明反應尚未開放。',choices:[]}
+ c05ResultEnd:{place:'第五章結果說明與後續補問 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'第十日結果說明與本輪詢問已保存。公開版本、原稿快照、原承諾與各件待收保留；可接續補問回覆與說明反應。',choices:[]}
 };
 export const resultHasQuestion=s=>['received','sent'].includes(s.flags.c05FollowReplyDisposition)||s.flags.c05OutAccessDisposition==='sent';
 export function resultWindowStatus(s){const f=s.flags;if(f.c05FollowReplyDisposition==='received')return '原已送本件已取得程序說明：'+(f.c05OutAccessFocus==='status'?'一般通行資訊須向旅客服務窗口分項核對。':'一般無障礙協助須由當事人自行向服務窗口提出需求並確認程序。')+'這不是班次、接駁、資格核准或事故原因結果。';if(f.c05FollowReplyDisposition==='sent')return '上一輪重審原留稿後首次送出本件，只取得該次收件，實質答覆待處理；不回填較早的留稿處置。';return f.c05OutAccessDisposition==='sent'?'上一輪本件保留原狀；原已送並收件仍待答覆，上一輪沒有新回覆。':'本件原稿仍未送出，沒有本件收件或程序答覆；不能宣稱已追問一個不存在的收件。';}

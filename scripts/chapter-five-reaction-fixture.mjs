@@ -1,0 +1,3 @@
+import {fifthFollowFixture} from './chapter-five-result-fixture.mjs';
+import {startFifthChapterResult,advance} from '../engine.mjs';
+export function fifthResultFixture({resultFocus='outcome',resultDisposition='published',resultQuestionFocus='remaining',resultQuestionDisposition='sent',resultNext='reply',...prior}={}){let s=startFifthChapterResult(fifthFollowFixture(prior));const report=[resultFocus,resultDisposition,'next'],question=[resultQuestionFocus,resultQuestionDisposition,'next'];for(const id of [...(s.flags.c05FollowNext==='report'?[...report,...question]:[...question,...report]),resultNext])s=advance(s,id);return s;}
