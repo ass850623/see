@@ -1,0 +1,3 @@
+import {fifthResultFixture} from './chapter-five-reaction-fixture.mjs';
+import {startFifthChapterReaction,advance} from '../engine.mjs';
+export function fifthReactionFixture({reactAction,reactExecution='execute',reactContact='call',reactFocus='limits',reactDisposition='spoken',reactNext='caucus',...prior}={}){let s=startFifthChapterReaction(fifthResultFixture(prior));const action=reactAction||(s.flags.c05ResultQuestionDisposition==='sent'?'receive':'send'),reply=[action,action==='keep'?'hold':reactExecution,'next'],reaction=[reactContact,reactFocus,reactDisposition,'next'];for(const id of [...(s.flags.c05ResultNext==='reply'?[...reply,...reaction]:[...reaction,...reply]),reactNext])s=advance(s,id);return s;}

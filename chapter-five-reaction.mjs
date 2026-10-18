@@ -11,7 +11,7 @@ export const reactionScenes={
  c05ReactResponseReview:scene('說明反應回應稿全文',['予澄將這一版回應讀回來，只帶入起稿當時已保存的本件狀態。新程序回覆不回填舊公告，也不變成記者已認可的結論。','已實際通話者可以按稿回答或留稿；未聯絡者只能留稿。本輪回答不會自動發成辦公室新公告。'],'審閱全文，決定本次電話說明或留稿。'),
  c05ReactResponseResult:scene('回答與背書之間',['予澄保存本輪實際說出或仍在留稿的版本。記者收到回答不代表她同意，也不代表報導已刊出。','你們沒有把對話加回第十日公開原文，原承諾與各件待答覆也沒有被這次電話結案。'],'核對本輪回應，再接續交接。'),
  c05ReactRecord:scene('補問與反應的交接',['本件新問題後續和說明反應都走完本輪處置。予澄讓新回覆、原留稿、公開版本和電話回應各自留在原來的位置。','下一輪可先處理黨內責任追問，或先整理辦公室值班與各件待收。選優先不等於已約到人、完成交班或取得新的共同立場。'],'保存本輪並選後續優先。'),
- c05ReactEnd:{place:'第五章補問回覆與說明反應 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新問題後續與說明反應已保存。原稿、公開版本、承諾日期及各件待收不變；後續黨內追問與值班交接尚未開放。',choices:[]}
+ c05ReactEnd:{place:'第五章補問回覆與說明反應 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新問題後續與說明反應已保存。原稿、公開版本、承諾日期及各件待收不變；可接續黨內追問與值班交接。',choices:[]}
 };
 export const reactionPrimary=s=>s.flags.c05ResultQuestionDisposition==='sent'?'receive':'send';
 const noReaction='本版起稿時尚未處理本輪說明反應。';
