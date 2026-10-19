@@ -462,3 +462,9 @@ export function startFifthChapterDuty(state){
  const next=structuredClone(state);next.scene=state.flags.c05ReactNext==='caucus'?'c05DutyCaucusDesk':'c05DutyDesk';next.pageIndex=0;next.flags.c05DutyStarted=true;next.note='按原優先處理黨內責任與內部值班，個別回應、限定承接及各件未決分列，原版本不回填。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05ReactBrief,choice:'接續第五章黨內追問與值班交接。'});return next;
 }
+
+export function startFifthChapterPreparation(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05DutyEnd')throw new Error('請先保存第五章黨內追問與值班交接');
+ const next=structuredClone(state);next.scene=state.flags.c05DutyNext==='prepare'?'c05PrepWorkDesk':'c05PrepTrackDesk';next.pageIndex=0;next.flags.c05PrepStarted=true;next.note='按原優先執行限定內部工作與逐件追蹤，原留稿須明確重啟，已收程序說明不重複領取回覆。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05DutyBrief,choice:'接續第五章履行準備與待收追蹤。'});return next;
+}
