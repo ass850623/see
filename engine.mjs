@@ -468,3 +468,9 @@ export function startFifthChapterPreparation(state){
  const next=structuredClone(state);next.scene=state.flags.c05DutyNext==='prepare'?'c05PrepWorkDesk':'c05PrepTrackDesk';next.pageIndex=0;next.flags.c05PrepStarted=true;next.note='按原優先執行限定內部工作與逐件追蹤，原留稿須明確重啟，已收程序說明不重複領取回覆。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05DutyBrief,choice:'接續第五章履行準備與待收追蹤。'});return next;
 }
+
+export function startFifthChapterTrackingReport(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05PrepEnd')throw new Error('請先保存第五章履行準備與待收追蹤');
+ const next=structuredClone(state);next.scene=state.flags.c05PrepNext==='report'?'c05TrackDesk':'c05ArrangeDesk';next.pageIndex=0;next.flags.c05TrackStarted=true;next.note='本輪回報與新內部安排另存，原版本與日期保留。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05PrepBrief,choice:'接續第五章追蹤回報與後續安排。'});return next;
+}

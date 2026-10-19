@@ -1,0 +1,6 @@
+import {fifthDutyFixture} from './chapter-five-preparation-fixture.mjs';
+import {startFifthChapterPreparation,advance} from '../engine.mjs';
+import {preparationWorkPrimary,preparationTrackPrimary} from '../chapter-five-preparation.mjs';
+export function fifthPreparationFixture({prepWork='execute',prepTarget='first',prepTrack='execute',prepNext='report',...prior}={}){let s=startFifthChapterPreparation(fifthDutyFixture(prior));const work=[prepWork==='keep'?'keep':preparationWorkPrimary(s),prepWork==='execute'?'execute':'hold','next'],track=[prepTarget,prepTrack==='keep'?'keep':preparationTrackPrimary(s,prepTarget),prepTrack==='execute'?'execute':'hold','next'];for(const id of [...(s.flags.c05DutyNext==='prepare'?[...work,...track]:[...track,...work]),prepNext])s=advance(s,id);return s;}
+
+export const trackingContexts=[{}, {prepTarget:'second',prepWork:'hold',prepTrack:'hold'}, {prepWork:'keep',prepTrack:'keep',dutyDisposition:'held',dutyOwner:'self'}, {outAccessDisposition:'held',followAction:'keep',dutyDisposition:'held'}, {followExecution:'hold',prepTarget:'first'}, {resultQuestionDisposition:'held',reactAction:'keep',prepTarget:'second'}, {reactExecution:'hold',prepTarget:'second',dutyOwner:'self'}, {resultDisposition:'held',reactContact:'hold',reactDisposition:'held',prepTrack:'keep'}];

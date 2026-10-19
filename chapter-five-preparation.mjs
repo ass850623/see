@@ -10,7 +10,7 @@ export const preparationScenes={
  c05PrepTrackReview:scene('所選原件與追蹤稿全文',['予澄將所選原件原文、來源狀態及本次動作一併讀出。舊回條、未送稿與新補問不互相替換。','首次送出或另起後續問題只取得本次收件，沒有本次實質答覆。收回來的程序說明也不等於班次、接駁或個案資格結果。'],'審閱全文後執行或暫緩本件動作。'),
  c05PrepTrackResult:scene('只記這一件實際發生的事',['予澄將本件收回的程序說明、首次收件、後續問題新收件或本輪保留分開保存。未選的另一件沒有因而結案。','這些新紀錄不追加回原詢問、原交接表或既有公開說明。若要對外回報，還得在下一輪另行審閱。'],'核對本件處置，再接續另一項或交接。'),
  c05PrepRecord:scene('產出與追蹤的交接',['本輪內部工作與所選原件追蹤都有了實際處置。予澄將已完成的限定工作和外部仍缺的結果分開列。','下一輪可先準備追蹤回報，或先整理後續安排。現在選優先，不代表已發布、安排會議或完成其他承諾。'],'保存本輪並選後續優先。'),
- c05PrepEnd:{place:'第五章履行準備與待收追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'限定內部工作與所選原件追蹤已保存。原承接、原稿、公開版本、承諾日期與其他待收保留；後續追蹤回報與安排尚未開放。',choices:[]}
+ c05PrepEnd:{place:'第五章履行準備與待收追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'限定內部工作與所選原件追蹤已保存。原承接、原稿、公開版本、承諾日期與其他待收保留；可接續追蹤回報與後續安排。',choices:[]}
 };
 export const preparationWorkPrimary=s=>s.flags.c05DutyDisposition==='confirmed'?'work':'restart';
 export function preparationTrackPrimary(s,target=s.flags.c05PrepTrackTarget){const f=s.flags;if(target==='first')return f.c05FollowReplyDisposition==='received'?'ask':f.c05FollowReplyDisposition==='sent'||f.c05OutAccessDisposition==='sent'?'receive':'send';return f.c05ReactReplyDisposition==='received'?'ask':f.c05ReactReplyDisposition==='sent'||f.c05ResultQuestionDisposition==='sent'?'receive':'send';}
