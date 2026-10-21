@@ -474,3 +474,9 @@ export function startFifthChapterTrackingReport(state){
  const next=structuredClone(state);next.scene=state.flags.c05PrepNext==='report'?'c05TrackDesk':'c05ArrangeDesk';next.pageIndex=0;next.flags.c05TrackStarted=true;next.note='本輪回報與新內部安排另存，原版本與日期保留。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05PrepBrief,choice:'接續第五章追蹤回報與後續安排。'});return next;
 }
+
+export function startFifthChapterFulfilment(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05TrackEnd')throw new Error('請先保存第五章追蹤回報與後續安排');
+ const next=structuredClone(state);next.scene=state.flags.c05TrackNext==='prepare'?'c05FulfilWorkDesk':'c05FulfilPressDesk';next.pageIndex=0;next.flags.c05FulfilStarted=true;next.note='限定準備的完成與候選稿送件分開；實際通話不代表記者刊出。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05TrackBrief,choice:'接續第五章安排執行與回報追問。'});return next;
+}

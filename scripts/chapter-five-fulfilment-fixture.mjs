@@ -1,0 +1,4 @@
+import {fifthPreparationFixture,trackingContexts} from './chapter-five-tracking-report-fixture.mjs';
+import {startFifthChapterTrackingReport,advance} from '../engine.mjs';
+export function fifthTrackingFixture({trackFocus='status',trackDisposition='published',arrangeOwner='aide',arrangeDisposition='confirmed',trackNext='prepare',...prior}={}){let s=startFifthChapterTrackingReport(fifthPreparationFixture(prior));const report=[trackFocus,trackDisposition,'next'],plan=[arrangeOwner,arrangeDisposition,'next'];for(const id of [...(s.flags.c05PrepNext==='report'?[...report,...plan]:[...plan,...report]),trackNext])s=advance(s,id);return s;}
+export const fulfilContexts=trackingContexts.map((prior,index)=>({...prior,trackDisposition:index%2?'held':'published',arrangeOwner:index%4<2?'self':'aide',arrangeDisposition:index%3?'confirmed':'held'}));

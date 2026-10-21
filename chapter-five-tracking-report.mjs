@@ -9,7 +9,7 @@ export const trackingReportScenes={
  c05ArrangeReview:scene('後續安排全文',['予澄讀出這一輪新的擬分工與責任界線。前一輪的工作是否完成仍按原紀錄，不因這份安排重算。','「名字先寫上去，還不等於接受。」你可以在此明確確認限定的內部準備，也可以先留稿；確認不表示工作已經做完。'],'確認限定內部分工，或保留擬稿。'),
  c05ArrangeResult:scene('接受與完成之間',['新分工若已確認，只記承接人接受這份限定內部準備，尚無新的完成產出。留稿則沒有新增接受。','予澄將原稿與本次處置分開保存。下一輪還得實際整理，再決定要不要聯絡或送出問題。'],'核對後續安排的實際狀態。'),
  c05TrackRecord:scene('把更新留在正確的位置',['兩項處置都已核對。公開更新與內部分工各存一版，先起的稿不被後來的選擇回填。','你看著還沒填滿的欄位。下一輪可以先履行新內部準備，或先處理回報之後的追問；現在只選優先。'],'保存本輪與下一輪優先。'),
- c05TrackEnd:{place:'第五章追蹤回報與後續安排 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪追蹤回報與後續安排已保存。後續安排執行與回報追問尚未開放。',choices:[]}
+ c05TrackEnd:{place:'第五章追蹤回報與後續安排 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪追蹤回報與後續安排已保存。可接續安排執行與回報追問。',choices:[]}
 };
 const work=s=>s.flags.c05PrepWorkDisposition==='completed'?'本輪已完成限定內部核對與提醒清單；這是內部產出，不代表對外承諾履行。':'本輪未執行限定內部核對，沒有新增完成紀錄。';
 const target=s=>s.flags.c05PrepTrackTarget==='first'?'第一件一般通行詢問':'第二件後續新問題';
