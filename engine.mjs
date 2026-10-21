@@ -480,3 +480,9 @@ export function startFifthChapterFulfilment(state){
  const next=structuredClone(state);next.scene=state.flags.c05TrackNext==='prepare'?'c05FulfilWorkDesk':'c05FulfilPressDesk';next.pageIndex=0;next.flags.c05FulfilStarted=true;next.note='限定準備的完成與候選稿送件分開；實際通話不代表記者刊出。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05TrackBrief,choice:'接續第五章安排執行與回報追問。'});return next;
 }
+
+export function startFifthChapterCandidate(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05FulfilEnd')throw new Error('請先保存第五章安排執行與回報追問');
+ const next=structuredClone(state);next.scene=state.flags.c05FulfilNext==='query'?'c05CandidateQueryDesk':'c05CandidatePartyDesk';next.pageIndex=0;next.flags.c05CandidateStarted=true;next.note='候選稿須實際完成才可送交，新收件與舊原件分開；黨內說明不等於共識。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05FulfilBrief,choice:'接續第五章候選問題與黨內回應。'});return next;
+}

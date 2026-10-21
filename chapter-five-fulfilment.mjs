@@ -11,7 +11,7 @@ export const fulfilScenes={
  c05FulfilResponseReview:scene('這次回應的全文',['予澄將本版來源、是否實際通話與起稿當時的內部工作狀態分開讀出。公開回報原文不會被這次電話改寫。','有通話才可以在審閱後說明；沒有聯絡時只保留內部稿。說出自己的回應，也不代表知言接受解釋或已刊出報導。'],'按審閱原文回應，或保留本稿。'),
  c05FulfilResponseResult:scene('電話留下了什麼',['本次只保存你是否按稿說明，以及本稿原文。不新增記者認可、報導刊出、黨團共同立場或窗口答覆。','後來的限定工作不回填已審閱的回應；這次回應也不追加回已發布的追蹤回報。兩者各自留在發生的位置。'],'核對本次回應或留稿，再接續未辦項目。'),
  c05FulfilRecord:scene('問題還要送到誰手上',['本輪的準備與回應各有了實際處置。候選稿若已完成，還需要下一輪重新審閱；未執行就不能假裝桌上已有完成稿。','接下來可先處理候選問題，或先回應黨內對後續責任的追問。此刻選優先，不代表已送件、開會或取得共識。'],'保存本輪並選下一輪優先。'),
- c05FulfilEnd:{place:'第五章安排執行與回報追問 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定準備與回報追問已保存。後續候選問題與黨內回應尚未開放。',choices:[]}
+ c05FulfilEnd:{place:'第五章安排執行與回報追問 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定準備與回報追問已保存。可接續候選問題與黨內回應。',choices:[]}
 };
 export const fulfilWorkPrimary=s=>s.flags.c05ArrangeDisposition==='confirmed'?'work':'restart';
 const owner=s=>s.flags.c05ArrangeOwner==='aide'?'予澄':'你';

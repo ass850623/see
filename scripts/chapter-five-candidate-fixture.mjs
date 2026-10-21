@@ -1,0 +1,5 @@
+import {fifthTrackingFixture,fulfilContexts} from './chapter-five-fulfilment-fixture.mjs';
+import {startFifthChapterFulfilment,advance} from '../engine.mjs';
+import {fulfilWorkPrimary} from '../chapter-five-fulfilment.mjs';
+export function fifthFulfilmentFixture({fulfilWork='execute',fulfilContact,fulfilResponse,fulfilFocus='status',fulfilNext='query',...prior}={}){let s=startFifthChapterFulfilment(fifthTrackingFixture(prior));const contact=fulfilContact||(s.flags.c05TrackDisposition==='published'?'call':'hold'),response=fulfilResponse||(contact==='call'?'spoken':'held'),w=[fulfilWork==='keep'?'keep':fulfilWorkPrimary(s),fulfilWork==='execute'?'execute':'hold','next'],r=[contact,fulfilFocus,response,'next'];for(const id of [...(s.flags.c05TrackNext==='prepare'?[...w,...r]:[...r,...w]),fulfilNext])s=advance(s,id);return s;}
+export const candidateContexts=fulfilContexts.map((prior,index)=>({...prior,fulfilWork:index<4?'execute':index===7?'keep':'hold',fulfilContact:prior.trackDisposition==='published'&&index!==6?'call':'hold',fulfilResponse:prior.trackDisposition==='published'&&index%4===0?'spoken':'held'}));
