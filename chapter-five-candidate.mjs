@@ -11,7 +11,7 @@ export const candidateScenes={
  c05CandidatePartyReview:scene('黨內回應全文',['予澄讀出本輪實際聯絡、上一輪準備處置與起稿當時的新問題狀態。未知的部分不靠一句政治承諾補齊。','若這份稿先起，稍後才送出的追問另存，不回填本版。只有本次實際通話才能按稿說明，說出也不等於若川接受或黨團同意。'],'審閱後在實際通話說明，或保留內部稿。'),
  c05CandidatePartyResult:scene('說出與接受之間',['本輪只記你是否按稿回應。沒有替若川補上一句同意，也沒有新增會議、共同署名或現場指揮權。','予澄將本次回應與新問題處置並列，原公開文字、原承接、原件與承諾日期都保留。'],'核對本次黨內回應或留稿。'),
  c05CandidateRecord:scene('把這輪留成可追的紀錄',['新問題與黨內回應都有了去向。送出的新問題仍待答覆，未送出或未完成候選稿的部分仍待準備。','下一輪可先處理這件新追問的回覆／待辦，或先核對後續分工。現在選優先，沒有替下一輪提前收回覆或完成工作。'],'保存本輪並選後續優先。'),
- c05CandidateEnd:{place:'第五章候選問題與黨內回應 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪候選問題與黨內回應已保存。後續候選追問回覆與分工核對尚未開放。',choices:[]}
+ c05CandidateEnd:{place:'第五章候選問題與黨內回應 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪候選問題與黨內回應已保存。可接續候選追問回覆與分工核對。',choices:[]}
 };
 const target=s=>s.flags.c05PrepTrackTarget==='first'?'第一件一般通行詢問':'第二件後續新問題';
 const prepared=s=>s.flags.c05FulfilWorkDisposition==='completed';
