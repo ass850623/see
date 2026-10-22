@@ -10,7 +10,7 @@ export const candidateReplyScenes={
  c05CRDutyReview:scene('新分工的範圍與原文',['予澄讀出擬承接人、限定工作與起稿當時的本件狀態。原已接受、已完成或留稿的舊安排仍按原文保留。','確認只代表本輪承接人接受這份新的內部準備，尚未執行。沒有外部送件、公開發稿、會議確認或交通安排自動生效。'],'審閱後確認限定承接，或保留擬稿。'),
  c05CRDutyResult:scene('接受這份工作之後',['已確認者只新增本輪限定承接，尚無完成產出；留稿者沒有新增接受。予澄不替你把自己的選擇記成她代辦。','晚到的窗口結果不回填早起的分工稿；這次新安排也不修改原公開說明或既有承諾日期。'],'核對本輪新分工處置。'),
  c05CRRecord:scene('把回覆與責任接起來',['本件追問的處置與新分工都已核對。程序說明、收件、待準備及新接受的工作各有自己的位置。','下一輪可先準備新的回報，或先追蹤責任與待辦。現在選優先，不替下一輪先完成工作或發布公告。'],'保存本輪並選下一輪優先。'),
- c05CREnd:{place:'第五章候選追問回覆與分工核對 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪候選追問處置與新限定分工已保存。後續新回報與責任追蹤尚未開放。',choices:[]}
+ c05CREnd:{place:'第五章候選追問回覆與分工核對 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪候選追問處置與新限定分工已保存。可接續新回報與責任追蹤。',choices:[]}
 };
 export const candidateReplyPrimary=s=>s.flags.c05CandidateQueryDisposition==='sent'?'receive':s.flags.c05FulfilWorkDisposition==='completed'?'send':'keep';
 const owner=s=>s.flags.c05CROwner==='aide'?'予澄':'你';

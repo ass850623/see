@@ -492,3 +492,9 @@ export function startFifthChapterCandidateReply(state){
  const next=structuredClone(state);next.scene=state.flags.c05CandidateNext==='reply'?'c05CRReplyDesk':'c05CRDutyDesk';next.pageIndex=0;next.flags.c05CRStarted=true;next.note='本件回覆、首次收件與待準備分流；本輪新承接不回填舊安排或代表已執行。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05CandidateBrief,choice:'接續第五章候選追問回覆與分工核對。'});return next;
 }
+
+export function startFifthChapterNewReport(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05CREnd')throw new Error('請先保存第五章候選追問回覆與分工核對');
+ const next=structuredClone(state);next.scene=state.flags.c05CRNext==='report'?'c05NRReportDesk':'c05NRWorkDesk';next.pageIndex=0;next.flags.c05NRStarted=true;next.note='本件狀態如實另起新回報；限定責任工作與外部結果分開，原版本不回填。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05CRBrief,choice:'接續第五章新回報與責任追蹤。'});return next;
+}
