@@ -10,7 +10,7 @@ export const handoverResponseScenes={
  c05HDDutyReview:scene('後續分工全文',['予澄將擬承接人、範圍與起稿當時的回訊狀態讀出。舊工作、舊表與新擬工作各存一版。','確認只表示本輪承接人接受限定內部準備，尚未執行。若之後要送稿給若川，還得另外審閱與決定，不能把這份內部確認當成對方已接手。'],'審閱後確認本輪限定承接，或保留擬稿。'),
  c05HDDutyResult:scene('新的接受與尚未做的事',['本輪已確認者只新增新的限定接受，沒有完成產出；留稿者沒有新增接受。你選自己承接，就不記成予澄代辦。','晚到回訊不改寫先起的分工稿，晚確認的工作也不追加回已審閱的收訊範圍。原承諾與日期照舊。'],'核對本輪新分工的實際處置。'),
  c05HDRecord:scene('把候選稿留給真正的下一輪',['本輪回訊處置與新分工都已核對。回訊有無收到、辦公室有無接受，以及尚未執行的準備，都分開保存，沒有混成一項共同安排。','下一輪可先做分工準備，或先檢查候選稿的審閱條件。現在選優先，不提前做完工作、送出候選稿或取得新同意。'],'保存本輪並選下一輪優先。'),
- c05HDEnd:{place:'第五章交班回應與後續分工 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪交班回訊處置與新的限定分工已保存。分工準備與候選稿審閱尚未開放。',choices:[]}
+ c05HDEnd:{place:'第五章交班回應與後續分工 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪交班回訊處置與新的限定分工已保存。可接續分工準備與候選稿審閱。',choices:[]}
 };
 export const handoverResponsePrimary=s=>s.flags.c05HOPartyDisposition==='spoken'?'receive':'keep';
 const replyStatus=s=>s.flags.c05HDReplyDisposition==='received'?'本輪已收若川的個人有限回訊，願看下一份候選稿，沒有接受新分工或黨團共識。':'本輪未收新的對應回訊，沒有新增對方發言或接受。';
