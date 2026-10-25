@@ -510,3 +510,9 @@ export function startFifthChapterHandover(state){
  const next=structuredClone(state);next.scene=state.flags.c05RRNext==='table'?'c05HOTableDesk':'c05HOPartyDesk';next.pageIndex=0;next.flags.c05HOStarted=true;next.note='原件與另問逐項整理，交班只記本次說明，不代若川接受或成立共同分工。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05RRBrief,choice:'接續第五章待收整理與黨內交班。'});return next;
 }
+
+export function startFifthChapterHandoverResponse(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05HOEnd')throw new Error('請先保存第五章待收整理與黨內交班');
+ const next=structuredClone(state);next.scene=state.flags.c05HONext==='response'?'c05HDReplyDesk':'c05HDDutyDesk';next.pageIndex=0;next.flags.c05HDStarted=true;next.note='原交班實際說出才收對應回訊；個人願看候選稿不代新分工接受，限定內部工作另行確認。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05HOBrief,choice:'接續第五章交班回應與後續分工。'});return next;
+}

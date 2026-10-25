@@ -11,7 +11,7 @@ export const handoverScenes={
  c05HOPartyReview:scene('黨內交班回應全文',['予澄讀出本次實際聯絡、已知處置與起稿時本表狀態。說明只含辦公室可交代的摘要，不抄入私人或受限原文。','若先起交班稿，後來才核對的表另存，不回填本版。有實際通話才可以按稿說明；說出也不等於若川接受或黨團達成共識。'],'審閱後在實際通話交代，或保留本稿。'),
  c05HOPartyResult:scene('交代過與接手了是兩回事',['本輪只保存你是否按審閱原文說明，沒有替若川補上一句接受。下一輪若要新分工，仍須另列範圍、審閱並明確確認。','予澄將本次交班回應與本表處置並列，原公開文字、原件與承諾日期都保留。'],'核對本次交班說明或留稿。'),
  c05HORecord:scene('把下一輪的責任留清楚',['最新整理表與黨內交班回應各有了去向。待收、待準備與沒有執行的工作都沒有因為交代過就消失。','下一輪可先處理交班回應，或先列後續分工。此刻只選優先，不提前成立新的接受、會議或共同安排。'],'保存本輪並選下一輪優先。'),
- c05HOEnd:{place:'第五章待收整理與黨內交班 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪待收／未決整理與黨內交班回應已保存。交班回應與後續分工尚未開放。',choices:[]}
+ c05HOEnd:{place:'第五章待收整理與黨內交班 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪待收／未決整理與黨內交班回應已保存。可接續交班回應與後續分工。',choices:[]}
 };
 const baseStatus=(s,target)=>{const f=s.flags,selected=f.c05PrepTrackTarget===target,reply=target==='first'?f.c05FollowReplyDisposition:f.c05ReactReplyDisposition,initial=target==='first'?f.c05OutAccessDisposition:f.c05ResultQuestionDisposition;if(reply==='received'||selected&&f.c05PrepTrackDisposition==='received')return '原件已收程序說明，沒有交通或資格結果；不因後來另問而改回未答。';if(reply==='sent'||initial==='sent'||selected&&f.c05PrepTrackDisposition==='sent')return '原件已送並收件，仍待對應答覆。';return '原件仍留稿，沒有該原件的外部收件。';};
 const candidateStatus=s=>{const f=s.flags;if(f.c05RRPendingDisposition==='received'||f.c05CRReplyDisposition==='received')return '本件原候選追問已收程序說明，仍無班次、接駁、資格或原因事實結果。';if(f.c05RRPendingDisposition==='sent'||f.c05CRReplyDisposition==='sent'||f.c05CandidateQueryDisposition==='sent')return '本件原候選追問已送並收件，仍待對應答覆。';return f.c05FulfilWorkDisposition==='completed'?'本件原候選追問仍留稿，未送出，沒有本件收件。':'本件原追問候選稿未完成，仍待準備；回報候選稿不代替它。';};

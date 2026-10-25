@@ -1,0 +1,4 @@
+import {fifthReportReactionFixture,handoverContexts} from './chapter-five-handover-fixture.mjs';
+import {startFifthChapterHandover,advance} from '../engine.mjs';
+export function fifthHandoverFixture({hoTableFocus='cases',hoTable='checked',hoContact='call',hoFocus='responsibility',hoResponse,hoNext='response',...prior}={}){let s=startFifthChapterHandover(fifthReportReactionFixture(prior));const response=hoResponse||(hoContact==='call'?'spoken':'held'),t=[hoTableFocus,hoTable,'next'],p=[hoContact,hoFocus,response,'next'];for(const id of [...(s.flags.c05RRNext==='table'?[...t,...p]:[...p,...t]),hoNext])s=advance(s,id);return s;}
+export const handoverResponseContexts=handoverContexts.map((prior,index)=>({...prior,hoTable:index%2?'held':'checked',hoContact:index%3===2?'hold':'call',hoResponse:index%3===2||index%2?'held':'spoken',hoFocus:index===6?'limits':'responsibility'}));
