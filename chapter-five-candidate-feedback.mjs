@@ -10,7 +10,7 @@ export const candidateFeedbackScenes={
  c05CFAuditReview:scene('未決與候選稿狀態全文',['予澄讀出原件、各輪另問與候選稿的不同去向，再核對限定工作是否確實完成。起稿時收到的回訊與尚未處理的回訊分開。','核對保存只完成這份新的內部核對紀錄，不補做舊工作。後來才收到的個人回訊也不回填先起的表。'],'審閱後核對保存，或保留核對稿。'),
  c05CFAuditResult:scene('可以保存的與不能代填的',['已核對者只新增本輪內部核對；留稿者沒有新增完成核對的紀錄。舊候選稿、實際送交版與原公開文字都保留。','班次、接駁、資格與原因仍須有權來源確認；新職責仍須真正承接人明確接受。這份紀錄不替任何一項先填答案。'],'核對本輪內部核對處置。'),
  c05CFRecord:scene('把修稿條件留在正確的一輪',['本稿回訊處置與未決核對各有了紀錄。回訊有無收到、候選稿有無完成與實際送交，以及沒有執行的工作，都按各自處置保存。','下一輪可先整理修稿條件，或先作責任回覆。現在只選優先，不提前改寫原送稿、送出新版或成立共同分工。'],'保存本輪並選下一輪優先。'),
- c05CFEnd:{place:'第五章候選稿回訊與未決核對 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪候選稿回訊處置與未決核對已保存。修稿條件與責任回覆尚未開放。',choices:[]}
+ c05CFEnd:{place:'第五章候選稿回訊與未決核對 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪候選稿回訊處置與未決核對已保存。可接續修稿條件與責任回覆。',choices:[]}
 };
 export const candidateFeedbackPrimary=s=>s.flags.c05DPReviewDisposition==='sent'?'receive':'keep';
 export function candidateDeliveryStatus(s){const f=s.flags;if(f.c05DPReviewDisposition==='sent')return '上一輪已按候選原文送若川個人，僅有該次個人收件；當輪尚無本稿讀稿回覆或接受。';if(f.c05DPReviewDisposition==='filed')return '上一輪僅將待收表候選整理作內部保存，沒有對外送稿或個人收件。';if(f.c05DPWorkDisposition!=='completed')return '上一輪限定準備未執行，沒有本輪完成的候選稿或送交。';if(f.c05HDNext==='review')return '上一輪先核對審閱條件時無稿，稍後才完成候選稿；原審閱仍保留條件，沒有依那份原文送交。';return f.c05HDScope==='outline'&&f.c05HDReplyDisposition!=='received'?'上一輪已完成分工候選稿，但缺個人閱稿回訊而留稿，沒有對外送交或收件。':'上一輪已有完成候選稿但處置留稿，沒有新增內部保存核對、對外送交或收件。';}

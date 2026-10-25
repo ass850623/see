@@ -528,3 +528,9 @@ export function startFifthChapterCandidateFeedback(state){
  const next=structuredClone(state);next.scene=state.flags.c05DPNext==='reply'?'c05CFReplyDesk':'c05CFAuditDesk';next.pageIndex=0;next.flags.c05CFStarted=true;next.note='本稿實際送交才收對應讀稿回訊；個人意見與新職責接受分開，未決核對不回填原稿。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05DPBrief,choice:'接續第五章候選稿回訊與未決核對。'});return next;
 }
+
+export function startFifthChapterRevisionConditions(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05CFEnd')throw new Error('請先保存第五章候選稿回訊與未決核對');
+ const next=structuredClone(state);next.scene=state.flags.c05CFNext==='revise'?'c05RVRevisionDesk':'c05RVReplyDesk';next.pageIndex=0;next.flags.c05RVStarted=true;next.note='本稿實際意見與內部自擬分流，修訂原文不覆寫原送交版，短文字回覆不夾帶新版候選稿。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05CFBrief,choice:'接續第五章修稿條件與責任回覆。'});return next;
+}
