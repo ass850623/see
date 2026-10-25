@@ -9,7 +9,7 @@ export const newReportScenes={
  c05NRWorkReview:scene('責任追蹤執行稿全文',['予澄讀出原承接人、原分工與本輪限定範圍。這項工作只整理內部紀錄，不代替再次對外追問或收取回覆。','若先起這份稿，稍後才發布的新回報另記，不回填本版。完成候選稿也不代表它已公開。'],'審閱後執行限定工作，或暫緩。'),
  c05NRWorkResult:scene('實際產出與仍待確認',['已執行者新增的是本件待收／未決表與內部回報候選稿；未執行者沒有新增完成紀錄。原承諾仍按自己的條件與日期追蹤。','予澄把本輪產出與外部尚缺的結果分開保存。沒有新對外送件、收件、電話、公告或交通安排自動發生。'],'核對本輪責任工作結果。'),
  c05NRRecord:scene('讓下一輪接得上',['新回報與責任工作都有了去向。予澄把已發布、內部留稿、已完成的限定產出與未執行分別標清。','下一輪可先處理新回報反應，或先續追待收。現在選優先，不替下一輪先刊出報導或收取答案。'],'保存本輪並選下一輪優先。'),
- c05NREnd:{place:'第五章新回報與責任追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新回報與限定責任工作已保存。後續新回報反應與待收續追尚未開放。',choices:[]}
+ c05NREnd:{place:'第五章新回報與責任追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新回報與限定責任工作已保存。可接續新回報反應與待收續追。',choices:[]}
 };
 const owner=s=>s.flags.c05CROwner==='aide'?'予澄':'你';
 export const newReportWorkPrimary=s=>s.flags.c05CRDutyDisposition==='confirmed'?'work':'restart';
