@@ -10,7 +10,7 @@ export const dutyPreparationScenes={
  c05DPReview:scene('候選稿與送交範圍全文',['予澄讀出起稿當時是否有完成稿、候選原文與本次可作的處置。沒有稿時只列條件；原文未向對方確認可閱時，不預先送出。','送給若川個人也只取得這次收件，不等於他已讀、接受新分工或黨團同意。內部待收表不藉閱稿回訊變成對外文件。'],'審閱後依本稿條件保存、送交或保留。'),
  c05DPReviewResult:scene('內部保存、個人收件與未決',['本輪只保存實際作出的處置。列入內部不等於對外發布，個人收件不等於對方已接受；沒有完成稿則沒有送稿。','後來完成的候選稿不回填先前的審閱條件。下一輪若要接續，仍需針對真正存在的原文再處理。'],'核對本次候選稿處置。'),
  c05DPRecord:scene('讓下一輪接到真正的版本',['準備產出與候選稿審閱各自有了紀錄。予澄將原承接、實際完成、內部保存、個人收件與仍待準備分開列。','下一輪可先處理候選稿回訊，或先核對未決。現在選優先，不替下一輪先讀稿、作答或確認共同安排。'],'保存本輪並選下一輪優先。'),
- c05DPEnd:{place:'第五章分工準備與候選稿審閱 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定準備與候選稿審閱已保存。候選稿回訊與未決核對尚未開放。',choices:[]}
+ c05DPEnd:{place:'第五章分工準備與候選稿審閱 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定準備與候選稿審閱已保存。可接續候選稿回訊與未決核對。',choices:[]}
 };
 export const dutyPreparationPrimary=s=>s.flags.c05HDDutyDisposition==='confirmed'?'work':'restart';
 const owner=s=>s.flags.c05HDOwner==='aide'?'予澄':'你';

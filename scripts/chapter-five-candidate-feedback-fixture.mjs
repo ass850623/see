@@ -1,0 +1,5 @@
+import {fifthHandoverResponseFixture,dutyPreparationContexts} from './chapter-five-duty-preparation-fixture.mjs';
+import {startFifthChapterDutyPreparation,advance} from '../engine.mjs';
+import {dutyPreparationPrimary} from '../chapter-five-duty-preparation.mjs';
+export function fifthDutyPreparationFixture({dpWork='execute',dpFocus='source',dpDisposition,dpNext='reply',...prior}={}){let s=startFifthChapterDutyPreparation(fifthHandoverResponseFixture(prior));const w=[dpWork==='keep'?'keep':dutyPreparationPrimary(s),dpWork==='execute'?'execute':'hold','next'],eligible=s.flags.c05HDNext==='prepare'&&dpWork==='execute',disposition=dpDisposition||(eligible?(s.flags.c05HDScope==='table'?'filed':s.flags.c05HDReplyDisposition==='received'?'sent':'held'):'held'),r=[dpFocus,disposition,'next'];for(const id of [...(s.flags.c05HDNext==='prepare'?[...w,...r]:[...r,...w]),dpNext])s=advance(s,id);return s;}
+export const candidateFeedbackContexts=dutyPreparationContexts.map((prior,index)=>({...prior,dpWork:index===2?'keep':index===5?'hold':'execute',...(index===4?{dpDisposition:'held'}:{}),...(index===7?{hdNext:'review'}:{})}));
