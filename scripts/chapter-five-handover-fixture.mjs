@@ -1,0 +1,5 @@
+import {fifthNewReportFixture,reportReactionContexts} from './chapter-five-report-reaction-fixture.mjs';
+import {startFifthChapterReportReaction,advance} from '../engine.mjs';
+import {reportReactionPrimary} from '../chapter-five-report-reaction.mjs';
+export function fifthReportReactionFixture({rrAction,rrExecution='execute',rrContact,rrFocus='limits',rrResponse,rrNext='table',...prior}={}){let s=startFifthChapterReportReaction(fifthNewReportFixture(prior));const action=rrAction||reportReactionPrimary(s),contact=rrContact||(s.flags.c05NRReportDisposition==='published'?'call':'hold'),response=rrResponse||(contact==='call'?'spoken':'held'),p=[action,action==='keep'?'hold':rrExecution,'next'],r=[contact,rrFocus,response,'next'];for(const id of [...(s.flags.c05NRNext==='pending'?[...p,...r]:[...r,...p]),rrNext])s=advance(s,id);return s;}
+export const handoverContexts=reportReactionContexts.map((prior,index)=>({...prior,rrExecution:index===2?'hold':'execute',...(index===7?{fulfilWork:'execute',candidateQuery:'held',crAction:'keep',rrAction:'keep'}:{} )}));

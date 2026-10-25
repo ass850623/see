@@ -504,3 +504,9 @@ export function startFifthChapterReportReaction(state){
  const next=structuredClone(state);next.scene=state.flags.c05NRNext==='pending'?'c05RRPendingDesk':'c05RRPressDesk';next.pageIndex=0;next.flags.c05RRStarted=true;next.note='本版發布才有本版採訪；續追按原件歷史分流，不重複領取舊回覆或替代未完成稿。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05NRBrief,choice:'接續第五章新回報反應與待收續追。'});return next;
 }
+
+export function startFifthChapterHandover(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05RREnd')throw new Error('請先保存第五章新回報反應與待收續追');
+ const next=structuredClone(state);next.scene=state.flags.c05RRNext==='table'?'c05HOTableDesk':'c05HOPartyDesk';next.pageIndex=0;next.flags.c05HOStarted=true;next.note='原件與另問逐項整理，交班只記本次說明，不代若川接受或成立共同分工。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05RRBrief,choice:'接續第五章待收整理與黨內交班。'});return next;
+}

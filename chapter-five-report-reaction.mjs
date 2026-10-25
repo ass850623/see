@@ -12,7 +12,7 @@ export const reportReactionScenes={
  c05RRPressReview:scene('針對本版的回應全文',['予澄讀出本版來源、實際聯絡與起稿時的續追狀態。已發布原文不因這次電話或後來送件而改寫。','有本次實際通話才可按稿說明；未聯絡則只保留內部稿。即使說出，也只記辦公室回應，不代記者認可、引用或刊出。'],'審閱後在實際通話說明，或保留本稿。'),
  c05RRPressResult:scene('這次回應留下的紀錄',['予澄只保存是否按稿說明及審閱原文。先起的回應不追加後來續追結果，原公開版也不被改成電話逐字稿。','沒有新增記者刊出、黨團共識或外部結果。另一項尚未處理的工作仍按自己的審閱範圍接續。'],'核對本次回應或留稿。'),
  c05RRRecord:scene('把回條、回應與未決分開',['本輪續追與針對新回報的回應都已有了處置。予澄把新收件、程序說明及沒有執行的部分分列，不用一句「持續追蹤」混在一起。','下一輪可先整理待收與未決，或先做黨內交班。現在選優先，不代表已打下一通電話、完成新工作或取得共同安排。'],'保存本輪並選下一輪優先。'),
- c05RREnd:{place:'第五章新回報反應與待收續追 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新回報反應與待收續追已保存。後續待收整理與黨內交班尚未開放。',choices:[]}
+ c05RREnd:{place:'第五章新回報反應與待收續追 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新回報反應與待收續追已保存。可接續待收整理與黨內交班。',choices:[]}
 };
 export const reportReactionPrimary=s=>s.flags.c05CRReplyDisposition==='received'?'ask':s.flags.c05CRReplyDisposition==='sent'||s.flags.c05CandidateQueryDisposition==='sent'?'receive':s.flags.c05FulfilWorkDisposition==='completed'?'send':'keep';
 const source=s=>({ask:'本件已收過對應程序說明，本輪不得重複領取同一份回覆。',receive:'本件原已送並收件，尚待對應程序答覆。',send:'本件原留稿，已有實際完成的候選稿，但沒有本件外部收件。',keep:'本件原候選稿未完成，仍待準備；後來的回報候選稿不代替本件。'}[reportReactionPrimary(s)]);
