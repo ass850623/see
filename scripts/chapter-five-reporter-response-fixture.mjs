@@ -1,0 +1,5 @@
+import {fifthReportReviewFixture,followupReactionContexts} from './chapter-five-followup-reaction-fixture.mjs';
+import {startFifthChapterFollowupReaction,advance} from '../engine.mjs';
+import {followupReactionPrimary,canContactPublishedReport} from '../chapter-five-followup-reaction.mjs';
+export function fifthFollowupReactionFixture({frAction,frExecution='execute',frFocus='responsibility',frContact,frNext='reporter',...prior}={}){let s=startFifthChapterFollowupReaction(fifthReportReviewFixture(prior));const action=frAction||followupReactionPrimary(s),contact=frContact||(canContactPublishedReport(s)?'contacted':'held'),r=[action,action==='keep'?'hold':frExecution,'next'],p=[frFocus,contact,'next'];for(const id of [...(s.flags.c05RANext==='response'?[...r,...p]:[...p,...r]),frNext])s=advance(s,id);return s;}
+export const reporterResponseContexts=followupReactionContexts.map((prior,index)=>({...prior,frContact:index===4?'held':undefined,frFocus:index%2?'limits':'responsibility',raNext:index%2?'reaction':'response'}));

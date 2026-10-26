@@ -10,7 +10,7 @@ export const followupReactionScenes={
  c05FRReactionReview:scene('只談這份實際公開原文',['予澄讀回真正對外的版本。你可以先談讀者對辦公室責任的追問，也可以先談一般程序與具體結果的差距。','若聯絡，只按這份已公開文字談，不把內部交班、新追問或晚到窗口回覆夾進去。未發布或暫緩者不新增知言發言、聯絡或反應。'],'審閱後實際聯絡許知言，或保留。'),
  c05FRReactionResult:scene('一位記者的讀稿反應',['已聯絡者保存知言在本次通話中的個人讀稿意見；保留者沒有新增通話或他的發言。這份意見不代已刊報導、記者背書或整體輿論。','你將新的追問放回內部頁籤。對方指出的缺口還需要回應，但現在沒有因此新增交通安排、個案結果或外部承接。'],'保存本次讀稿聯絡或保留狀態。'),
  c05FRRecord:scene('把回覆與反應交給下一輪',['本次追問真正收到甚麼、知言是否實際談過這份公開版，都有了各自的紀錄。你決定下一輪先準備記者回應，還是先整理未決事項。','這個選擇不代表你已回覆記者或公開新稿。原公開文字、舊回覆、工作與承諾日期各留原版。'],'保存本輪並選下一輪優先。'),
- c05FREnd:{place:'第五章追問回覆與公開反應 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪追問回覆與個人讀稿反應已保存。記者回應與未決整理尚未開放。',choices:[]}
+ c05FREnd:{place:'第五章追問回覆與公開反應 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪追問回覆與個人讀稿反應已保存。可接續記者回應與未決整理。',choices:[]}
 };
 export const followupReactionPrimary=s=>s.flags.c05RAFollowDisposition==='sent'?'receive':'keep';
 export const canContactPublishedReport=s=>s.flags.c05RAReportDisposition==='published';

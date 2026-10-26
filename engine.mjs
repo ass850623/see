@@ -582,3 +582,9 @@ export function startFifthChapterFollowupReaction(state){
  const next=structuredClone(state);next.scene=state.flags.c05RANext==='response'?'c05FRReplyDesk':'c05FRReactionDesk';next.pageIndex=0;next.flags.c05FRStarted=true;next.note='本次實際送問才收對應回覆，本輪實際發布才可聯絡個人讀稿反應，原公開版不回填。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05RABrief,choice:'接續第五章追問回覆與公開反應。'});return next;
 }
+
+export function startFifthChapterReporterResponse(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05FREnd')throw new Error('請先保存第五章追問回覆與公開反應');
+ const next=structuredClone(state);next.scene=state.flags.c05FRNext==='reporter'?'c05RPReplyDesk':'c05RPPendingDesk';next.pageIndex=0;next.flags.c05RPStarted=true;next.note='只有實際個人讀稿聯絡才可回電按短稿說明，未決表只作內部整理，原公開版與期限保留。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05FRBrief,choice:'接續第五章記者回應與未決整理。'});return next;
+}
