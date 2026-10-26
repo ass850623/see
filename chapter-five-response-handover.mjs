@@ -10,7 +10,7 @@ export const responseHandoverScenes={
  c05RHHandoverReview:scene('交班候選原文全文',['予澄逐項讀回已做、未做與留稿。你把「未確認」留在需要答覆的地方，沒有因為頁面要交出去就補滿空白。','這份稿只保留起稿時已知的回訊狀態。若先準備交班，稍後才到的知言回訊另存，不追加進本版，也不改原期限。'],'審閱後完成內部交班候選原文，或留稿。'),
  c05RHHandoverResult:scene('交班稿存在，還沒有人接走',['完成的路線另存新的內部交班候選原文；留稿者不新增完成產出。予澄將它放到待審閱頁籤，沒有把它算成下一班已收件或接受。','原限定工作、舊交班與公開版本都留原紀錄。這一輪完成的是候選稿，不是全部未決事項，也不是新的外部分工。'],'保存交班準備產出或留稿狀態。'),
  c05RHRecord:scene('讓下一輪接到真正的版本',['回應後續與交班準備都有各自的紀錄。你選擇下一輪先審閱交班稿，還是先核對後續分工。','現在只選優先，不先送交、確認新承接、執行新工作或收取新答案。原日期與未決狀態一併留下。'],'保存本輪並選下一輪優先。'),
- c05RHEnd:{place:'第五章回應後續與交班準備 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪回應後續與內部交班準備已保存。交班審閱與後續分工尚未開放。',choices:[]}
+ c05RHEnd:{place:'第五章回應後續與交班準備 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪回應後續與內部交班準備已保存。可接續交班審閱與後續分工。',choices:[]}
 };
 export const responseHandoverPrimary=s=>s.flags.c05RPReplyDisposition==='spoken'?'receive':'keep';
 const spokenSource=s=>s.flags.c05RPReplyDisposition==='spoken'?reporterResponsePayload(s):'上一輪記者回應留稿，沒有本次實際說出的短稿；不以舊讀稿聯絡或候選回應代替。';
