@@ -1,0 +1,5 @@
+import {fifthTrackingExecutionFixture,windowReportContexts} from './chapter-five-window-report-fixture.mjs';
+import {startFifthChapterWindowReport,advance} from '../engine.mjs';
+import {windowReportPrimary} from '../chapter-five-window-report.mjs';
+export function fifthWindowReportFixture({wrAction,wrExecution='execute',wrFocus='facts',wrReport='prepared',wrNext='review',...prior}={}){let s=startFifthChapterWindowReport(fifthTrackingExecutionFixture(prior));const action=wrAction||windowReportPrimary(s),r=[action,action==='keep'?'hold':wrExecution,'next'],p=[wrFocus,wrReport,'next'];for(const id of [...(s.flags.c05TENext==='reply'?[...r,...p]:[...p,...r]),wrNext])s=advance(s,id);return s;}
+export const reportReviewContexts=[{...windowReportContexts[0]},{...windowReportContexts[1]},{...windowReportContexts[2],teNext:'report'},{...windowReportContexts[3]},{...windowReportContexts[4]},{...windowReportContexts[5],wrReport:'held'},{...windowReportContexts[0],wrReport:'held'},{...windowReportContexts[1],wrExecution:'hold'}];
