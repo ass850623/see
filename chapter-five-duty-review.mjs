@@ -9,7 +9,7 @@ export const dutyReviewScenes={
  c05DRReportReview:scene('候選追蹤回報全文',['予澄讀出上一輪真正執行的範圍、是否明確重啟，以及這份回報起稿時已知的分工稿審閱狀態。','若先起回報，後來才保存的新稿審閱另留紀錄，不回填本版。完成候選回報不代表對外說明、交班送達或新工作接受。'],'審閱後完成候選原文，或留稿。'),
  c05DRReportResult:scene('候選回報另存一版',['完成者另存本輪新的內部追蹤回報原文；留稿者不新增完成產出。原公開版、交班稿與新分工稿都各留原文。','你把候選回報放進待審閱頁籤。下一輪若要送交或據以安排工作，還得針對這份原文另作決定。'],'保存本輪追蹤回報產出或留稿。'),
  c05DRRecord:scene('讓下一輪辨認真正的進度',['分工稿審閱與候選追蹤回報都有各自的處置。你選下一輪先審閱回報，還是先確認下一輪安排。','現在只選優先，不先發布、送交、送問、接受新工作或取得答覆。原期限與仍未知的結果一併保留。'],'保存本輪並選下一輪優先。'),
- c05DREnd:{place:'第五章分工稿審閱與追蹤回報 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪分工稿審閱與內部候選追蹤回報已保存。追蹤回報審閱與下一輪安排尚未開放。',choices:[]}
+ c05DREnd:{place:'第五章分工稿審閱與追蹤回報 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪分工稿審閱與內部候選追蹤回報已保存。可接續追蹤回報審閱與下一輪安排。',choices:[]}
 };
 export const hasDutyOutput=s=>s.flags.c05DEWorkDisposition==='completed';
 const original=s=>hasDutyOutput(s)?s.flags.c05DEOutput:'上一輪未執行或暫緩，沒有新的分工完成原文；不以舊問稿、交班原文或擬稿範圍替代。';

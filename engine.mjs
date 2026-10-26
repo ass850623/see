@@ -612,3 +612,9 @@ export function startFifthChapterDutyReview(state){
  const next=structuredClone(state);next.scene=state.flags.c05DENext==='review'?'c05DRReviewDesk':'c05DRReportDesk';next.pageIndex=0;next.flags.c05DRStarted=true;next.note='實際新分工稿才可審閱保存，候選追蹤回報只記起稿時狀態，尚未送交或公開。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05DEBrief,choice:'接續第五章分工稿審閱與追蹤回報。'});return next;
 }
+
+export function startFifthChapterTrackingReview(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05DREnd')throw new Error('請先保存第五章分工稿審閱與追蹤回報');
+ const next=structuredClone(state);next.scene=state.flags.c05DRNext==='review'?'c05TRReviewDesk':'c05TRArrangeDesk';next.pageIndex=0;next.flags.c05TRStarted=true;next.note='實際候選追蹤回報才可審閱保存，下一輪限定安排依當時狀態確認，接受尚未執行。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05DRBrief,choice:'接續第五章追蹤回報審閱與下一輪安排。'});return next;
+}
