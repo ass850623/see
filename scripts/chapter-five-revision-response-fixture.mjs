@@ -1,0 +1,5 @@
+import {fifthRevisionConditionsFixture,revisionReviewContexts} from './chapter-five-revision-review-fixture.mjs';
+import {startFifthChapterRevisionReview,advance} from '../engine.mjs';
+import {hasRevisedCandidate,canDeliverRevision} from '../chapter-five-revision-review.mjs';
+export function fifthRevisionReviewFixture({srFocus='facts',srDisposition,srTrackFocus='versions',srTrack='checked',srNext='feedback',...prior}={}){let s=startFifthChapterRevisionReview(fifthRevisionConditionsFixture(prior));const disposition=srDisposition||(canDeliverRevision(s)?'sent':hasRevisedCandidate(s)?'filed':'held'),r=[srFocus,disposition,'next'],t=[srTrackFocus,srTrack,'next'];for(const id of [...(s.flags.c05RVNext==='review'?[...r,...t]:[...t,...r]),srNext])s=advance(s,id);return s;}
+export const revisionResponseContexts=[{...revisionReviewContexts[0]},{...revisionReviewContexts[1],rvNext:'track'},{...revisionReviewContexts[0],srDisposition:'filed'},{...revisionReviewContexts[0],srDisposition:'held'},{...revisionReviewContexts[2]},{...revisionReviewContexts[3]},{...revisionReviewContexts[4]},{...revisionReviewContexts[6]}];

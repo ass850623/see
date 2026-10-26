@@ -540,3 +540,9 @@ export function startFifthChapterRevisionReview(state){
  const next=structuredClone(state);next.scene=state.flags.c05RVNext==='review'?'c05SRReviewDesk':'c05SRTrackDesk';next.pageIndex=0;next.flags.c05SRStarted=true;next.note='只審閱實際完成的新修訂稿，個人收件與內部保存分開，交班核對不補做舊工作。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05RVBrief,choice:'接續第五章修訂稿審閱與交班追蹤。'});return next;
 }
+
+export function startFifthChapterRevisionResponse(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05SREnd')throw new Error('請先保存第五章修訂稿審閱與交班追蹤');
+ const next=structuredClone(state);next.scene=state.flags.c05SRNext==='feedback'?'c05RFReplyDesk':'c05RFDutyDesk';next.pageIndex=0;next.flags.c05RFStarted=true;next.note='實際送交新版才收對應讀稿意見，新的限定承接須明確確認，接受尚未執行。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05SRBrief,choice:'接續第五章修訂稿回訊與承接確認。'});return next;
+}

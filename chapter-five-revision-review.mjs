@@ -9,7 +9,7 @@ export const revisionReviewScenes={
  c05SRTrackReview:scene('交班追蹤全文',['予澄讀回原分工與實際產出、新稿是否完成、短回覆是否送出，以及這份追蹤起稿時已知的新版去向。','如果先做追蹤，稍後才送的新稿不補寫進本份追蹤；若先審閱新版，這份表可以記下當時的處置。原承諾與期限按原樣保留。'],'核對後保存追蹤，或暫緩。'),
  c05SRTrackResult:scene('核對完成仍有未決',['你把尚未確認的工作圈起來，沒有替下一班填上名字。予澄說：「知道缺誰的答覆，也是一份能交出去的交班。」','本輪完成的僅是這份內部追蹤，沒有新窗口答覆、交通安排、個案結果或其他人的承接。暫緩者則不記成已完成核對。'],'保存追蹤處置。'),
  c05SRRecord:scene('新版與交班各自落筆',['新版去向與內部追蹤已有各自的紀錄。你決定下一輪先看修訂稿回訊，還是先談承接確認。','這個優先選擇還不是已收新版讀稿意見或已有人接工作。予澄把兩份原文依起稿時點放回各自的頁籤。'],'保存本輪並選下一輪優先。'),
- c05SREnd:{place:'第五章修訂稿審閱與交班追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪修訂稿去向與交班追蹤已保存。修訂稿回訊與承接確認尚未開放。',choices:[]}
+ c05SREnd:{place:'第五章修訂稿審閱與交班追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪修訂稿去向與交班追蹤已保存。可接續修訂稿回訊與承接確認。',choices:[]}
 };
 export const hasRevisedCandidate=s=>s.flags.c05RVRevisionDisposition==='prepared';
 export const canDeliverRevision=s=>hasRevisedCandidate(s)&&s.flags.c05RVAction==='apply'&&s.flags.c05CFReplyDisposition==='received';
