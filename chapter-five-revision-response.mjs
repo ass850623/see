@@ -9,7 +9,7 @@ export const revisionResponseScenes={
  c05RFDutyReview:scene('限定承接全文',['予澄讀出名字、範圍與這份安排起稿時的回訊狀態。「如果是我接，就只接這一頁；若是你接，我不會把它算成我做了。」','確認只表示本輪明確接受限定內部準備。資料還沒取得，候選問題還沒送出，工作也還沒完成；舊工作的完成與未完不變。'],'審閱後確認限定承接，或留稿。'),
  c05RFDutyResult:scene('接受與完成之間',['你把這次確認留下，沒有替它蓋上完成章。予澄將舊安排與本輪新頁分開，讓下一輪能辨認真正要執行的工作。','留稿者沒有新增接受。後來才收到的讀稿意見也不改寫先前起稿的安排，更不延長原承諾或替他人承接。'],'保存本輪新的限定承接處置。'),
  c05RFRecord:scene('帶著版本與範圍交給下一輪',['新版回訊與內部承接都有各自的紀錄。你選擇下一輪先做限定準備，還是先追蹤未決事項。','現在只記優先順序，不先取得資料、送出問題、做完工作或收到外部答覆。予澄把原版本與日期一併留在交接頁。'],'保存本輪並選下一輪優先。'),
- c05RFEnd:{place:'第五章修訂稿回訊與承接確認 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新版回訊與新的限定承接已保存。限定準備與未決續追尚未開放。',choices:[]}
+ c05RFEnd:{place:'第五章修訂稿回訊與承接確認 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪新版回訊與新的限定承接已保存。可接續限定準備與未決續追。',choices:[]}
 };
 export const revisionResponsePrimary=s=>s.flags.c05SRDisposition==='sent'?'receive':'keep';
 const submitted=s=>s.flags.c05SRDisposition==='sent'?s.flags.c05SRCandidateSnapshot:'上一輪未實際送出新版，沒有可收取對應讀稿回訊的新版送交原文。';

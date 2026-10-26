@@ -546,3 +546,9 @@ export function startFifthChapterRevisionResponse(state){
  const next=structuredClone(state);next.scene=state.flags.c05SRNext==='feedback'?'c05RFReplyDesk':'c05RFDutyDesk';next.pageIndex=0;next.flags.c05RFStarted=true;next.note='實際送交新版才收對應讀稿意見，新的限定承接須明確確認，接受尚未執行。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05SRBrief,choice:'接續第五章修訂稿回訊與承接確認。'});return next;
 }
+
+export function startFifthChapterLimitedPreparation(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05RFEnd')throw new Error('請先保存第五章修訂稿回訊與承接確認');
+ const next=structuredClone(state);next.scene=state.flags.c05RFNext==='prepare'?'c05LPWorkDesk':'c05LPTrackDesk';next.pageIndex=0;next.flags.c05LPStarted=true;next.note='依原承接人與限定範圍完成候選原文；原留稿須明確重啟，內部續追不取得資料或外部答覆。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05RFBrief,choice:'接續第五章限定準備與未決續追。'});return next;
+}
