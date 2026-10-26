@@ -9,7 +9,7 @@ export const trackingExecutionScenes={
  c05TEPendingReview:scene('待收範圍全文',['予澄讀回這份待收稿起稿時的工作狀態與送問原文。沒有實際送出，就不填新增窗口收件；有送出，也不替窗口寫答案。','舊待收與原期限保留。本輪保存可以記真正新增的待回覆問題，或只完成內部狀態整理；暫緩者不記成已整理。'],'核對後保存本輪待收，或暫緩。'),
  c05TEPendingResult:scene('待收不是已回覆',['你把尚無答案的欄位留白。予澄將這次新待收、原待收與未執行事項分開，沒有替它們填上同一個完成標記。','一般公開索引、窗口核對與個人送件收件，都不代具體班次、接駁、個案資格或原因的答案，也不延長原承諾。'],'保存待收整理的實際處置。'),
  c05TERecord:scene('帶著實際產出進下一輪',['這輪做了甚麼、哪些問題真的送出、哪一份待收稿只記當時狀態，都已有各自的紀錄。你決定先處理窗口回覆，或先整理執行回報。','這只是下一輪優先，現在不先收取窗口答覆、不公開新稿，也不替任何人接受新責任。'],'保存本輪並選下一輪優先。'),
- c05TEEnd:{place:'第五章追蹤執行與窗口待收 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪追蹤執行與窗口待收已保存。窗口回覆與執行回報尚未開放。',choices:[]}
+ c05TEEnd:{place:'第五章追蹤執行與窗口待收 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪追蹤執行與窗口待收已保存。可接續窗口回覆與執行回報。',choices:[]}
 };
 export const trackingExecutionPrimary=s=>s.flags.c05PRPlanDisposition==='confirmed'?'work':'restart';
 const owner=s=>s.flags.c05PROwner==='aide'?'予澄':'你';

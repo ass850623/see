@@ -1,0 +1,5 @@
+import {fifthPreparationReviewFixture,trackingExecutionContexts} from './chapter-five-tracking-execution-fixture.mjs';
+import {startFifthChapterTrackingExecution,advance} from '../engine.mjs';
+import {trackingExecutionPrimary} from '../chapter-five-tracking-execution.mjs';
+export function fifthTrackingExecutionFixture({teAction,teExecution='execute',teFocus='questions',tePending='record',teNext='reply',...prior}={}){let s=startFifthChapterTrackingExecution(fifthPreparationReviewFixture(prior));const action=teAction||trackingExecutionPrimary(s),w=[action,action==='keep'?'hold':teExecution,'next'],p=[teFocus,tePending,'next'];for(const id of [...(s.flags.c05PRNext==='execute'?[...w,...p]:[...p,...w]),teNext])s=advance(s,id);return s;}
+export const windowReportContexts=[{...trackingExecutionContexts[0]},{...trackingExecutionContexts[1],teExecution:'send'},{...trackingExecutionContexts[3],prNext:'pending',teExecution:'send'},{...trackingExecutionContexts[1]},{...trackingExecutionContexts[2],teExecution:'hold'},{...trackingExecutionContexts[4]},{...trackingExecutionContexts[6],teAction:'keep'},{...trackingExecutionContexts[7]}];

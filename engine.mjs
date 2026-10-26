@@ -564,3 +564,9 @@ export function startFifthChapterTrackingExecution(state){
  const next=structuredClone(state);next.scene=state.flags.c05PRNext==='execute'?'c05TEWorkDesk':'c05TEPendingDesk';next.pageIndex=0;next.flags.c05TEStarted=true;next.note='依原安排實際執行；只有明確送問才新增窗口收件，待收只記起稿時已知狀態，尚無答覆。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05PRBrief,choice:'接續第五章追蹤執行與窗口待收。'});return next;
 }
+
+export function startFifthChapterWindowReport(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05TEEnd')throw new Error('請先保存第五章追蹤執行與窗口待收');
+ const next=structuredClone(state);next.scene=state.flags.c05TENext==='reply'?'c05WRReplyDesk':'c05WRReportDesk';next.pageIndex=0;next.flags.c05WRStarted=true;next.note='只有實際送問才收對應一般程序回覆，候選回報依起稿時已知內容完成，尚未發布。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05TEBrief,choice:'接續第五章窗口回覆與執行回報。'});return next;
+}
