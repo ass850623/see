@@ -9,7 +9,7 @@ export const dutyExecutionScenes={
  c05DETrackReview:scene('交班追蹤全文',['予澄讀回上一輪交班是否實際完成、這輪前是否已保存原文，以及原人接受的限定範圍。這份表只保存起稿時已知的本輪執行狀態。','若先追蹤，稍後才完成的新稿不補進本版；若先執行，才可按當時產出記錄。原公開版本、證物與期限不改寫。'],'核對後保存交班追蹤，或暫緩。'),
  c05DETrackResult:scene('把已做與未做留在各自欄位',['你把仍缺原文、仍待審閱與尚未執行各自留下。予澄沒有替下一輪填上外部收件或窗口回覆。','完成者只新增本次內部核對；暫緩者不記成已追蹤。沒有新資料、具體交通或資格結果，也沒有延長原承諾。'],'保存本輪交班追蹤處置。'),
  c05DERecord:scene('讓新稿與追蹤各自交接',['本輪實際完成了哪份新稿、哪份追蹤只記當時狀態，都有了各自的原文。你選下一輪先審閱分工稿，或先準備追蹤回報。','現在只選優先，不先公開新稿、送出問題、取得資料或收取外部答覆。原安排與舊交班仍留原版。'],'保存本輪並選下一輪優先。'),
- c05DEEnd:{place:'第五章分工執行與交班追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定分工產出與交班追蹤已保存。分工稿審閱與追蹤回報尚未開放。',choices:[]}
+ c05DEEnd:{place:'第五章分工執行與交班追蹤 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定分工產出與交班追蹤已保存。可接續分工稿審閱與追蹤回報。',choices:[]}
 };
 export const dutyExecutionPrimary=s=>s.flags.c05HRDutyDisposition==='confirmed'?'work':'restart';
 const owner=s=>s.flags.c05HROwner==='aide'?'予澄':'你';
