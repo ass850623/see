@@ -9,7 +9,7 @@ export const reportReviewScenes={
  c05RAFollowReview:scene('後續追問原文',['予澄只讀出這次要送的問題。公開回報、內部安排與私人原件都不附在問稿後面；如果先起這份問稿，稍後發布的回報也不補進來。','有線索者可明確送出，亦可保留。收件只是這份新問題送到一般程序窗口，沒有答覆、具體交通結果或新職責接受。'],'審閱後實際送問，或保留候選。'),
  c05RAFollowResult:scene('新問題仍在等答案',['送出的路線只保存本次追問原文與一般窗口收件；留稿者沒有新送件或收件。予澄沒有替窗口先填上一段回覆。','舊問題、舊答覆、原期限與公開版本各留原文。你看見多了一筆待回覆，沒有把它當成事情已經解決。'],'保存本次後續追問處置。'),
  c05RARecord:scene('公開版與追問各走一條線',['本輪公開或留稿的回報，以及新送或保留的問題，都有自己的原文。你決定下一輪先處理追問回覆，還是先看公開反應。','現在只選優先。未發布不會先有針對這版的公開反應，未送問也不會先有新答案。'],'保存本輪並選下一輪優先。'),
- c05RAEnd:{place:'第五章回報審閱與後續追問 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪回報發布處置與後續追問已保存。追問回覆與公開反應尚未開放。',choices:[]}
+ c05RAEnd:{place:'第五章回報審閱與後續追問 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪回報發布處置與後續追問已保存。可接續追問回覆與公開反應。',choices:[]}
 };
 export const hasExecutionReport=s=>s.flags.c05WRReportDisposition==='prepared';
 export const canFollowReport=s=>s.flags.c05WRReplyDisposition==='received'||(s.flags.c05TEWorkDisposition==='completed'&&s.flags.c05PRAction==='source');
