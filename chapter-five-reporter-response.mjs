@@ -9,7 +9,7 @@ export const reporterResponseScenes={
  c05RPPendingReview:scene('未決整理全文',['予澄讀回已取得的一般程序回覆、知言是否真的提出意見，以及這份表起稿時的記者回應狀態。未做的事仍留未做。','先整理未決、稍後才回電說明時，不回填這一版；先回應再整理，才可記下當時已說出的短稿狀態。原日期不重算。'],'核對後保存本輪未決整理，或暫緩。'),
  c05RPPendingResult:scene('一份能辨認未決的表',['你把仍缺資料與仍缺確認的地方圈起來，沒有替下一個值班人填上已完成。予澄說：「交接的人要知道的是哪一步還沒發生。」','完成者只新增這份內部整理；暫緩者不記成已核對。沒有新班次、資格結果、外部答覆或其他人的接受。'],'保存未決整理的實際處置。'),
  c05RPRecord:scene('把說出的話與待做的事分開',['本次是否向知言實際回應、未決事項是否核對保存，都已有各自的紀錄。你決定下一輪先處理回應後續，還是先準備交班。','這個優先選擇不先收新回訊、不成立新分工，也不先完成交班。原公開版本、原件與期限照舊。'],'保存本輪並選下一輪優先。'),
- c05RPEnd:{place:'第五章記者回應與未決整理 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪記者回應與內部未決整理已保存。回應後續與交班準備尚未開放。',choices:[]}
+ c05RPEnd:{place:'第五章記者回應與未決整理 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪記者回應與內部未決整理已保存。可接續回應後續與交班準備。',choices:[]}
 };
 export const canAnswerReporter=s=>s.flags.c05FRReactionDisposition==='contacted';
 export const reporterResponseSource=s=>canAnswerReporter(s)?s.flags.c05FRReactionRecord.split('\n內部審閱原文')[0]:'上一輪沒有這份公開版的實際讀稿聯絡或知言發言，本輪僅作內部回應準備。';

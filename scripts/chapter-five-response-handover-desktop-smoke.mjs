@@ -1,0 +1,23 @@
+import {_electron as electron} from 'playwright';
+import assert from 'node:assert/strict';
+import {mkdtemp} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import {fifthReporterResponseFixture,responseHandoverContexts} from './chapter-five-response-handover-fixture.mjs';
+import {options,decodeSave} from '../engine.mjs';
+import {responseHandoverPrimary,responseHandoverPayload} from '../chapter-five-response-handover.mjs';
+import {publishedExecutionReport} from '../chapter-five-report-review.mjs';
+const executablePath=path.resolve('dist/linux-unpacked/mist-islands-rpg');
+for(const index of [0,1,2,7])for(const order of ['follow','handover']){
+ const old=fifthReporterResponseFixture({...responseHandoverContexts[index],rpNext:order}),profile=await mkdtemp(path.join(tmpdir(),'mist-rh-desktop-')),errors=[];
+ let app,p;const launch=async()=>{app=await electron.launch({executablePath,args:['--no-sandbox'],env:{...process.env,DISPLAY:process.env.DISPLAY||':99',XDG_CONFIG_HOME:profile}});p=await app.firstWindow();p.on('pageerror',e=>errors.push(e.message));};
+ const save=()=>p.evaluate(()=>JSON.parse(window.mistDesktop.read('mist-chapter-v1-auto').data));
+ const read=async()=>{while(await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).count())await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).click();};
+ const ledger=async()=>{await p.getByRole('button',{name:'補充說明紀錄',exact:true}).click();const rows=await p.locator('#panel-content').evaluate(n=>Array.from(n.childNodes,n=>n.textContent));await p.keyboard.press('Escape');return rows;};
+ try{await launch();await p.locator('#title-quit').waitFor();assert.equal(new URL(p.url()).protocol,'mist:');assert.equal(await p.evaluate(()=>typeof window.require),'undefined');await p.evaluate(raw=>window.mistDesktop.write('mist-chapter-v1-auto',raw),JSON.stringify(old));await p.reload();await p.locator('#continue-story').click();const previousLedger=await ledger();await p.getByRole('button',{name:'接續第五章回應後續與交班準備',exact:true}).click();
+ const action=responseHandoverPrimary(old),execution=action==='receive'&&!(index===0&&order==='handover')?'execute':'hold',disposition=index===2&&order==='handover'?'held':'prepared',r=[action,execution,'next'],t=['versions',disposition,'next'];let firstDraft;
+ for(const id of [...(order==='follow'?[...r,...t]:[...t,...r]),'review']){let s=await save();if(['c05RHReplyReview','c05RHHandoverReview','c05RHRecord'].includes(s.scene)){await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).click();const before=await save();assert.equal(before.pageIndex,1);assert.equal(before.flags.c05RHRecorded,undefined);await app.close();await launch();await p.locator('#continue-story').click();const restored=await save();const {playTimeMs:beforeTime,phaseTimesMs:beforePhases,...beforeStory}=before,{playTimeMs:afterTime,phaseTimesMs:afterPhases,...afterStory}=restored;assert.deepEqual(afterStory,beforeStory);assert.ok(afterTime>=beforeTime);}await read();s=await save();assert.ok(decodeSave(JSON.stringify(s)));firstDraft??=s.flags[order==='follow'?'c05RHReplyDraft':'c05RHHandoverDraft'];await p.waitForFunction(()=>document.querySelector('#chapter-background').complete&&document.querySelector('#chapter-background').naturalWidth>0);const selected=options(s).find(c=>c.id===id);assert.ok(selected);await p.getByRole('button',{name:selected.text,exact:true}).click();}
+ await app.close();await launch();await p.locator('#continue-story').click();const end=await save();assert.equal(end.scene,'c05RHEnd');assert.equal(end.flags.c05RHRecorded,true);assert.equal(end.flags.c05RHReplyDisposition,execution==='execute'?'received':'held');assert.equal(end.flags.c05RHHandoverDisposition,disposition);assert.equal(end.flags[order==='follow'?'c05RHReplyDraft':'c05RHHandoverDraft'],firstDraft);for(const[k,v]of Object.entries(old.flags))assert.equal(end.flags[k],v);assert.deepEqual(end.evidence,old.evidence);assert.equal(end.flags.c05RHHandoverOutput,disposition==='prepared'?responseHandoverPayload(end):undefined);assert.deepEqual(publishedExecutionReport(end),publishedExecutionReport(old));assert.deepEqual(await ledger(),previousLedger);await p.getByRole('button',{name:'任務簿',exact:true}).click();assert.match(await p.locator('#panel-content').textContent(),/回應後續與交班準備交接｜本輪已保存/);assert.ok((await p.locator('#panel-content').textContent()).includes(end.flags.c05RHBrief));assert.deepEqual(errors,[]);
+ }finally{if(app)await app.close();}
+}
+console.log('Eight packaged Linux response-followup/handover routes passed: offline assets, isolated renderer, actual speaking versus old contact gate, both orders, prepared/held output, three mid-reading restarts, terminal restart, frozen drafts and unchanged public ledger');
