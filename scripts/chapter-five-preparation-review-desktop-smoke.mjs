@@ -1,0 +1,22 @@
+import {_electron as electron} from 'playwright';
+import assert from 'node:assert/strict';
+import {mkdtemp} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import path from 'node:path';
+import {fifthLimitedPreparationFixture,preparationReviewContexts} from './chapter-five-preparation-review-fixture.mjs';
+import {options,decodeSave} from '../engine.mjs';
+import {hasPreparationOutput} from '../chapter-five-preparation-review.mjs';
+const executablePath=path.resolve('dist/linux-unpacked/mist-islands-rpg');
+for(const index of [0,1,4,5])for(const order of ['review','arrange']){
+ const old=fifthLimitedPreparationFixture({...preparationReviewContexts[index],lpNext:order}),profile=await mkdtemp(path.join(tmpdir(),'mist-pr-desktop-')),errors=[];
+ let app,p;const launch=async()=>{app=await electron.launch({executablePath,args:['--no-sandbox'],env:{...process.env,DISPLAY:process.env.DISPLAY||':99',XDG_CONFIG_HOME:profile}});p=await app.firstWindow();p.on('pageerror',e=>errors.push(e.message));};
+ const save=()=>p.evaluate(()=>JSON.parse(window.mistDesktop.read('mist-chapter-v1-auto').data));
+ const read=async()=>{while(await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).count())await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).click();};
+ const ledger=async()=>{await p.getByRole('button',{name:'補充說明紀錄',exact:true}).click();const rows=await p.locator('#panel-content').evaluate(n=>Array.from(n.childNodes,n=>n.textContent));await p.keyboard.press('Escape');return rows;};
+ try{await launch();await p.locator('#title-quit').waitFor();assert.equal(new URL(p.url()).protocol,'mist:');assert.equal(await p.evaluate(()=>typeof window.require),'undefined');await p.evaluate(raw=>window.mistDesktop.write('mist-chapter-v1-auto',raw),JSON.stringify(old));await p.reload();await p.locator('#continue-story').click();const previousLedger=await ledger();await p.getByRole('button',{name:'接續第五章準備稿審閱與追蹤安排',exact:true}).click();
+ const reviewed=hasPreparationOutput(old)?'checked':'held',action=order==='review'&&reviewed==='checked'?(old.flags.c05RFScope==='list'?'source':'questions'):'gaps',accepted=index===5?'held':'confirmed',r=['scope',reviewed,'next'],t=[(order==='review'?'self':'aide')+'-'+action,accepted,'next'];let firstDraft;
+ for(const id of [...(order==='review'?[...r,...t]:[...t,...r]),'execute']){let s=await save();if(['c05PRReview','c05PRArrangeReview','c05PRRecord'].includes(s.scene)){await p.getByRole('button',{name:'繼續閱讀 →',exact:true}).click();const before=await save();assert.equal(before.pageIndex,1);assert.equal(before.flags.c05PRRecorded,undefined);await app.close();await launch();await p.locator('#continue-story').click();const restored=await save();const {playTimeMs:beforeTime,phaseTimesMs:beforePhases,...beforeStory}=before,{playTimeMs:afterTime,phaseTimesMs:afterPhases,...afterStory}=restored;assert.deepEqual(afterStory,beforeStory);assert.ok(afterTime>=beforeTime);}await read();s=await save();assert.ok(decodeSave(JSON.stringify(s)));firstDraft??=s.flags[order==='review'?'c05PRDraft':'c05PRPlanDraft'];await p.waitForFunction(()=>document.querySelector('#chapter-background').complete&&document.querySelector('#chapter-background').naturalWidth>0);const selected=options(s).find(c=>c.id===id);assert.ok(selected);await p.getByRole('button',{name:selected.text,exact:true}).click();}
+ await app.close();await launch();await p.locator('#continue-story').click();const end=await save();assert.equal(end.scene,'c05PREnd');assert.equal(end.flags.c05PRRecorded,true);assert.equal(end.flags.c05PRDisposition,reviewed);assert.equal(end.flags.c05PRPlanDisposition,accepted);assert.equal(end.flags.c05PRAction,action);assert.equal(end.flags[order==='review'?'c05PRDraft':'c05PRPlanDraft'],firstDraft);for(const[k,v]of Object.entries(old.flags))assert.equal(end.flags[k],v);assert.deepEqual(end.evidence,old.evidence);assert.deepEqual(await ledger(),previousLedger);await p.getByRole('button',{name:'任務簿',exact:true}).click();assert.match(await p.locator('#panel-content').textContent(),/準備稿審閱與追蹤安排交接｜本輪已保存/);assert.ok((await p.locator('#panel-content').textContent()).includes(end.flags.c05PRBrief));assert.deepEqual(errors,[]);
+ }finally{if(app)await app.close();}
+}
+console.log('Eight packaged Linux preparation-review/planning routes passed: offline assets, isolated renderer, real-output gate, source/question/gap plans, both orders and owners, confirmed/held plans, three mid-reading restarts, terminal restart, frozen drafts and unchanged public ledger');

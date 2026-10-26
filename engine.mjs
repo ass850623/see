@@ -552,3 +552,9 @@ export function startFifthChapterLimitedPreparation(state){
  const next=structuredClone(state);next.scene=state.flags.c05RFNext==='prepare'?'c05LPWorkDesk':'c05LPTrackDesk';next.pageIndex=0;next.flags.c05LPStarted=true;next.note='依原承接人與限定範圍完成候選原文；原留稿須明確重啟，內部續追不取得資料或外部答覆。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05RFBrief,choice:'接續第五章限定準備與未決續追。'});return next;
 }
+
+export function startFifthChapterPreparationReview(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05LPEnd')throw new Error('請先保存第五章限定準備與未決續追');
+ const next=structuredClone(state);next.scene=state.flags.c05LPNext==='review'?'c05PRReviewDesk':'c05PRArrangeDesk';next.pageIndex=0;next.flags.c05PRStarted=true;next.note='只審閱實際完成的準備稿，安排依起稿時已完成的審閱限定範圍，確認接受尚未執行。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05LPBrief,choice:'接續第五章準備稿審閱與追蹤安排。'});return next;
+}

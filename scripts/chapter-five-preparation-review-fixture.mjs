@@ -1,0 +1,5 @@
+import {fifthRevisionResponseFixture,limitedPreparationContexts} from './chapter-five-limited-preparation-fixture.mjs';
+import {startFifthChapterLimitedPreparation,advance} from '../engine.mjs';
+import {limitedPreparationPrimary} from '../chapter-five-limited-preparation.mjs';
+export function fifthLimitedPreparationFixture({lpAction,lpExecution='execute',lpFocus='gaps',lpTracked='checked',lpNext='review',...prior}={}){let s=startFifthChapterLimitedPreparation(fifthRevisionResponseFixture(prior));const action=lpAction||limitedPreparationPrimary(s),w=[action,action==='keep'?'hold':lpExecution,'next'],t=[lpFocus,lpTracked,'next'];for(const id of [...(s.flags.c05RFNext==='prepare'?[...w,...t]:[...t,...w]),lpNext])s=advance(s,id);return s;}
+export const preparationReviewContexts=[{...limitedPreparationContexts[0]},{...limitedPreparationContexts[1],rfNext:'track'},{...limitedPreparationContexts[4]},{...limitedPreparationContexts[5]},{...limitedPreparationContexts[0],lpExecution:'hold'},{...limitedPreparationContexts[1],lpAction:'keep'},{...limitedPreparationContexts[6],lpExecution:'hold'},{...limitedPreparationContexts[7],lpAction:'keep'}];

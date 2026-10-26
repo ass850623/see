@@ -9,7 +9,7 @@ export const limitedPreparationScenes={
  c05LPTrackReview:scene('未決續追全文',['予澄逐項讀回新版去向、實際收到或未收到的新版意見，以及原限定承接。這份表只記起稿時已知的準備狀態。','若先續追，稍後才完成的工作不補寫進這一版；若先做準備，則按當時實際產出記錄。原期限仍在，沒有因為新稿而重算。'],'核對後保存本輪續追，或暫緩。'),
  c05LPTrackResult:scene('知道缺口仍不是補上缺口',['你看完表，把需要後續處理的事項留在原來的位置。予澄說：「這一輪能交接的是我們查清了哪些紀錄，不能寫成外面已經回答。」','完成核對只新增這份內部續追紀錄；暫緩者不記成已核對。公開原文、證物、外部結果與舊工作的完成狀態都保留。'],'保存本輪續追處置。'),
  c05LPRecord:scene('把真正做出的頁面交下去',['新準備與未決續追各有了處置。你選下一輪先審閱準備稿，或先整理追蹤安排。','現在只選優先，不提前送出候選問題、接受新外部分工或收取答案。先起的稿與後完成的產出，各留自己的時間順序。'],'保存本輪並選下一輪優先。'),
- c05LPEnd:{place:'第五章限定準備與未決續追 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定準備與未決續追已保存。準備稿審閱與追蹤安排尚未開放。',choices:[]}
+ c05LPEnd:{place:'第五章限定準備與未決續追 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪限定準備與未決續追已保存。可接續準備稿審閱與追蹤安排。',choices:[]}
 };
 export const limitedPreparationPrimary=s=>s.flags.c05RFDutyDisposition==='confirmed'?'work':'restart';
 const owner=s=>s.flags.c05RFOwner==='aide'?'予澄':'你';
