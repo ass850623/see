@@ -9,7 +9,7 @@ export const revisionConditionScenes={
  c05RVReplyReview:scene('責任回覆與送交範圍全文',['予澄讀出來源、是否有本稿實際意見與起稿當時的修訂狀態。沒有新的意見，不補一段已發生的對話。','如可送出，只送本版簡短文字回覆，不附修訂候選稿或內部審閱註記。先起的回覆不追加稍後才完成的修訂產出。'],'審閱後送出對應文字回覆，或保留。'),
  c05RVReplyResult:scene('回覆收件不是新版被讀過',['本輪已送者只記這次個人文字回覆收件；留稿者沒有新增對外回覆或收件。新版候選稿是否存在與是否送交仍分開。','沒有若川讀過新版、接受新職責、共同署名或黨團共識。原公開說明、原件與承諾日期都保留。'],'核對本次責任回覆或留稿。'),
  c05RVRecord:scene('把修訂與回覆交給下一輪',['修稿準備與責任回覆各有了處置。對應意見、內部自擬、已完成的新稿與只送出文字回覆，不被混成同一份送交。','下一輪可先審閱修訂稿，或先追蹤交班。現在只選優先，不先送新版、收回訊或成立共同分工。'],'保存本輪並選下一輪優先。'),
- c05RVEnd:{place:'第五章修稿條件與責任回覆 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪修稿準備與責任回覆已保存。修訂稿審閱與交班追蹤尚未開放。',choices:[]}
+ c05RVEnd:{place:'第五章修稿條件與責任回覆 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪修稿準備與責任回覆已保存。可接續修訂稿審閱與交班追蹤。',choices:[]}
 };
 export const revisionConditionPrimary=s=>s.flags.c05CFReplyDisposition==='received'?'apply':s.flags.c05DPWorkDisposition==='completed'&&s.flags.c05HDScope==='outline'?'internal':'keep';
 const noOriginal='本輪沒有可用的已完成分工候選原文；不以內部待收表或未完成稿替代。';

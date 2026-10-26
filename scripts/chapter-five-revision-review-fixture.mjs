@@ -1,0 +1,5 @@
+import {fifthCandidateFeedbackFixture,revisionConditionContexts} from './chapter-five-revision-conditions-fixture.mjs';
+import {startFifthChapterRevisionConditions,advance} from '../engine.mjs';
+import {revisionConditionPrimary} from '../chapter-five-revision-conditions.mjs';
+export function fifthRevisionConditionsFixture({rvAction,rvExecution='execute',rvFocus='facts',rvReply='held',rvNext='review',...prior}={}){let s=startFifthChapterRevisionConditions(fifthCandidateFeedbackFixture(prior));const action=rvAction||revisionConditionPrimary(s),r=[action,action==='keep'?'hold':rvExecution,'next'],p=[rvFocus,s.flags.c05CFReplyDisposition==='received'?rvReply:'held','next'];for(const id of [...(s.flags.c05CFNext==='revise'?[...r,...p]:[...p,...r]),rvNext])s=advance(s,id);return s;}
+export const revisionReviewContexts=[{...revisionConditionContexts[0],rvReply:'sent'},{...revisionConditionContexts[0],cfNext:'responsibility'},{...revisionConditionContexts[3]},{...revisionConditionContexts[6]},{...revisionConditionContexts[0],rvExecution:'hold'},{...revisionConditionContexts[0],rvAction:'keep'},{...revisionConditionContexts[1]},{...revisionConditionContexts[7]}];
