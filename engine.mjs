@@ -600,3 +600,9 @@ export function startFifthChapterHandoverReview(state){
  const next=structuredClone(state);next.scene=state.flags.c05RHNext==='review'?'c05HRReviewDesk':'c05HRDutyDesk';next.pageIndex=0;next.flags.c05HRStarted=true;next.note='實際完成交班稿才可審閱保存，新限定分工依起稿時審閱狀態確認，接受尚未執行。';
  next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05RHBrief,choice:'接續第五章交班審閱與後續分工。'});return next;
 }
+
+export function startFifthChapterDutyExecution(state){
+ if(!validState(state)||state.chapter!=='c05'||state.scene!=='c05HREnd')throw new Error('請先保存第五章交班審閱與後續分工');
+ const next=structuredClone(state);next.scene=state.flags.c05HRNext==='work'?'c05DEWorkDesk':'c05DETrackDesk';next.pageIndex=0;next.flags.c05DEStarted=true;next.note='依原承接人與限定範圍完成新原文，原留稿須明確重啟；交班追蹤只作內部核對，原公開版與期限保留。';
+ next.history.push({scene:state.scene,speaker:chapterScenes[state.scene].speaker,text:state.flags.c05HRBrief,choice:'接續第五章分工執行與交班追蹤。'});return next;
+}

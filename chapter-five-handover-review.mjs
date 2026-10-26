@@ -9,7 +9,7 @@ export const handoverReviewScenes={
  c05HRDutyReview:scene('新的限定分工全文',['予澄讀出擬承接人、範圍與起稿當時的交班狀態。你選自己，就由自己承接；你選予澄，也只確認她接受這一份內部準備。','確認只表示本輪接受新限定工作，尚未執行。沒有取得資料、完成核驗、送出新問題或收取答覆，舊工作的完成與留稿不重算。'],'審閱後明確確認限定承接，或留稿。'),
  c05HRDutyResult:scene('新接受與尚未開始的工作',['已確認者保存新的限定接受；留稿者沒有新增接受。予澄在每一項旁留下尚未執行的標記，沒有把準備工作當成外部結果。','先起的分工稿按當時範圍保留，晚審閱的交班原文不替它升格。原期限與公開版本照舊。'],'保存新分工的實際處置。'),
  c05HRRecord:scene('交班原文與新分工各自落筆',['本輪是否保存了實際交班稿、誰是否接受新準備，都已有各自的紀錄。你選下一輪先做分工執行，或先追蹤交班缺口。','現在只選優先，不先完成工作、送出問題或取得新回覆。下一輪要接的是這次真正確認的範圍。'],'保存本輪並選下一輪優先。'),
- c05HREnd:{place:'第五章交班審閱與後續分工 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪交班原文審閱與新限定分工已保存。分工執行與交班追蹤尚未開放。',choices:[]}
+ c05HREnd:{place:'第五章交班審閱與後續分工 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪交班原文審閱與新限定分工已保存。可接續分工執行與交班追蹤。',choices:[]}
 };
 export const hasHandoverCandidate=s=>s.flags.c05RHHandoverDisposition==='prepared';
 export const handoverDutyScopes=s=>s.flags.c05RHNext==='review'&&s.flags.c05HRReviewDisposition==='filed'?['sources','questions','gaps']:['gaps'];
