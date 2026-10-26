@@ -9,7 +9,7 @@ export const preparationReviewScenes={
  c05PRArrangeReview:scene('追蹤安排全文',['予澄將名字與範圍讀回。找出處、向窗口送問與補準備缺口，各自是不同工作，不能在確認一頁安排時一起算完。','明確確認只代表承接人接受本輪限定後續安排，尚未執行。尚未確認的窗口、待取得資料、原期限與其他人的職責都保留。'],'審閱後確認安排，或留稿。'),
  c05PRArrangeResult:scene('安排成立，結果仍未到',['你在新安排旁寫下處置，沒有加上完成日期。予澄把原產出和這次的新接受分開，讓下一輪知道真正能接著做哪一步。','留稿者沒有新增接受。由自己承接不記成予澄代辦；由予澄承接也只限這次明確列出的範圍，不代表若川或外部窗口接受工作。'],'保存追蹤安排的實際處置。'),
  c05PRRecord:scene('帶著審閱與安排往前',['準備稿審閱與新安排都有了各自的紀錄。你決定下一輪先處理追蹤執行，還是先整理窗口待收。','這個選擇還不是已查到出處、已送問或已有回覆。予澄將兩份起稿時點不同的原文分別放回頁籤。'],'保存本輪並選下一輪優先。'),
- c05PREnd:{place:'第五章準備稿審閱與追蹤安排 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪準備稿審閱與新的追蹤安排已保存。追蹤執行與窗口待收尚未開放。',choices:[]}
+ c05PREnd:{place:'第五章準備稿審閱與追蹤安排 · 原型暫停點',speaker:'林予澄',role:'幕僚長',portrait:'aide',terminal:true,text:'本輪準備稿審閱與新的追蹤安排已保存。可接續追蹤執行與窗口待收。',choices:[]}
 };
 export const hasPreparationOutput=s=>s.flags.c05LPWorkDisposition==='completed';
 export const preparationPlanPrimary=s=>s.flags.c05PRDisposition==='checked'?(s.flags.c05RFScope==='list'?'source':'questions'):'gaps';
